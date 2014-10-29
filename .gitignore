@@ -52,3 +52,9 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# Dev environment configs
+*.komodoproject
+
+# Project specific
+/src/db.sqlite3
