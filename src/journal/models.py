@@ -1,11 +1,18 @@
 from django.db import models
-from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
+from django.conf import settings
 
 
-ARTICLE_STATUS = ()
+ARTICLE_STATUS = (
+    (0, _(u'New')),
+    (1, _(u'Rejected')),
+    (2, _(u'In review')),
+    (3, _(u'Reviewed')),
+    (4, _(u'Published')),
+    (5, _(u'In rework')),
+)
 
 RESOLUTIONS = (
     (0, _(u'None')),
@@ -35,13 +42,14 @@ class BaseOrderedEntry(models.Model):
 
 class Section(models.Model):
     name = models.CharField(max_length=100)
-    moderators = models.ManyToManyField(get_user_model())
+    moderators = models.ManyToManyField(settings.AUTH_USER_MODEL)
 
 
 class StaffMember(models.Model):
-    user = models.OneToOneField(get_user_model())
+    user = models.OneToOneField(settings.AUTH_USER_MODEL)
 
     chief_editor = models.BooleanField()
+    editor = models.BooleanField()
     reviewer = models.BooleanField()
 
     def save(self, *args, **kwargs):
@@ -53,15 +61,18 @@ class StaffMember(models.Model):
 class Organization(models.Model):
     name = models.TextField()
     site = models.URLField()
-    address = models.TextField()
+
+    country = models.CharField(max_length=100)
+    city = models.CharField(max_length=100)
+    address = models.TextField(default='', blank=True)
 
     obsolete = models.BooleanField()
     previous = models.ManyToManyField('self')
 
 
 class Author(models.Model):
-    user = models.OneToOneField(get_user_model())
-    organizations = models.ManyToManyField(Organization)  # all possible user's organizations
+    user = models.OneToOneField(settings.AUTH_USER_MODEL)
+    organizations = models.ManyToManyField(Organization, through='PositionInOrganization')  # all possible user's organizations
 
     first_name_ru = models.CharField(_('first name'), max_length=60, blank=True)
     last_name_ru = models.CharField(_('last name'), max_length=30, blank=True)
@@ -69,8 +80,14 @@ class Author(models.Model):
     last_name_en = models.CharField(_('last name'), max_length=30, blank=True)
 
 
+class PositionInOrganization(models.Model):
+    author = models.ForeignKey(Author)
+    organization = models.ForeignKey(Organization)
+    position = models.CharField(max_length=200)
+
+
 class PersonInOrganizations(models.Model):
-    user = models.ForeignKey(get_user_model())
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     organizations = models.ManyToManyField(Organization, through='OrderedOrganizations')
 
 
@@ -85,8 +102,8 @@ class OrderedOrganizations(BaseOrderedEntry):
 
 class Article(models.Model):
     authors = models.ManyToManyField(PersonInOrganizations, through='OrderedAuthors')
-    
-    status = models.SmallIntegerField(default=0, choices=ARTICLE_STATUS)
+
+    status = models.PositiveSmallIntegerField(default=0, choices=ARTICLE_STATUS)
     date_in = models.DateField(default=timezone.now)
     date_out = models.DateField(null=True, blank=True)
     old_number = models.SmallIntegerField(null=True, blank=True)
@@ -94,11 +111,22 @@ class Article(models.Model):
     title = models.TextField()
     abstract = models.TextField()
     content = models.TextField()
+    volume = models.ForeignKey('Volume')
+    sections = models.ManyToManyField('Section')
 
 
 class ArticleSource(models.Model):
     article = models.ForeignKey(Article)
     file = models.FileField(upload_to='sources')
+
+
+class ArticleResolution(models.Model):
+    article = models.ForeignKey(Article)
+    reviews = models.ManyToManyField('Review')
+
+    status = models.PositiveSmallIntegerField(choices=RESOLUTIONS)
+    text = models.TextField()
+    date_created = models.DateTimeField()
 
 
 class OrderedAuthors(BaseOrderedEntry):
@@ -112,15 +140,22 @@ class OrderedAuthors(BaseOrderedEntry):
 
 class Review(models.Model):
     article = models.ForeignKey(Article)
-    reviewer = models.ForeignKey(get_user_model())
+    reviewer = models.ForeignKey(settings.AUTH_USER_MODEL)
     date_created = models.DateTimeField(default=timezone.now)
 
-    text = models.TextField(default=u'', blank=True)
+    comment_for_authors = models.TextField(default=u'', blank=True)
+    comment_for_editors = models.TextField(default=u'', blank=True)
     resolution = models.PositiveSmallIntegerField(choices=RESOLUTIONS, default=0)
+
+#TODO: Qualification Fields
+#TODO: Organization & author moderation
+
+class ReviewFile(models.Model):
+    review = models.ForeignKey(Review)
+    file = models.FileField(upload_to='reviews')
 
 
 class Volume(models.Model):
-    #articles - m2m -?
     title = models.CharField(max_length=100)
     year = models.PositiveIntegerField()
 
