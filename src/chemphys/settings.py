@@ -12,7 +12,7 @@ TEMPLATE_DEBUG = DEBUG
 ALLOWED_HOSTS = (
     '127.0.0.1',
     'chemphys.init-ltd.ru',
-    'chemphys.edu.ru'
+    'chemphys.edu.ru',
 )
 
 INSTALLED_APPS = (
@@ -49,11 +49,11 @@ DATABASES = {
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Europe/Moscow'
+USE_TZ = True
 
 USE_I18N = True
 USE_L10N = True
 
-USE_TZ = True
-
-
 STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')

@@ -48,9 +48,9 @@ class Section(models.Model):
 class StaffMember(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
 
-    chief_editor = models.BooleanField()
-    editor = models.BooleanField()
-    reviewer = models.BooleanField()
+    chief_editor = models.BooleanField(default=False)
+    editor = models.BooleanField(default=False)
+    reviewer = models.BooleanField(default=False)
 
     def save(self, *args, **kwargs):
         if self.chief_editor:
@@ -66,7 +66,7 @@ class Organization(models.Model):
     city = models.CharField(max_length=100)
     address = models.TextField(default='', blank=True)
 
-    obsolete = models.BooleanField()
+    obsolete = models.BooleanField(default=False)
     previous = models.ManyToManyField('self')
 
 
