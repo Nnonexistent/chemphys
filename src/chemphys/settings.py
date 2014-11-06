@@ -23,6 +23,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'journal',
+    'pages',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -45,6 +46,8 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'chemphys/templates'),)
 
 LANGUAGE_CODE = 'en'
 

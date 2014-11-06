@@ -1,0 +1,41 @@
+{% load pages_menu %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+{% block head %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Электронный журнал Физико-химическая кинетика в газовой динамике">
+
+    <title>{{ title|default:"Физико-химическая кинетика в газовой динамике" }}</title>
+    <link href="//yastatic.net/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+{% endblock %}
+  </head>
+
+  <body>
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="{% url "index" %}">Физико-химическая кинетика в газовой динамике</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="">Содержание</a></li>
+            {% pages_menu %}
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <h1>{{ title }}</h1>
+      {% block content %}{{ content }}{% endblock %}
+    </div>
+
+    <script src="//yastatic.net/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//yastatic.net/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  </body>
+</html>
