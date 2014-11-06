@@ -23,7 +23,7 @@ RESOLUTIONS = (
 
 
 class BaseOrderedEntry(models.Model):
-    order = models.PositiveIntegerField()
+    order = models.PositiveIntegerField(verbose_name=_(u'Order'), blank=True)
 
     class Meta:
         abstract = True
@@ -40,17 +40,22 @@ class BaseOrderedEntry(models.Model):
         super(BaseOrderedEntry, self).save(*args, **kwargs)
 
 
-class Section(models.Model):
-    name = models.CharField(max_length=100)
-    moderators = models.ManyToManyField(settings.AUTH_USER_MODEL)
+class Section(BaseOrderedEntry):
+    name = models.CharField(max_length=100, verbose_name=_(u'Name'))
+    moderators = models.ManyToManyField(settings.AUTH_USER_MODEL, verbose_name=_(u'Moderators'), blank=True)
+
+    class Meta:
+        ordering = BaseOrderedEntry.Meta.ordering
+        verbose_name = _(u'Section')
+        verbose_name_plural = _(u'Sections')
 
 
 class StaffMember(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, verbose_name=_(u'User'))
 
-    chief_editor = models.BooleanField(default=False)
-    editor = models.BooleanField(default=False)
-    reviewer = models.BooleanField(default=False)
+    chief_editor = models.BooleanField(default=False, verbose_name=_(u'Chief editor'))
+    editor = models.BooleanField(default=False, verbose_name=_(u'Editor'))
+    reviewer = models.BooleanField(default=False, verbose_name=_(u'Reviewer'))
 
     def save(self, *args, **kwargs):
         if self.chief_editor:
@@ -59,19 +64,19 @@ class StaffMember(models.Model):
 
 
 class Organization(models.Model):
-    name = models.TextField()
-    site = models.URLField()
+    name = models.TextField(verbose_name=_(u'Name'))
+    site = models.URLField(blank=True, default='', verbose_name=_(u'Site URL'))
 
-    country = models.CharField(max_length=100)
-    city = models.CharField(max_length=100)
-    address = models.TextField(default='', blank=True)
+    country = models.CharField(max_length=100, verbose_name=_(u'Country'), blank=True, default='')
+    city = models.CharField(max_length=100, verbose_name=_(u'City'), blank=True, default='')
+    address = models.TextField(verbose_name=_(u'Address'), default='', blank=True)
 
-    obsolete = models.BooleanField(default=False)
-    previous = models.ManyToManyField('self')
+    obsolete = models.BooleanField(default=False, verbose_name=_(u'Obsolete'))
+    previous = models.ManyToManyField('self', verbose_name=_(u'Previous versions'), blank=True)
 
 
 class Author(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, verbose_name=_(u'User'))
     organizations = models.ManyToManyField(Organization, through='PositionInOrganization')  # all possible user's organizations
 
     first_name_ru = models.CharField(_('first name'), max_length=60, blank=True)
