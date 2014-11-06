@@ -43,6 +43,8 @@ class SectionAdmin(admin.ModelAdmin):
     articles_count.short_description = _(u'Articles')
 
     # TODO: check staff memebership for moderators, make select with only valid choices
+    # TODO: count all published, all in moderation separately
+    # TODO: pending reviews
 
 
 class StaffMemberAdmin(admin.ModelAdmin):
@@ -69,6 +71,7 @@ class StaffMemberAdmin(admin.ModelAdmin):
 
     # TODO: make user field read-only for editing
     # TODO: display users names instead of usernames in select widget
+    # TODO: pending reviews
 
 
 class OrganizationAdmin(admin.ModelAdmin):
@@ -132,15 +135,53 @@ class ArticleSourceInline(admin.TabularInline):
 class ArticleResolutionInline(admin.TabularInline):
     model = app_models.ArticleResolution
     extra = 0
+    raw_id_fields = ['reviews']
 
 
-class OrderedAuthorsInline(admin.TabularInline):
-    model = app_models.OrderedAuthors
+class ArticleAuthorInline(admin.TabularInline):
+    model = app_models.ArticleAuthor
     extra = 0
 
 
 class ArticleAdmin(admin.ModelAdmin):
-    inlines = (OrderedAuthorsInline, ArticleSourceInline, ArticleResolutionInline)
+    search_fields = ('title', 'abstract')
+    list_filter = ('status', 'volume', 'sections')
+    list_display = ('title', 'volume', 'display_authors', 'display_reviews')
+    inlines = (ArticleAuthorInline, ArticleSourceInline, ArticleResolutionInline)
+
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if db_field.name == "sections":
+            kwargs['widget'] = forms.CheckboxSelectMultiple
+        return super(ArticleAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
+
+    def display_authors(self, obj=None):
+        if not obj:
+            return u''
+        out = []
+        for user in obj.get_authors():
+            out.append(u'<a href="%s" target="_blank">%s</a>' % (
+                reverse('admin:journal_author_change', args=[user.author]), user.get_full_name() or user.username))
+        return mark_safe(u', '.join(out))
+    display_authors.short_description = _(u'Authors')
+
+    def display_reviews(self, obj=None):
+        if not obj:
+            return u''
+        out = []
+        for review in obj.review_set.all():
+            out.append(u'<a href="%s" target="_blank">%s: %s</a>' % (
+                reverse('admin:journal_review_change', args=[review.id]),
+                review.reviewer.get_full_name() or review.reviewer.username,
+                u'%s - %s' % (review.get_status_display(),
+                              review.get_resolution_display()) if review.resolution else review.get_status_display()))
+        return mark_safe(u'<br />'.join(out))
+    display_reviews.short_description = _(u'Reviews')
+
+    # TODO:display review links in article edit page
+
+
+class ReviewFieldAdmin(admin.ModelAdmin):
+    list_display = ('name', 'field_type')
 
 
 class ReviewFileInline(admin.TabularInline):
@@ -150,6 +191,8 @@ class ReviewFileInline(admin.TabularInline):
 
 class ReviewAdmin(admin.ModelAdmin):
     inlines = [ReviewFileInline]
+    list_display = ('__unicode__', 'reviewer', 'status', 'resolution', 'date_created')
+    list_filter = ('status', 'resolution')
 
 
 class VolumeAdmin(admin.ModelAdmin):
@@ -167,5 +210,6 @@ admin.site.register(app_models.Section, SectionAdmin)
 admin.site.register(app_models.StaffMember, StaffMemberAdmin)
 admin.site.register(app_models.Author, AuthorAdmin)
 admin.site.register(app_models.Article, ArticleAdmin)
+admin.site.register(app_models.ReviewField, ReviewFieldAdmin)
 admin.site.register(app_models.Review, ReviewAdmin)
 admin.site.register(app_models.Volume, VolumeAdmin)

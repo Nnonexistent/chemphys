@@ -13,11 +13,16 @@ ARTICLE_STATUSES = (
     (4, _(u'Published')),
     (5, _(u'In rework')),
 )
+REVIEW_STATUSES = (
+    (0, _(u'Pending')),
+    (1, _(u'Unfinished')),
+    (2, _(u'Done')),
+)
 RESOLUTIONS = (
     (0, _(u'None')),
-    (1, _(u'Reject')),
-    (2, _(u'Correct')),
-    (3, _(u'Publish')),
+    (1, _(u'Rejected')),
+    (2, _(u'Rework required')),
+    (3, _(u'Approved')),
 )
 MODERATION_STATUSES = (
     (0, _(u'New')),
@@ -45,6 +50,7 @@ class ModeratedObject(models.Model):
 
 class OrderedEntry(models.Model):
     order = models.PositiveIntegerField(verbose_name=_(u'Order'), blank=True, default=0)
+    _order_lookup_field = None
 
     class Meta:
         abstract = True
@@ -52,11 +58,10 @@ class OrderedEntry(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.order:
-            # FIXME: check if we really need to construct lookup from all fk's
-            lookups = {}
-            for field in self._meta.fields:
-                if isinstance(field, models.ForeignKey):
-                    lookups[field.name, getattr(self, field.name)]
+            if self._order_lookup_field:
+                lookups = {self._order_lookup_field: getattr(self, self._order_lookup_field)}
+            else:
+                lookups = {}
             qs = self.__class__.objects.filter(**lookups)
             if self.pk:
                 qs = qs.exclude(pk=self.pk)
@@ -165,87 +170,138 @@ class PositionInOrganization(models.Model):
         verbose_name_plural = _(u'Position in organizations')
 
     def __unicode__(self):
-        return u'%s (%s)' % (self.position, self.organization)
-
-
-class PersonInOrganizations(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    organizations = models.ManyToManyField(Organization, through='OrderedOrganizations')
-
-
-class OrderedOrganizations(OrderedEntry):
-    person = models.ForeignKey(PersonInOrganizations)
-    organization = models.ForeignKey(Organization)
-
-    class Meta:
-        unique_together = [('person', 'organization')]
-        ordering = OrderedEntry.Meta.ordering
+        return u'%s (%s, %s)' % (self.user.get_full_name() or self.user, self.position, self.organization)
 
 
 class Article(models.Model):
-    authors = models.ManyToManyField(PersonInOrganizations, through='OrderedAuthors')
+    status = models.PositiveSmallIntegerField(default=0, choices=ARTICLE_STATUSES, verbose_name=_(u'Status'))
+    date_in = models.DateTimeField(default=timezone.now, verbose_name=_(u'Date in'))
+    date_published = models.DateTimeField(null=True, blank=True, verbose_name=_(u'Publish date'))
+    old_number = models.SmallIntegerField(null=True, blank=True, verbose_name=_(u'Old number'), help_text=_(u'to link consistency with old articles'))
 
-    status = models.PositiveSmallIntegerField(default=0, choices=ARTICLE_STATUSES)
-    date_in = models.DateField(default=timezone.now)
-    date_out = models.DateField(null=True, blank=True)
-    old_number = models.SmallIntegerField(null=True, blank=True)
+    title = models.TextField(verbose_name=_(u'Title'))
+    abstract = models.TextField(verbose_name=_(u'Abstract'))
+    content = models.FileField(verbose_name=_(u'Content'), upload_to='published', default='', blank=True)
 
-    title = models.TextField()
-    abstract = models.TextField()
-    content = models.TextField()
     volume = models.ForeignKey('Volume', null=True, blank=True)
-    sections = models.ManyToManyField('Section')
+    sections = models.ManyToManyField('Section', blank=True)
 
+    class Meta:
+        ordering = ['date_in']
+        verbose_name = _(u'Article')
+        verbose_name_plural = _(u'Articles')
+
+    def __unicode__(self):
+        return self.title
+
+    def get_authors(self):
+        authors = []
+        for aa in self.articleauthor_set.all():
+            user = aa.position.user
+            if user not in authors:
+                authors.append(user)
+        return authors
+
+
+class ArticleAuthor(OrderedEntry):
+    article = models.ForeignKey(Article, verbose_name=Article._meta.verbose_name)
+    position = models.ForeignKey(PositionInOrganization, verbose_name=_(u'Author'))
+
+    _order_lookup_field = 'article'
+
+    class Meta:
+        verbose_name = _(u'Article author')
+        verbose_name_plural = _(u'Article authors')
+        ordering = OrderedEntry.Meta.ordering
+        unique_together = [('article', 'position')]
+
+    def __unicode__(self):
+        return unicode(self.position)
+    
 
 class ArticleSource(models.Model):
-    article = models.ForeignKey(Article)
-    file = models.FileField(upload_to='sources')
+    article = models.ForeignKey(Article, verbose_name=Article._meta.verbose_name)
+
+    date_created = models.DateTimeField(default=timezone.now, verbose_name=_(u'Date created'))
+    file = models.FileField(upload_to='sources', verbose_name=_(u'File'))
     comment = models.TextField(default='', blank=True, verbose_name=_(u'Staff comment'))
+
+    class Meta:
+        ordering = ['date_created']
+        verbose_name = _(u'Article source')
+        verbose_name_plural = _(u'Article sources')
+
+    def __unicode__(self):
+        return _(u'Source of %s') % self.article
 
 
 class ArticleResolution(models.Model):
-    article = models.ForeignKey(Article)
-    reviews = models.ManyToManyField('Review')
+    article = models.ForeignKey(Article, verbose_name=Article._meta.verbose_name)
 
-    date_created = models.DateTimeField(default=timezone.now)
-    status = models.PositiveSmallIntegerField(choices=RESOLUTIONS)
-    text = models.TextField()
-
-    class Meta:
-        ordering = ['date_created', ]
-    
-
-class OrderedAuthors(OrderedEntry):
-    article = models.ForeignKey(Article)
-    person_in_org = models.ForeignKey(PersonInOrganizations)
+    date_created = models.DateTimeField(default=timezone.now, verbose_name=_(u'Date created'))
+    reviews = models.ManyToManyField('Review', verbose_name=_(u'Reviews'))
+    status = models.PositiveSmallIntegerField(choices=RESOLUTIONS, verbose_name=_(u'Status'))
+    text = models.TextField(verbose_name=_(u'Text'))
 
     class Meta:
-        unique_together = [('article', 'person_in_org')]
-        ordering = OrderedEntry.Meta.ordering
+        ordering = ['date_created']
+        verbose_name = _(u'Article resolution')
+        verbose_name_plural = _(u'Article resolutions')
+
+    def __unicode__(self):
+        return _(u'Resolution for %s') % self.article
 
 
 class ReviewField(OrderedEntry):
-    field_type = models.PositiveSmallIntegerField(choices=REVIEW_FIELD_TYPES)
-    name = models.CharField(max_length=64)
-    description = models.TextField(default='', blank=True)
-    choices = models.TextField(default='', blank=True)
+    field_type = models.PositiveSmallIntegerField(choices=REVIEW_FIELD_TYPES, verbose_name=_(u'Field type'))
+    name = models.CharField(max_length=64, verbose_name=_(u'Name'))
+    description = models.TextField(default='', blank=True, verbose_name=_(u'Description'))
+    choices = models.TextField(default='', blank=True, verbose_name=_(u'Choices'))
+
+    class Meta:
+        ordering = OrderedEntry.Meta.ordering
+        verbose_name = _(u'Review field')
+        verbose_name_plural = _(u'Review fields')
+
+    def __unicode__(self):
+        return self.name
 
 
 class Review(models.Model):
-    article = models.ForeignKey(Article)
-    reviewer = models.ForeignKey(settings.AUTH_USER_MODEL)
-    date_created = models.DateTimeField(default=timezone.now)
+    article = models.ForeignKey(Article, verbose_name=Article._meta.verbose_name)
+    reviewer = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_(u'Reviewer'))
+    status = models.PositiveSmallIntegerField(choices=REVIEW_STATUSES, default=0, verbose_name=_(u'Status'))
+    date_created = models.DateTimeField(default=timezone.now, verbose_name=_(u'Created'))
 
-    field_values = models.TextField(default='', editable=False)
+    field_values = models.TextField(default='', editable=False, verbose_name=_(u'Field values'))
 
-    comment_for_authors = models.TextField(default=u'', blank=True)
-    comment_for_editors = models.TextField(default=u'', blank=True)
-    resolution = models.PositiveSmallIntegerField(choices=RESOLUTIONS, default=0)
+    comment_for_authors = models.TextField(default=u'', blank=True, verbose_name=_(u'Comment for authors'))
+    comment_for_editors = models.TextField(default=u'', blank=True, verbose_name=_(u'Comment for editors'))
+    resolution = models.PositiveSmallIntegerField(choices=RESOLUTIONS, default=0, verbose_name=_(u'Resolution'))
+
+    # TODO: review - article versioning?
+
+    class Meta:
+        ordering = ['date_created']
+        verbose_name = _(u'Review')
+        verbose_name_plural = _(u'Reviews')
+
+    def __unicode__(self):
+        return _(u'Review for %s') % self.article
 
 
 class ReviewFile(models.Model):
-    review = models.ForeignKey(Review)
-    file = models.FileField(upload_to='reviews')
+    review = models.ForeignKey(Review, verbose_name=Review._meta.verbose_name)
+    file = models.FileField(upload_to='reviews', verbose_name=_(u'File'))
+    comment = models.TextField(default='', blank=True, verbose_name=_(u'Comment'))
+
+    class Meta:
+        ordering = ['id']
+        verbose_name = _(u'Review file')
+        verbose_name_plural = _(u'Review files')
+
+    def unicode(self):
+        return _(u'File for review for %s') % self.review.article
 
 
 class Volume(OrderedEntry):
