@@ -10,7 +10,7 @@ ARTICLE_STATUSES = (
     (1, _(u'Rejected')),
     (2, _(u'In review')),
     (3, _(u'Reviewed')),
-    (4, _(u'Published')),
+    (10, _(u'Published')),
     (5, _(u'In rework')),
 )
 REVIEW_STATUSES = (
@@ -315,3 +315,7 @@ class Volume(OrderedEntry):
 
     def __unicode__(self):
         return ugettext(u'%(title)s, %(year)s year') % self.__dict__
+
+    @models.permalink
+    def get_absolute_url(self):
+        return 'show_volume', [self.id]

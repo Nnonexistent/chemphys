@@ -1,4 +1,4 @@
-{% load pages_menu %}
+{% load pages_menu journal_tags %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -24,8 +24,13 @@
           <a class="navbar-brand" href="{% url "index" %}">Физико-химическая кинетика в газовой динамике</a>
         </div>
         <ul class="nav navbar-nav">
-            <li><a href="">Содержание</a></li>
-            {% pages_menu %}
+          <li class="dropdown">
+            <a href="{% url "show_volumes" %}" class="dropdown-toggle" data-toggle="dropdown">Содержание <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              {% volumes_menu %}
+            </ul>
+          </li>
+          {% pages_menu %}
         </ul>
       </div>
     </nav>

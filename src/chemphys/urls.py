@@ -5,6 +5,8 @@ urlpatterns = patterns(
     '',  # prefix
 
     url(r'^$', 'journal.views.index', name='index'),
+    url(r'^volumes/$', 'journal.views.show_volumes', name='show_volumes'),
+    url(r'^volumes/(\d+)/$', 'journal.views.show_volume', name='show_volume'),
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^([\w-]+)/$', 'pages.views.pages_page', name='pages_page'),
