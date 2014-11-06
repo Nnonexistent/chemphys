@@ -105,6 +105,7 @@ class StaffMember(models.Model):
 
 class Organization(ModeratedObject):
     name = models.TextField(verbose_name=_(u'Name'))
+    short_name = models.CharField(max_length=32, verbose_name=_(u'Short name'), help_text=_(u'for admin site'), default='', blank=True)
     alt_names = models.TextField(verbose_name=_(u'Alternative names'), help_text=_(u'one per line'), default='', blank=True)
 
     site = models.URLField(blank=True, default='', verbose_name=_(u'Site URL'))

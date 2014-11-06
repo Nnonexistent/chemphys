@@ -103,6 +103,7 @@ class LocalizedNameInline(admin.TabularInline):
 class AuthorAdmin(admin.ModelAdmin):
     list_display = ('display_user', 'moderation_status')
     list_filter = ['moderation_status']
+    search_fields = ('user__username', 'user__last_name', 'user__localizedname__last_name')
 
     def display_user(self, obj=None):
         if obj:
@@ -122,6 +123,9 @@ class AuthorAdmin(admin.ModelAdmin):
         
         for formset, inline in super(AuthorAdmin, self).get_formsets_with_inlines(request, obj):
             yield formset, inline
+
+    # TODO: organization list in list_display
+    # TODO: article count (published, new etc)
 
     # TODO: make user field read-only for editing
     # TODO: display users names instead of usernames in select widget
@@ -149,6 +153,8 @@ class ArticleAdmin(admin.ModelAdmin):
     list_display = ('title', 'volume', 'display_authors', 'display_reviews')
     inlines = (ArticleAuthorInline, ArticleSourceInline, ArticleResolutionInline)
 
+    # TODO: search by author names
+
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == "sections":
             kwargs['widget'] = forms.CheckboxSelectMultiple
@@ -160,7 +166,7 @@ class ArticleAdmin(admin.ModelAdmin):
         out = []
         for user in obj.get_authors():
             out.append(u'<a href="%s" target="_blank">%s</a>' % (
-                reverse('admin:journal_author_change', args=[user.author]), user.get_full_name() or user.username))
+                reverse('admin:journal_author_change', args=[user.author.id]), user.get_full_name() or user.username))
         return mark_safe(u', '.join(out))
     display_authors.short_description = _(u'Authors')
 
