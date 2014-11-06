@@ -46,7 +46,7 @@ DATABASES = {
     }
 }
 
-LANGUAGE_CODE = 'ru'
+LANGUAGE_CODE = 'en'
 
 TIME_ZONE = 'Europe/Moscow'
 USE_TZ = True
