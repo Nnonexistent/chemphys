@@ -40,6 +40,12 @@ LANG_CODES = (
     ('ru', _('Russian')),
     ('en', _('English')),
 )
+ATTACH_TYPES = (
+    (0, _(u'Generic')),
+    (1, _(u'Image')),
+    (2, _(u'Video')),
+)
+
 
 class ModeratedObject(models.Model):
     moderation_status = models.PositiveSmallIntegerField(choices=MODERATION_STATUSES, default=0, verbose_name=_(u'Moderation status'))
@@ -140,8 +146,9 @@ class Author(ModeratedObject):
 class LocalizedName(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_(u'User'))
     lang = models.CharField(max_length=2, choices=LANG_CODES, verbose_name=_(u'Language'))
-    first_name = models.CharField(_('first name'), max_length=60, blank=True)
-    last_name = models.CharField(_('last name'), max_length=60, blank=True)
+
+    first_name = models.CharField(_('First name'), max_length=60, blank=True)
+    last_name = models.CharField(_('Last name'), max_length=60, blank=True)
 
     class Meta:
         ordering = ('user', 'lang')
@@ -180,8 +187,6 @@ class Article(models.Model):
     date_published = models.DateTimeField(null=True, blank=True, verbose_name=_(u'Publish date'))
     old_number = models.SmallIntegerField(null=True, blank=True, verbose_name=_(u'Old number'), help_text=_(u'to link consistency with old articles'))
 
-    title = models.TextField(verbose_name=_(u'Title'))
-    abstract = models.TextField(verbose_name=_(u'Abstract'))
     content = models.FileField(verbose_name=_(u'Content'), upload_to='published', default='', blank=True)
 
     volume = models.ForeignKey('Volume', null=True, blank=True)
@@ -203,6 +208,33 @@ class Article(models.Model):
                 authors.append(user)
         return authors
 
+    @property
+    def title(self):
+        try:
+            return self.localizedarticlecontent_set.get(lang=settings.LANGUAGE_CODE).title
+        except LocalizedArticleContent.DoesNotExist:
+            try:
+                return self.localizedarticlecontent_set.all()[0].title
+            except IndexError:
+                return u'Article %s' % self.id
+
+
+class LocalizedArticleContent(models.Model):
+    article = models.ForeignKey(Article, verbose_name=Article._meta.verbose_name)
+    lang = models.CharField(max_length=2, choices=LANG_CODES, verbose_name=_(u'Language'))
+
+    title = models.TextField(verbose_name=_(u'Title'))
+    abstract = models.TextField(verbose_name=_(u'Abstract'))
+
+    class Meta:
+        ordering = ('article', 'lang')
+        verbose_name = _(u'Localized article content')
+        verbose_name_plural = _(u'Localized article content')
+        unique_together = [('article', 'lang')]
+
+    def __unicode__(self):
+        return _(u'Loclized content for %s') % self.article
+
 
 class ArticleAuthor(OrderedEntry):
     article = models.ForeignKey(Article, verbose_name=Article._meta.verbose_name)
@@ -218,7 +250,25 @@ class ArticleAuthor(OrderedEntry):
 
     def __unicode__(self):
         return unicode(self.position)
-    
+
+
+class ArticleAttach(OrderedEntry):
+    article = models.ForeignKey(Article, verbose_name=Article._meta.verbose_name)
+    type = models.PositiveSmallIntegerField(choices=ATTACH_TYPES, verbose_name=_(u'Attach type'), default=0)
+    file = models.FileField(upload_to='attaches', verbose_name=_(u'File'))
+    comment = models.TextField(default='', blank=True, verbose_name=_(u'Comment'))
+    date_created = models.DateTimeField(default=timezone.now, verbose_name=_(u'Date created'))
+
+    _order_lookup_field = 'article'
+
+    class Meta:
+        verbose_name = _(u'Article attach')
+        verbose_name_plural = _(u'Article attaches')
+        ordering = OrderedEntry.Meta.ordering
+
+    def __unicode__(self):
+        return _(u'Attach for %s') % self.article
+
 
 class ArticleSource(models.Model):
     article = models.ForeignKey(Article, verbose_name=Article._meta.verbose_name)

@@ -147,11 +147,21 @@ class ArticleAuthorInline(admin.TabularInline):
     extra = 0
 
 
+class ArticleAttachInline(admin.TabularInline):
+    model = app_models.ArticleAttach
+    extra = 0
+
+
+class LocalizedArticleContentInline(admin.TabularInline):
+    model = app_models.LocalizedArticleContent
+    extra = 0
+
+
 class ArticleAdmin(admin.ModelAdmin):
     search_fields = ('title', 'abstract')
     list_filter = ('status', 'volume', 'sections')
     list_display = ('title', 'volume', 'display_authors', 'display_reviews')
-    inlines = (ArticleAuthorInline, ArticleSourceInline, ArticleResolutionInline)
+    inlines = (LocalizedArticleContentInline, ArticleAuthorInline, ArticleSourceInline, ArticleAttachInline, ArticleResolutionInline)
 
     # TODO: search by author names
 
