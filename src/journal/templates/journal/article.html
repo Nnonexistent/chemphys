@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+
+{% block title %}{% endblock %}
+
+{% block content %}
+<div role="tabpanel">
+
+  <ul class="nav nav-tabs" role="tablist">
+    {% for entry in article.localizedarticlecontent_set.all %}
+    <li role="presentation"{% if forloop.first %} class="active"{% endif %}><a href="#{{ entry.lang }}_overview" aria-controls="{{ entry.lang }}_overview" role="tab" data-toggle="tab">Overview [{{ entry.get_lang_display }}]</a></li>
+    {% endfor %}
+    <li role="presentation"><a href="#media" aria-controls="media" role="tab" data-toggle="tab">Media</a></li>
+    <li role="presentation"><a href="#refs" aria-controls="refs" role="tab" data-toggle="tab">References</a></li>
+  </ul>
+
+
+  <div class="tab-content">
+
+    {% for entry in article.localizedarticlecontent_set.all %}
+    <div role="tabpanel" class="tab-pane{% if forloop.first %} active{% endif %}" id="{{ entry.lang }}_overview">
+        <h1 class="h3">{{ entry.title }}</h1>
+        {% for aa in article.articleauthor_set.all %}
+            {{ aa }}{% if not forloop.last%}, {% endif %}
+        {% endfor %}
+        <hr />
+        <div class="row">
+            <div class="col-lg-8 text-justify">
+            {{ entry.abstract|linebreaks }}
+            </div>
+            <div class="col-lg-4">
+            <a href="{{ article.content.url }}" class="btn btn-primary">View article</a><br />
+            Volume: <a href="{{ article.volume.get_absolute_url }}">{{ article.volume }}</a><br />
+            Permanent link: <a href="{{ link }}">{{ link }}</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <div role="tabpanel" class="tab-pane" id="media">
+        <ul>
+        {% for entry in article.articleattach_set.all %}
+            <li><a href="{{ entry.file.url }}">{{ entry.comment }}</a></li>
+        {% endfor %}
+        </ul>
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="refs">
+        TODO
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}

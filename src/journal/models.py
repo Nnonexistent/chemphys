@@ -200,6 +200,10 @@ class Article(models.Model):
     def __unicode__(self):
         return self.title
 
+    @models.permalink
+    def get_absolute_url(self):
+        return 'show_article', [self.id]
+
     def get_authors(self):
         authors = []
         for aa in self.articleauthor_set.all():
