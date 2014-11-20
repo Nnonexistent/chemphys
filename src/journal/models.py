@@ -169,7 +169,7 @@ class LocalizedName(models.Model):
 
 class PositionInOrganization(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_(u'User'))
-    position = models.CharField(max_length=200, verbose_name=_(u'Position'))
+    position = models.CharField(max_length=200, verbose_name=_(u'Position'), default='', blank=True)
     organization = models.ForeignKey(Organization, verbose_name=_(u'Organization'))
 
     class Meta:
