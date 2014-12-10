@@ -1,4 +1,4 @@
-{% load pages_menu journal_tags %}
+{% load i18n pages_menu journal_tags %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,24 +8,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Электронный журнал Физико-химическая кинетика в газовой динамике">
 
-    <title>{{ title|default:"Физико-химическая кинетика в газовой динамике" }}</title>
+    <title>{{ title|default:_("Физико-химическая кинетика в газовой динамике") }}</title>
     <link href="//yastatic.net/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
     <!--[if lt IE 9]>
       <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+    .langs {
+        margin-right: 1em;
+    }
+    .langs input {
+        display: block;
+        margin: 2px;
+        width: 80px;
+    }
+    </style>
 {% endblock %}
   </head>
 
   <body>
     <nav class="navbar navbar-default" role="navigation">
       <div class="container">
+        <div class="nav navbar-nav langs">
+        {% get_available_languages as languages %}
+        {% for lang_code, lang_name in languages %}
+        <form action="{% url 'set_language' %}" method="post">
+            {% csrf_token %}
+            <input name="next" type="hidden" value="{{ request.get_full_path }}" />
+            <input name="language" type="hidden" value="{{ lang_code }}" />
+            <input type="submit" value="{{ lang_name }}" class="btn btn-xs btn-{% if lang_code == LANGUAGE_CODE %}primary{% else %}default{% endif %}" />
+        </form>
+        {% endfor %}
+        </div>
         <div class="navbar-header">
-          <a class="navbar-brand" href="{% url "index" %}">Физико-химическая кинетика в газовой динамике</a>
+          <a class="navbar-brand" href="{% url "index" %}">{% trans "Физико-химическая кинетика в газовой динамике" %}</a>
         </div>
         <ul class="nav navbar-nav">
           <li class="dropdown">
-            <a href="{% url "show_volumes" %}" class="dropdown-toggle" data-toggle="dropdown">Содержание <span class="caret"></span></a>
+            <a href="{% url "show_volumes" %}" class="dropdown-toggle" data-toggle="dropdown">{% trans "Содержание" %} <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
               {% volumes_menu %}
             </ul>

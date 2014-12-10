@@ -36,10 +36,6 @@ REVIEW_FIELD_TYPES = (
     (3, _(u'Text field')),
     (4, _(u'Checkbox')),
 )
-LANG_CODES = (
-    ('ru', _('Russian')),
-    ('en', _('English')),
-)
 ATTACH_TYPES = (
     (0, _(u'Generic')),
     (1, _(u'Image')),
@@ -145,7 +141,7 @@ class Author(ModeratedObject):
 
 class LocalizedName(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_(u'User'))
-    lang = models.CharField(max_length=2, choices=LANG_CODES, verbose_name=_(u'Language'))
+    lang = models.CharField(max_length=2, choices=settings.LANGUAGES, verbose_name=_(u'Language'))
 
     first_name = models.CharField(_('First name'), max_length=60, blank=True)
     last_name = models.CharField(_('Last name'), max_length=60, blank=True)
@@ -225,7 +221,7 @@ class Article(models.Model):
 
 class LocalizedArticleContent(models.Model):
     article = models.ForeignKey(Article, verbose_name=Article._meta.verbose_name)
-    lang = models.CharField(max_length=2, choices=LANG_CODES, verbose_name=_(u'Language'))
+    lang = models.CharField(max_length=2, choices=settings.LANGUAGES, verbose_name=_(u'Language'))
 
     title = models.TextField(verbose_name=_(u'Title'))
     abstract = models.TextField(verbose_name=_(u'Abstract'))
