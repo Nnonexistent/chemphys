@@ -74,10 +74,16 @@ class StaffMemberAdmin(admin.ModelAdmin):
     # TODO: pending reviews
 
 
+class OrganizationLocalizedContentInline(admin.StackedInline):
+    extra = 0
+    model = app_models.OrganizationLocalizedContent
+
+
 class OrganizationAdmin(admin.ModelAdmin):
-    list_display = ('name', 'moderation_status', 'country', 'city', 'obsolete', 'display_site')
+    inlines = [OrganizationLocalizedContentInline]
+    list_display = ('__unicode__', 'moderation_status', 'obsolete', 'display_site')
     list_filter = ('moderation_status', 'obsolete')
-    search_fields = ('name', 'alt_names', 'previous__name', 'previous__alt_names')
+    search_fields = ('organizationlocalizedcontent__name', 'alt_names', 'previous__organizationlocalizedcontent__name', 'previous__alt_names')
     raw_id_fields = ['previous']
 
     def display_site(self, obj=None):

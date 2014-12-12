@@ -4,6 +4,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 from django.conf import settings
 
+from utils.localized import BaseLocalizedObject, BaseLocalizedContent
+
 
 ARTICLE_STATUSES = (
     (0, _(u'New')),
@@ -105,26 +107,50 @@ class StaffMember(models.Model):
         return self.user.get_full_name() or self.user.username
 
 
-class Organization(ModeratedObject):
-    name = models.TextField(verbose_name=_(u'Name'))
+class Organization(ModeratedObject, BaseLocalizedObject):
     short_name = models.CharField(max_length=32, verbose_name=_(u'Short name'), help_text=_(u'for admin site'), default='', blank=True)
     alt_names = models.TextField(verbose_name=_(u'Alternative names'), help_text=_(u'one per line'), default='', blank=True)
 
     site = models.URLField(blank=True, default='', verbose_name=_(u'Site URL'))
-    country = models.CharField(max_length=100, verbose_name=_(u'Country'), blank=True, default='')
-    city = models.CharField(max_length=100, verbose_name=_(u'City'), blank=True, default='')
-    address = models.TextField(verbose_name=_(u'Address'), default='', blank=True)
 
     obsolete = models.BooleanField(default=False, verbose_name=_(u'Obsolete'))
     previous = models.ManyToManyField('self', verbose_name=_(u'Previous versions'), blank=True)
 
     class Meta:
-        ordering = ['name']
+        ordering = ['short_name']
         verbose_name = _(u'Organization')
         verbose_name_plural = _(u'Organizations')
 
     def __unicode__(self):
         return self.name
+
+    @property
+    def name(self):
+        return self.get_localized('name') or ''
+
+    @property
+    def address(self):
+        return self.get_localized('address') or ''
+
+    @property
+    def country(self):
+        return self.get_localized('country') or ''
+
+    @property
+    def city(self):
+        return self.get_localized('city') or ''
+
+
+class OrganizationLocalizedContent(BaseLocalizedContent):
+    org = models.ForeignKey(Organization)
+
+    name = models.TextField(verbose_name=_(u'Name'))
+    country = models.CharField(max_length=100, verbose_name=_(u'Country'), blank=True, default='')
+    city = models.CharField(max_length=100, verbose_name=_(u'City'), blank=True, default='')
+    address = models.TextField(verbose_name=_(u'Address'), default='', blank=True)
+
+    class Meta:
+        unique_together = [('lang', 'org')]
 
 
 class Author(ModeratedObject):
@@ -177,7 +203,7 @@ class PositionInOrganization(models.Model):
         return u'%s (%s, %s)' % (self.user.get_full_name() or self.user, self.position, self.organization)
 
 
-class Article(models.Model):
+class Article(BaseLocalizedObject):
     status = models.PositiveSmallIntegerField(default=0, choices=ARTICLE_STATUSES, verbose_name=_(u'Status'))
     date_in = models.DateTimeField(default=timezone.now, verbose_name=_(u'Date in'))
     date_published = models.DateTimeField(null=True, blank=True, verbose_name=_(u'Publish date'))
@@ -194,7 +220,7 @@ class Article(models.Model):
         verbose_name_plural = _(u'Articles')
 
     def __unicode__(self):
-        return self.title
+        return self.title or ((_(u'Article %s') % self.id) if self.id else _(u'New article'))
 
     @models.permalink
     def get_absolute_url(self):
@@ -210,21 +236,23 @@ class Article(models.Model):
 
     @property
     def title(self):
-        try:
-            return self.localizedarticlecontent_set.get(lang=settings.LANGUAGE_CODE).title
-        except LocalizedArticleContent.DoesNotExist:
-            try:
-                return self.localizedarticlecontent_set.all()[0].title
-            except IndexError:
-                return u'Article %s' % self.id
+        return self.get_localized('title') or ''
+
+    @property
+    def abstract(self):
+        return self.get_localized('abstract') or ''
+
+    @property
+    def keywords(self):
+        return self.get_localized('keywords') or ''
 
 
-class LocalizedArticleContent(models.Model):
+class LocalizedArticleContent(BaseLocalizedContent):
     article = models.ForeignKey(Article, verbose_name=Article._meta.verbose_name)
-    lang = models.CharField(max_length=2, choices=settings.LANGUAGES, verbose_name=_(u'Language'))
 
     title = models.TextField(verbose_name=_(u'Title'))
-    abstract = models.TextField(verbose_name=_(u'Abstract'))
+    abstract = models.TextField(verbose_name=_(u'Abstract'), default=u'', blank=True)
+    keywords = models.TextField(verbose_name=_(u'Keywords'), default=u'', blank=True)
 
     class Meta:
         ordering = ('article', 'lang')
@@ -329,8 +357,6 @@ class Review(models.Model):
     comment_for_authors = models.TextField(default=u'', blank=True, verbose_name=_(u'Comment for authors'))
     comment_for_editors = models.TextField(default=u'', blank=True, verbose_name=_(u'Comment for editors'))
     resolution = models.PositiveSmallIntegerField(choices=RESOLUTIONS, default=0, verbose_name=_(u'Resolution'))
-
-    # TODO: review - article versioning?
 
     class Meta:
         ordering = ['date_created']
