@@ -46,9 +46,9 @@
         </div>
         <ul class="nav navbar-nav">
           <li class="dropdown">
-            <a href="{% url "show_volumes" %}" class="dropdown-toggle" data-toggle="dropdown">{% trans "Содержание" %} <span class="caret"></span></a>
+            <a href="{% url "show_issues" %}" class="dropdown-toggle" data-toggle="dropdown">{% trans "Contents" %} <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-              {% volumes_menu %}
+              {% issues_menu %}
             </ul>
           </li>
           {% pages_menu %}

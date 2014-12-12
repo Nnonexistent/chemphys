@@ -21,7 +21,7 @@ def show_issue(request, id):
     return render(request, 'journal/issue.html', {
         'title': unicode(issue),
         'issue': issue,
-        'articles': vol.article_set.filter(status=10),
+        'articles': issue.article_set.filter(status=10),
     })
 
 
