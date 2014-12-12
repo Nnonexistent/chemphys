@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <ul>
+    {% for issue in issues %}
+        <li><a href="{{ issue.get_absolute_url }}">{{ issue }}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}

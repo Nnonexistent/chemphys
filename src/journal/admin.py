@@ -165,8 +165,8 @@ class LocalizedArticleContentInline(admin.TabularInline):
 
 class ArticleAdmin(admin.ModelAdmin):
     search_fields = ('title', 'abstract')
-    list_filter = ('status', 'volume', 'sections')
-    list_display = ('title', 'volume', 'display_authors', 'display_reviews')
+    list_filter = ('status', 'issue', 'sections')
+    list_display = ('title', 'issue', 'display_authors', 'display_reviews')
     inlines = (LocalizedArticleContentInline, ArticleAuthorInline, ArticleSourceInline, ArticleAttachInline, ArticleResolutionInline)
 
     # TODO: search by author names
@@ -217,7 +217,7 @@ class ReviewAdmin(admin.ModelAdmin):
     list_filter = ('status', 'resolution')
 
 
-class VolumeAdmin(admin.ModelAdmin):
+class IssueAdmin(admin.ModelAdmin):
     list_display = ('__unicode__', 'articles_count')
 
     def articles_count(self, obj=None):
@@ -234,4 +234,4 @@ admin.site.register(app_models.Author, AuthorAdmin)
 admin.site.register(app_models.Article, ArticleAdmin)
 admin.site.register(app_models.ReviewField, ReviewFieldAdmin)
 admin.site.register(app_models.Review, ReviewAdmin)
-admin.site.register(app_models.Volume, VolumeAdmin)
+admin.site.register(app_models.Issue, IssueAdmin)

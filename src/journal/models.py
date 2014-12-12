@@ -211,7 +211,7 @@ class Article(BaseLocalizedObject):
 
     content = models.FileField(verbose_name=_(u'Content'), upload_to='published', default='', blank=True)
 
-    volume = models.ForeignKey('Volume', null=True, blank=True)
+    issue = models.ForeignKey('Issue', null=True, blank=True)
     sections = models.ManyToManyField('Section', blank=True)
 
     class Meta:
@@ -381,18 +381,22 @@ class ReviewFile(models.Model):
         return _(u'File for review for %s') % self.review.article
 
 
-class Volume(OrderedEntry):
-    title = models.CharField(max_length=100, verbose_name=_(u'Title'))
+class Issue(OrderedEntry):
+    number = models.CharField(max_length=100, verbose_name=_(u'Number'), blank=True, null=True)
+    volume = models.PositiveIntegerField(verbose_name=_(u'Volume'))
     year = models.PositiveIntegerField(verbose_name=_(u'Year'))
 
     class Meta:
-        verbose_name = _(u'Volume')
-        verbose_name_plural = _(u'Volumes')
+        verbose_name = _(u'Issue')
+        verbose_name_plural = _(u'Issue')
         ordering = ['order']
 
     def __unicode__(self):
-        return ugettext(u'%(title)s, %(year)s year') % self.__dict__
+        if self.number:
+            return ugettext(u'Volume %(volume)s, issue %(number)s, %(year)s year') % self.__dict__
+        else:
+            return ugettext(u'Volume %(volume)s, %(year)s year') % self.__dict__
 
     @models.permalink
     def get_absolute_url(self):
-        return 'show_volume', [self.id]
+        return 'show_issue', [self.id]

@@ -8,8 +8,8 @@ urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls)),
 
     url(r'^$', 'journal.views.index', name='index'),
-    url(r'^volumes/$', 'journal.views.show_volumes', name='show_volumes'),
-    url(r'^volumes/(\d+)/$', 'journal.views.show_volume', name='show_volume'),
+    url(r'^issues/$', 'journal.views.show_issues', name='show_issues'),
+    url(r'^issues/(\d+)/$', 'journal.views.show_issue', name='show_issue'),
     url(r'^articles/(\d+)/$', 'journal.views.show_article', name='show_article'),
 
     url(r'^([\w-]+)/$', 'pages.views.pages_page', name='pages_page'),
