@@ -25,6 +25,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'journal',
     'pages',
+    'mailauth',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -60,7 +61,12 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.messages.context_processors.messages"
 )
 
-TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'chemphys/templates'),)
+TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'chemphys', 'templates'),)
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'mailauth.backend.MailAuthBackend',
+)
 
 LANGUAGES = (
     ('ru', _('Russian')),
@@ -74,6 +80,7 @@ USE_TZ = True
 USE_I18N = True
 USE_L10N = True
 
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'chemphys', 'static'), )
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 

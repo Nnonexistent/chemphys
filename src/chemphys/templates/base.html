@@ -1,4 +1,4 @@
-{% load i18n pages_menu journal_tags %}
+{% load i18n pages_menu journal_tags static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,38 +9,24 @@
     <meta name="description" content="Электронный журнал Физико-химическая кинетика в газовой динамике">
 
     <title>{{ title|default:_("Физико-химическая кинетика в газовой динамике") }}</title>
-    <link href="//yastatic.net/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet" media="screen">
     <!--[if lt IE 9]>
       <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <style type="text/css">
-    .langs {
-        margin-right: 1em;
-    }
     .langs input {
         display: block;
         margin: 2px;
-        width: 80px;
+        width: 100px;
     }
     </style>
 {% endblock %}
   </head>
 
   <body>
-    <nav class="navbar navbar-default" role="navigation">
+    <nav class="navbar navbar-inverse" role="navigation">
       <div class="container">
-        <div class="nav navbar-nav langs">
-        {% get_available_languages as languages %}
-        {% for lang_code, lang_name in languages %}
-        <form action="{% url 'set_language' %}" method="post">
-            {% csrf_token %}
-            <input name="next" type="hidden" value="{{ request.get_full_path }}" />
-            <input name="language" type="hidden" value="{{ lang_code }}" />
-            <input type="submit" value="{{ lang_name }}" class="btn btn-xs btn-{% if lang_code == LANGUAGE_CODE %}primary{% else %}default{% endif %}" />
-        </form>
-        {% endfor %}
-        </div>
         <div class="navbar-header">
           <a class="navbar-brand" href="{% url "index" %}">{% trans "Физико-химическая кинетика в газовой динамике" %}</a>
         </div>
@@ -53,6 +39,20 @@
           </li>
           {% pages_menu %}
         </ul>
+        <form class="navbar-form navbar-left">
+            <input type="text" class="form-control col-lg-8" placeholder="{% trans "Search" %}">
+        </form>
+        <div class="nav navbar-nav langs">
+        {% get_available_languages as languages %}
+        {% for lang_code, lang_name in languages %}
+        <form action="{% url 'set_language' %}" method="post">
+            {% csrf_token %}
+            <input name="next" type="hidden" value="{{ request.get_full_path }}" />
+            <input name="language" type="hidden" value="{{ lang_code }}" />
+            <input type="submit" value="{{ lang_name }}" class="btn btn-sm btn-{% if lang_code == LANGUAGE_CODE %}primary{% else %}default{% endif %}" />
+        </form>
+        {% endfor %}
+        </div>
       </div>
     </nav>
 
@@ -61,7 +61,7 @@
       {% block content %}{{ content }}{% endblock %}
     </div>
 
-    <script src="//yastatic.net/jquery/2.1.1/jquery.min.js"></script>
-    <script src="//yastatic.net/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="//yastatic.net/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//yastatic.net/bootstrap/3.3.1/js/bootstrap.min.js"></script>
   </body>
 </html>
