@@ -15,10 +15,35 @@
       <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <style type="text/css">
+    .langs {
+        padding-top: 5px;
+    }
     .langs input {
         display: block;
-        margin: 2px;
-        width: 100px;
+        margin: 4px 0;
+        width: 80px;
+    }
+    .navbar-brand span {
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 16px;
+        margin-top: -20px;
+    }
+    .navbar-brand .brand-left {
+        text-align: right;
+    }
+    .navbar-brand img {
+        display: inline;
+        margin-top: -20px;
+    }
+    .adv-search {
+        margin-top: -9px;
+        margin-bottom: -8px;
+        text-align: right;
+        display: block;
+        position: relative;
+        z-index: 10;
+        height: 17px;
     }
     </style>
 {% endblock %}
@@ -28,7 +53,11 @@
     <nav class="navbar navbar-inverse" role="navigation">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="{% url "index" %}">{% trans "Физико-химическая кинетика в газовой динамике" %}</a>
+          <a class="navbar-brand" href="{% url "index" %}">
+            <span class="brand-left">{% trans "Физико-химическая<br />кинетика" %}</span>
+            <img src="{% static "img/logo.png" %}" alt="" />
+            <span class="brand-right">{% trans "в газовой<br />динамике" %}</span>
+          </a>
         </div>
         <ul class="nav navbar-nav">
           <li class="dropdown">
@@ -39,20 +68,23 @@
           </li>
           {% pages_menu %}
         </ul>
-        <form class="navbar-form navbar-left">
-            <input type="text" class="form-control col-lg-8" placeholder="{% trans "Search" %}">
-        </form>
-        <div class="nav navbar-nav langs">
-        {% get_available_languages as languages %}
-        {% for lang_code, lang_name in languages %}
+
+        <div class="nav navbar-nav langs navbar-right">
+        {% for lang_code, lang_name in LANGUAGES %}
+        {% get_language_info for lang_code as lang %}
         <form action="{% url 'set_language' %}" method="post">
             {% csrf_token %}
             <input name="next" type="hidden" value="{{ request.get_full_path }}" />
             <input name="language" type="hidden" value="{{ lang_code }}" />
-            <input type="submit" value="{{ lang_name }}" class="btn btn-sm btn-{% if lang_code == LANGUAGE_CODE %}primary{% else %}default{% endif %}" />
+            <input type="submit" value="{{ lang.name_local }}" class="btn btn-xs btn-{% if lang_code == LANGUAGE_CODE %}primary{% else %}info{% endif %}" />
         </form>
         {% endfor %}
         </div>
+
+        <form class="navbar-form navbar-left">
+            <div class="small adv-search"><a href="">{% trans "Advanced Search" %}</a></div>
+            <input type="text" class="form-control col-lg-8" placeholder="{% trans "Search" %}">
+        </form>
       </div>
     </nav>
 
@@ -60,6 +92,18 @@
       {% block title %}<h1>{{ title }}</h1>{% endblock %}
       {% block content %}{{ content }}{% endblock %}
     </div>
+
+    <hr />
+
+    <footer class="container text-muted">
+        <p class="pull-right">Copyright© 2003&mdash;{% now 'Y' %} {% trans "Институт Механики МГУ" %}</p>
+        <p>
+        ISSN 1991-6396<br/>
+        {% trans "Свидетельство СМИ: Эл № 77-6360 от 10 июля 2002 г." %}<br/>
+        {% trans "Журнал издается с 2003 года" %}<br/>
+        {% trans "Периодичность: 4 выпуска в год" %}
+        </p>
+    </footer>
 
     <script src="//yastatic.net/jquery/2.1.3/jquery.min.js"></script>
     <script src="//yastatic.net/bootstrap/3.3.1/js/bootstrap.min.js"></script>

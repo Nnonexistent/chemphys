@@ -31,4 +31,5 @@ def show_article(request, id):
         'title': unicode(article),
         'article': article,
         'link': request.build_absolute_uri(),
+        'issue': article.issue,
     })
