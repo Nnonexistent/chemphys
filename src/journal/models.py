@@ -73,9 +73,40 @@ class OrderedEntry(models.Model):
         super(OrderedEntry, self).save(*args, **kwargs)
 
 
+# Due to changes in django 1.7 `django.contrib.auth.get_user_model` no longer works in model definition time
+def _get_user_model():
+    app_name, model_name = settings.AUTH_USER_MODEL.rsplit('.', 1)
+    app = models.get_app(app_name)
+    return getattr(app, model_name)
+
+
+class LocalizedUser(_get_user_model(), BaseLocalizedObject):
+    class Meta:
+        proxy = True
+
+    def __unicode__(self):
+        return self.get_full_name() or self.username
+
+    def get_full_name(self):
+        full_name = '%s %s' % (self.localized_first_name, self.localized_last_name)
+        return full_name.strip()
+
+    def get_short_name(self):
+        return self.localized_first_name
+
+    # We can't use `first_name` as property name because it will clash with field name
+    @property
+    def localized_first_name(self):
+        return self.get_localized('first_name') or ''
+
+    @property
+    def localized_last_name(self):
+        return self.get_localized('last_name') or ''
+
+
 class Section(OrderedEntry):
     name = models.CharField(max_length=100, verbose_name=_(u'Name'))
-    moderators = models.ManyToManyField(settings.AUTH_USER_MODEL, verbose_name=_(u'Moderators'), blank=True)
+    moderators = models.ManyToManyField(LocalizedUser, verbose_name=_(u'Moderators'), blank=True)
 
     class Meta:
         ordering = OrderedEntry.Meta.ordering
@@ -87,7 +118,7 @@ class Section(OrderedEntry):
 
 
 class StaffMember(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, verbose_name=_(u'User'))
+    user = models.OneToOneField(LocalizedUser, verbose_name=_(u'User'))
 
     chief_editor = models.BooleanField(default=False, verbose_name=_(u'Chief editor'))
     editor = models.BooleanField(default=False, verbose_name=_(u'Editor'))
@@ -154,7 +185,7 @@ class OrganizationLocalizedContent(BaseLocalizedContent):
 
 
 class Author(ModeratedObject):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, verbose_name=_(u'User'))
+    user = models.OneToOneField(LocalizedUser, verbose_name=_(u'User'))
 
     class Meta:
         ordering = ('user__last_name', 'user__first_name')
@@ -165,9 +196,8 @@ class Author(ModeratedObject):
         return self.user.get_full_name() or self.user.username
 
 
-class LocalizedName(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_(u'User'))
-    lang = models.CharField(max_length=2, choices=settings.LANGUAGES, verbose_name=_(u'Language'))
+class LocalizedName(BaseLocalizedContent):
+    user = models.ForeignKey(LocalizedUser, verbose_name=_(u'User'))
 
     first_name = models.CharField(_('First name'), max_length=60, blank=True)
     last_name = models.CharField(_('Last name'), max_length=60, blank=True)
@@ -190,7 +220,7 @@ class LocalizedName(models.Model):
 
 
 class PositionInOrganization(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_(u'User'))
+    user = models.ForeignKey(LocalizedUser, verbose_name=_(u'User'))
     position = models.CharField(max_length=200, verbose_name=_(u'Position'), default='', blank=True)
     organization = models.ForeignKey(Organization, verbose_name=_(u'Organization'))
 
@@ -348,7 +378,7 @@ class ReviewField(OrderedEntry):
 
 class Review(models.Model):
     article = models.ForeignKey(Article, verbose_name=Article._meta.verbose_name)
-    reviewer = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_(u'Reviewer'))
+    reviewer = models.ForeignKey(LocalizedUser, verbose_name=_(u'Reviewer'))
     status = models.PositiveSmallIntegerField(choices=REVIEW_STATUSES, default=0, verbose_name=_(u'Status'))
     date_created = models.DateTimeField(default=timezone.now, verbose_name=_(u'Created'))
 

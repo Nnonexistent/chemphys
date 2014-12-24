@@ -60,3 +60,4 @@ target/
 /src/db.sqlite3
 /src/static/
 /src/media/
+/src/django/

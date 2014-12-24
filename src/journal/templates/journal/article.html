@@ -5,6 +5,18 @@
 
 
 {% block content %}
+<div class="row">
+    <div class="col-lg-10">
+        <h1 class="h4">{{ article.title }}</h1>
+    </div>
+    <div class="col-lg-2">
+        <br />
+        <a href="{{ article.content.url }}" class="btn btn-primary">View article <br /><small class="text-muted">PDF, {{ article.content.size|filesizeformat }}</small></a>
+    </div>
+</div>
+
+<br />
+
 <div role="tabpanel">
 
   <ul class="nav nav-tabs" role="tablist">
@@ -20,20 +32,23 @@
 
     {% for entry in article.localizedarticlecontent_set.all %}
     <div role="tabpanel" class="tab-pane{% if forloop.first %} active{% endif %}" id="{{ entry.lang }}_overview">
-        <h1 class="h3">{{ entry.title }}</h1>
-        {% for aa in article.articleauthor_set.all %}
-            {{ aa }}{% if not forloop.last%}, {% endif %}
-        {% endfor %}
-        <hr />
+        {% if LANGUANGE_CODE != entry.lang %}<h1 class="h5">{{ entry.title }}</h1>{% endif %}
+
         <div class="row">
-            <div class="col-lg-8 text-justify">
+            <div class="col-lg-3">
+            </div>
+            <div class="col-lg-6 text-justify">
             {{ entry.abstract|linebreaks }}
             </div>
-            <div class="col-lg-4">
-            <a href="{{ article.content.url }}" class="btn btn-primary">View article <br /><small class="text-muted">PDF, {{ article.content.size|filesizeformat }}</small></a>
-            <br /><br />
-            {% trans "Issue" %}: <a href="{{ article.issue.get_absolute_url }}">{{ article.issue }}</a><br />
-            {% trans "Permanent link" %}: <a href="{{ link }}">{{ link }}</a>
+            <div class="col-lg-3">
+                <p>
+                {% blocktrans count count=article.articleauthor_set.all.count %}Author:{% plural %}Authors:{% endblocktrans %}
+                {% for aa in article.articleauthor_set.all %}
+                    <a href="" title="{{ aa.position.organization }}">{{ aa.position.user }}</a>{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+                </p>
+                <p>{% trans "Issue" %}: <a href="{{ article.issue.get_absolute_url }}">{{ article.issue }}</a></p>
+                <p>{% trans "Permanent link" %}: <a href="{{ link }}" class="text-nowrap">{{ link }}</a></p>
             </div>
         </div>
     </div>
