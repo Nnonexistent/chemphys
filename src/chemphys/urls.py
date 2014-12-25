@@ -10,7 +10,7 @@ urlpatterns = patterns(
     url(r'^$', 'journal.views.index', name='index'),
     url(r'^issues/$', 'journal.views.show_issues', name='show_issues'),
     url(r'^issues/(\d+)/$', 'journal.views.show_issue', name='show_issue'),
-    url(r'^articles/(\d+)/$', 'journal.views.show_article', name='show_article'),
+    url(r'^issues/(\d{4})-(\d+)-(\d+)/articles/(\d+)/$', 'journal.views.show_article', name='show_article'),
 
     url(r'^([\w-]+)/$', 'pages.views.pages_page', name='pages_page'),
 )

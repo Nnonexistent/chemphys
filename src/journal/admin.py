@@ -25,7 +25,14 @@ def override_formset_factory(get_real_instance):
     return OverrideInlineFormSet
 
 
-class SectionAdmin(admin.ModelAdmin):
+class JournalAdmin(admin.ModelAdmin):
+    class Media:
+        js = ('js/admin.jquery.js',
+              'js/jquery.autosize.min.js',
+              'js/admin.js')
+
+
+class SectionAdmin(JournalAdmin):
     raw_id_fields = ['moderators']
     list_display = ('name', 'display_moderators', 'articles_count')
     search_fields = ['name']
@@ -47,7 +54,7 @@ class SectionAdmin(admin.ModelAdmin):
     # TODO: pending reviews
 
 
-class StaffMemberAdmin(admin.ModelAdmin):
+class StaffMemberAdmin(JournalAdmin):
     list_display = ('display_user', 'chief_editor', 'editor', 'reviewer', 'moderated_sections')
     list_filter = ('editor', 'reviewer')
     search_fields = ('user__username', 'user__last_name')
@@ -79,7 +86,7 @@ class OrganizationLocalizedContentInline(admin.StackedInline):
     model = app_models.OrganizationLocalizedContent
 
 
-class OrganizationAdmin(admin.ModelAdmin):
+class OrganizationAdmin(JournalAdmin):
     inlines = [OrganizationLocalizedContentInline]
     list_display = ('__unicode__', 'moderation_status', 'obsolete', 'display_site')
     list_filter = ('moderation_status', 'obsolete')
@@ -106,7 +113,7 @@ class LocalizedNameInline(admin.TabularInline):
     model = app_models.LocalizedName
 
 
-class AuthorAdmin(admin.ModelAdmin):
+class AuthorAdmin(JournalAdmin):
     list_display = ('display_user', 'moderation_status')
     list_filter = ['moderation_status']
     search_fields = ('user__username', 'user__last_name', 'user__localizedname__last_name')
@@ -158,15 +165,15 @@ class ArticleAttachInline(admin.TabularInline):
     extra = 0
 
 
-class LocalizedArticleContentInline(admin.TabularInline):
+class LocalizedArticleContentInline(admin.StackedInline):
     model = app_models.LocalizedArticleContent
     extra = 0
 
 
-class ArticleAdmin(admin.ModelAdmin):
-    search_fields = ('title', 'abstract')
+class ArticleAdmin(JournalAdmin):
+    search_fields = ('title', 'abstract', 'references')
     list_filter = ('status', 'issue', 'sections')
-    list_display = ('title', 'issue', 'display_authors', 'display_reviews')
+    list_display = ('display_title', 'issue', 'display_authors', 'display_reviews')
     inlines = (LocalizedArticleContentInline, ArticleAuthorInline, ArticleSourceInline, ArticleAttachInline, ArticleResolutionInline)
 
     # TODO: search by author names
@@ -175,6 +182,14 @@ class ArticleAdmin(admin.ModelAdmin):
         if db_field.name == "sections":
             kwargs['widget'] = forms.CheckboxSelectMultiple
         return super(ArticleAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
+
+    def display_title(self, obj=None, max_length=64):
+        if not obj: 
+            return u''
+        if len(obj.title) > max_length:
+            return obj.title[:max_length-4].rstrip() + '...'
+        return obj.title
+    display_title.short_description = _(u'Title')
 
     def display_authors(self, obj=None):
         if not obj:
@@ -202,7 +217,7 @@ class ArticleAdmin(admin.ModelAdmin):
     # TODO:display review links in article edit page
 
 
-class ReviewFieldAdmin(admin.ModelAdmin):
+class ReviewFieldAdmin(JournalAdmin):
     list_display = ('name', 'field_type')
 
 
@@ -211,13 +226,13 @@ class ReviewFileInline(admin.TabularInline):
     extra = 0
 
 
-class ReviewAdmin(admin.ModelAdmin):
+class ReviewAdmin(JournalAdmin):
     inlines = [ReviewFileInline]
     list_display = ('__unicode__', 'reviewer', 'status', 'resolution', 'date_created')
     list_filter = ('status', 'resolution')
 
 
-class IssueAdmin(admin.ModelAdmin):
+class IssueAdmin(JournalAdmin):
     list_display = ('__unicode__', 'articles_count')
 
     def articles_count(self, obj=None):

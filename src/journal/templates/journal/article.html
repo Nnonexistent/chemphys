@@ -1,10 +1,8 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{% endblock %}
 
-
-{% block content %}
+{% block title %}
 <div class="row">
     <div class="col-lg-10">
         <h1 class="h4">{{ article.title }}</h1>
@@ -14,17 +12,22 @@
         <a href="{{ article.content.url }}" class="btn btn-primary">View article <br /><small class="text-muted">PDF, {{ article.content.size|filesizeformat }}</small></a>
     </div>
 </div>
-
 <br />
+{% endblock %}
 
+{% block content %}
 <div role="tabpanel">
 
   <ul class="nav nav-tabs" role="tablist">
     {% for entry in article.localizedarticlecontent_set.all %}
-    <li role="presentation"{% if forloop.first %} class="active"{% endif %}><a href="#{{ entry.lang }}_overview" aria-controls="{{ entry.lang }}_overview" role="tab" data-toggle="tab">Overview [{{ entry.get_lang_display }}]</a></li>
+    <li role="presentation"{% if forloop.first %} class="active"{% endif %}><a href="#{{ entry.lang }}_overview" aria-controls="{{ entry.lang }}_overview" role="tab" data-toggle="tab">{% trans "Overview" %} ({{ entry.get_lang_display }})</a></li>
     {% endfor %}
-    <li role="presentation"><a href="#media" aria-controls="media" role="tab" data-toggle="tab">Media</a></li>
-    <li role="presentation"><a href="#refs" aria-controls="refs" role="tab" data-toggle="tab">References</a></li>
+    {% if article.articleattach_set.all.exists %}
+    <li role="presentation"><a href="#media" aria-controls="media" role="tab" data-toggle="tab">{% trans "Media" %}</a></li>
+    {% endif %}
+    {% if article.references %}
+    <li role="presentation"><a href="#refs" aria-controls="refs" role="tab" data-toggle="tab">{% trans "References" %}</a></li>
+    {% endif %}
   </ul>
 
 
@@ -35,25 +38,29 @@
         {% if LANGUANGE_CODE != entry.lang %}<h1 class="h5">{{ entry.title }}</h1>{% endif %}
 
         <div class="row">
+            {% if article.image %}
             <div class="col-lg-3">
+                <img src="{{ article.image.url }}" alt="" width="270" />
             </div>
-            <div class="col-lg-6 text-justify">
+            {% endif %}
+            <div class="col-lg-{% if article.image %}6{% else %}9{% endif %} text-justify">
             {{ entry.abstract|linebreaks }}
             </div>
             <div class="col-lg-3">
                 <p>
-                {% blocktrans count count=article.articleauthor_set.all.count %}Author:{% plural %}Authors:{% endblocktrans %}
+                {% blocktrans count count=article.articleauthor_set.all.count %}Author{% plural %}Authors{% endblocktrans %}:
                 {% for aa in article.articleauthor_set.all %}
                     <a href="" title="{{ aa.position.organization }}">{{ aa.position.user }}</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
                 </p>
                 <p>{% trans "Issue" %}: <a href="{{ article.issue.get_absolute_url }}">{{ article.issue }}</a></p>
-                <p>{% trans "Permanent link" %}: <a href="{{ link }}" class="text-nowrap">{{ link }}</a></p>
+                <p> <a href="{{ link }}" class="text-nowrap">{% trans "Permanent link to this article" %}</a></p>
             </div>
         </div>
     </div>
     {% endfor %}
 
+    {% if article.articleattach_set.all.exists %}
     <div role="tabpanel" class="tab-pane" id="media">
         <ul>
         {% for entry in article.articleattach_set.all %}
@@ -61,10 +68,13 @@
         {% endfor %}
         </ul>
     </div>
+    {% endif %}
 
+    {% if article.references %}
     <div role="tabpanel" class="tab-pane" id="refs">
-        TODO
+        {{ article.references|linebreaksbr }}
     </div>
+    {% endif %}
 
   </div>
 

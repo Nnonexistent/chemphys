@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
@@ -233,12 +235,18 @@ class PositionInOrganization(models.Model):
         return u'%s (%s, %s)' % (self.user.get_full_name() or self.user, self.position, self.organization)
 
 
+def article_upload_to(instance, filename):
+    out = uuid.uuid4().hex + (filename.rsplit('.', 1)[-1][:4].lower() if '.' in filename else '')
+    return 'articles/' + out
+
+
 class Article(BaseLocalizedObject):
     status = models.PositiveSmallIntegerField(default=0, choices=ARTICLE_STATUSES, verbose_name=_(u'Status'))
     date_in = models.DateTimeField(default=timezone.now, verbose_name=_(u'Date in'))
     date_published = models.DateTimeField(null=True, blank=True, verbose_name=_(u'Publish date'))
     old_number = models.SmallIntegerField(null=True, blank=True, verbose_name=_(u'Old number'), help_text=_(u'to link consistency with old articles'))
 
+    image = models.ImageField(verbose_name=_(u'Image'), upload_to=article_upload_to, blank=True, default='')
     content = models.FileField(verbose_name=_(u'Content'), upload_to='published', default='', blank=True)
 
     issue = models.ForeignKey('Issue', null=True, blank=True)
@@ -254,7 +262,7 @@ class Article(BaseLocalizedObject):
 
     @models.permalink
     def get_absolute_url(self):
-        return 'show_article', [self.id]
+        return 'show_article', (self.issue.year, self.issue.volume, self.issue.number, self.id)
 
     def get_authors(self):
         authors = []
@@ -276,6 +284,10 @@ class Article(BaseLocalizedObject):
     def keywords(self):
         return self.get_localized('keywords') or ''
 
+    @property
+    def references(self):
+        return self.get_localized('references') or ''
+
 
 class LocalizedArticleContent(BaseLocalizedContent):
     article = models.ForeignKey(Article, verbose_name=Article._meta.verbose_name)
@@ -283,6 +295,7 @@ class LocalizedArticleContent(BaseLocalizedContent):
     title = models.TextField(verbose_name=_(u'Title'))
     abstract = models.TextField(verbose_name=_(u'Abstract'), default=u'', blank=True)
     keywords = models.TextField(verbose_name=_(u'Keywords'), default=u'', blank=True)
+    references = models.TextField(verbose_name=_(u'References'), default='', blank=True)
 
     class Meta:
         ordering = ('article', 'lang')

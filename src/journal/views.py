@@ -25,8 +25,11 @@ def show_issue(request, id):
     })
 
 
-def show_article(request, id):
-    article = get_object_or_404(Article, id=id, status=10)
+def show_article(request, iss_year, iss_volume, iss_number, id):
+    article = get_object_or_404(Article, status=10, id=id,
+                                issue__year=iss_year,
+                                issue__volume=iss_volume,
+                                issue__number=iss_number)
     return render(request, 'journal/article.html', {
         'title': unicode(article),
         'article': article,
