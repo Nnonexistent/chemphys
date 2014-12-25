@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<div role="tabpanel">
+
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#authors" aria-controls="authors" role="tab" data-toggle="tab">{% trans "Authors" %}</a></li>
+    <li role="presentation"><a href="#articles" aria-controls="articles" role="tab" data-toggle="tab">{% trans "Articles" %}</a></li>
+  </ul>
+  <br />
+
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="authors">
+    <table class="table">
+    {% for user in authors %}
+        <tr>
+            <td><a href="{{ user.author.get_absolute_url }}">{{ user }}</a></td>
+            <td>{% blocktrans count count=user.author.published_articles.count %}One article{% plural %}{{ count }} articles{% endblocktrans %}</td>
+        </tr>
+    {% endfor %}
+    </table>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="articles">
+    <table class="table">
+    {% for article in articles %}
+        <tr>
+            <td>{% if article.image %}<a href="{{ article.get_absolute_url }}"><img src="{{ article.image.url }}" width="100" alt="" /></a>{% endif %}</td>
+            <td><a href="{{ article.get_absolute_url }}">{{ article }}</a>
+                <br /><a class="text-muted" href="{{ article.issue.get_absolute_url }}">{{ article.issue }}</a></td>
+            <td><a href="{{ article.content.url }}" class="btn btn-primary">View article <br /><small class="text-muted">PDF, {{ article.content.size|filesizeformat }}</small></a></td>
+        </tr>
+    {% endfor %}
+    </table>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

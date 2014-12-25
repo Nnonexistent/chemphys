@@ -2,9 +2,13 @@
 
 
 {% block content %}
-    <ul>
+    <table class="table">
     {% for article in articles %}
-        <li><a href="{{ article.get_absolute_url }}">{{ article }}</a></li>
+        <tr>
+            <td>{% if article.image %}<a href="{{ article.get_absolute_url }}"><img src="{{ article.image.url }}" width="100" alt="" /></a>{% endif %}</td>
+            <td><a href="{{ article.get_absolute_url }}">{{ article }}</a></td>
+            <td><a href="{{ article.content.url }}" class="btn btn-primary">View article <br /><small class="text-muted">PDF, {{ article.content.size|filesizeformat }}</small></a></td>
+        </tr>
     {% endfor %}
-    </ul>
+    </table>
 {% endblock %}

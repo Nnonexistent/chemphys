@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 from django.conf import settings
+from django.core.urlresolvers import reverse
 
 from utils.localized import BaseLocalizedObject, BaseLocalizedContent
 
@@ -157,6 +158,10 @@ class Organization(ModeratedObject, BaseLocalizedObject):
     def __unicode__(self):
         return self.name
 
+    @models.permalink
+    def get_absolute_url(self):
+        return 'show_organization', [self.id]
+
     @property
     def name(self):
         return self.get_localized('name') or ''
@@ -196,6 +201,13 @@ class Author(ModeratedObject):
 
     def __unicode__(self):
         return self.user.get_full_name() or self.user.username
+
+    def published_articles(self):
+        return Article.objects.filter(status=10, articleauthor__position__user=self.user).distinct()
+
+    @models.permalink
+    def get_absolute_url(self):
+        return 'show_author', [self.user_id]
 
 
 class LocalizedName(BaseLocalizedContent):
@@ -260,9 +272,10 @@ class Article(BaseLocalizedObject):
     def __unicode__(self):
         return self.title or ((_(u'Article %s') % self.id) if self.id else _(u'New article'))
 
-    @models.permalink
     def get_absolute_url(self):
-        return 'show_article', (self.issue.year, self.issue.volume, self.issue.number, self.id)
+        if self.issue:
+            return reverse('show_article', args=(self.issue.year, self.issue.volume, self.issue.number, self.id))
+        return u''
 
     def get_authors(self):
         authors = []

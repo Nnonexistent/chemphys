@@ -35,7 +35,7 @@
 
     {% for entry in article.localizedarticlecontent_set.all %}
     <div role="tabpanel" class="tab-pane{% if forloop.first %} active{% endif %}" id="{{ entry.lang }}_overview">
-        {% if LANGUANGE_CODE != entry.lang %}<h1 class="h5">{{ entry.title }}</h1>{% endif %}
+        {% if LANGUAGE_CODE != entry.lang %}<h1 class="h5">{{ entry.title }}</h1>{% endif %}
 
         <div class="row">
             {% if article.image %}
@@ -50,7 +50,7 @@
                 <p>
                 {% blocktrans count count=article.articleauthor_set.all.count %}Author{% plural %}Authors{% endblocktrans %}:
                 {% for aa in article.articleauthor_set.all %}
-                    <a href="" title="{{ aa.position.organization }}">{{ aa.position.user }}</a>{% if not forloop.last %}, {% endif %}
+                    <a href="{{ aa.position.user.author.get_absolute_url }}" title="{{ aa.position.organization }}">{{ aa.position.user }}</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
                 </p>
                 <p>{% trans "Issue" %}: <a href="{{ article.issue.get_absolute_url }}">{{ article.issue }}</a></p>

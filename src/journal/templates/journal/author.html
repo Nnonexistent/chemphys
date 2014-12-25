@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+
+<div role="tabpanel">
+
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#orgs" aria-controls="orgs" role="tab" data-toggle="tab">{% trans "Organizations" %}</a></li>
+    <li role="presentation"><a href="#articles" aria-controls="articles" role="tab" data-toggle="tab">{% trans "Articles" %}</a></li>
+  </ul>
+  <br />
+
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="orgs">
+    <table class="table">
+    {% for org in orgs %}
+        <tr>
+            <td><a href="{{ org.get_absolute_url }}">{{ org }}</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="articles">
+    <table class="table">
+    {% for article in articles %}
+        <tr>
+            <td>{% if article.image %}<a href="{{ article.get_absolute_url }}"><img src="{{ article.image.url }}" width="100" alt="" /></a>{% endif %}</td>
+            <td><a href="{{ article.get_absolute_url }}">{{ article }}</a>
+                <br /><a class="text-muted" href="{{ article.issue.get_absolute_url }}">{{ article.issue }}</a></td>
+            <td><a href="{{ article.content.url }}" class="btn btn-primary">View article <br /><small class="text-muted">PDF, {{ article.content.size|filesizeformat }}</small></a></td>
+        </tr>
+    {% endfor %}
+    </table>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

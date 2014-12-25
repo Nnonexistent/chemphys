@@ -11,6 +11,8 @@ urlpatterns = patterns(
     url(r'^issues/$', 'journal.views.show_issues', name='show_issues'),
     url(r'^issues/(\d+)/$', 'journal.views.show_issue', name='show_issue'),
     url(r'^issues/(\d{4})-(\d+)-(\d+)/articles/(\d+)/$', 'journal.views.show_article', name='show_article'),
+    url(r'^organizations/(\d+)/$', 'journal.views.show_organization', name='show_organization'),
+    url(r'^authors/(\d+)/$', 'journal.views.show_author', name='show_author'),
 
     url(r'^([\w-]+)/$', 'pages.views.pages_page', name='pages_page'),
 )
