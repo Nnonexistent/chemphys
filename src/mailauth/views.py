@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from django.contrib.auth import authenticate
+from django.http import HttpResponseRedirect
 
-# Create your views here.
+
+def auth(request, key):
+    authenticate(mail_key=key)
+    return HttpResponseRedirect('/')

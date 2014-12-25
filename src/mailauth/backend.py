@@ -1,9 +1,24 @@
+from django.contrib.auth import get_user_model
+
 from mailauth.models import MailAuthToken
 
 
 class MailAuthBackend(object):
-    def authenticate(self, token=None):
+    def authenticate(self, mail_key=None):
         try:
-            MailAuthToekn.objects.get()
+            token = MailAuthToken.objects.get(key=mail_key)
         except MailAuthToken.DoesNotExist:
             return
+        else:
+            try:
+                user = get_user_model().objects.filter(email=token.email).order_by('id')[0]
+            except IndexError:
+                username = token.email[:30]
+                count = 1
+                while get_user_model().objects.filter(username=username).exists():
+                    count += 1
+                    username = '%s_%s' % (username[:30-1-len(str(count))], count)
+                user = get_user_model().objects.create(username=username, email=token.email)
+
+                token.delete()
+            return user
