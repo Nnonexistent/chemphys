@@ -6,8 +6,12 @@ from django.utils import timezone
 from django.conf import settings
 
 
+def default_key():
+    return uuid.uuid4().hex
+
+
 class MailAuthToken(models.Model):
-    key = models.CharField(max_length=64, verbose_name=_(u'Key'), unique=True, default=lambda: uuid.uuid4().hex)
+    key = models.CharField(max_length=64, verbose_name=_(u'Key'), unique=True, default=default_key)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_(u'User'))
     created = models.DateTimeField(default=timezone.now)
 
@@ -20,3 +24,4 @@ class MailAuthToken(models.Model):
             while MailAuthToken.object.filter(key=self.key).exists():
                 self.key = self._meta.get_field('key').default()
         super(MailAuthToken, self).save(*args, **kwargs)
+
