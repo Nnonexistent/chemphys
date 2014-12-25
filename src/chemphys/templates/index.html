@@ -1,1 +1,13 @@
 {% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <p>{% blocktrans %}You are logged in as {{ user }}{% endblocktrans %}. <a href="#TODO">{% trans "Logout" %}</a></p>
+        {% if user.is_staff %}
+        <p><a href="{% url 'admin:index' %}">{% trans "Administration" %}</a></p>
+        {% endif %}
+    {% else %}
+        <p><a href="{% url 'auth_as_author' %}">{% trans "Login as author" %}</a></p>
+    {% endif %}
+{% endblock %}
