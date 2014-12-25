@@ -1,0 +1,27 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+
+
+{% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'index' %}">{% trans "Journal administration" %}</a></h1>
+{% endblock %}
+
+
+{% block nav-global %}{% endblock %}
+
+
+{% block extrastyle %}{{ block.super }}
+<style type="text/css">
+#container .tabular tr.has_original td {
+    padding-top: inherit;
+}
+textarea {
+    height: 2.5em;
+    resize: none;
+    max-height: 300px;
+}
+</style>
+{% endblock %}
