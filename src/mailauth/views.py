@@ -1,5 +1,8 @@
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from django.utils.translation import ugettext as _
+from django.contrib import messages
 
 from mailauth.forms import MailAuthForm
 
@@ -16,7 +19,7 @@ def auth_form(request):
         form = MailAuthForm(request.POST)
         if form.is_valid():
             form.save(uri_builder=request.build_absolute_uri)
-            messages.info(request, u'The authentication link was sent on your e-mail "%s"' % form.cleaned_data['email'])
+            messages.info(request, _(u'The authentication link was sent on your e-mail "%s"' % form.cleaned_data['email']))
             return HttpResponseRedirect('/')
     else:
         form = MailAuthForm()
