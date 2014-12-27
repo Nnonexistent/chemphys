@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
+from django.conf import settings
 
 from pages.models import Page, LocalizedPageContent
 
@@ -8,6 +9,7 @@ from pages.models import Page, LocalizedPageContent
 class LocalizedPageContentInline(admin.StackedInline):
     extra = 0
     model = LocalizedPageContent
+    max_num = len(settings.LANGUAGES)
 
 
 class PageAdmin(admin.ModelAdmin):

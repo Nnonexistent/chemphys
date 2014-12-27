@@ -84,6 +84,7 @@ class StaffMemberAdmin(JournalAdmin):
 class OrganizationLocalizedContentInline(admin.StackedInline):
     extra = 0
     model = app_models.OrganizationLocalizedContent
+    max_num = len(settings.LANGUAGES)
 
 
 class OrganizationAdmin(JournalAdmin):
@@ -112,6 +113,7 @@ class PositionInOrganizationInline(admin.TabularInline):
 class LocalizedNameInline(admin.TabularInline):
     extra = 0
     model = app_models.LocalizedName
+    max_num = len(settings.LANGUAGES)
 
 
 class AuthorAdmin(JournalAdmin):
@@ -129,10 +131,14 @@ class AuthorAdmin(JournalAdmin):
     def get_formsets_with_inlines(self, request, obj=None):
         formset_class = override_formset_factory(lambda x: x.user if x.user_id else None)
 
-        formset = inlineformset_factory(app_models.LocalizedUser, app_models.LocalizedName, extra=0, formset=formset_class)
+        formset = inlineformset_factory(
+            app_models.LocalizedUser, app_models.LocalizedName,
+            extra=LocalizedNameInline.extra, formset=formset_class, max_num=LocalizedNameInline.max_num)
         yield formset, LocalizedNameInline(app_models.LocalizedUser, admin.site)
 
-        formset = inlineformset_factory(app_models.LocalizedUser, app_models.PositionInOrganization, extra=0, formset=formset_class)
+        formset = inlineformset_factory(
+            app_models.LocalizedUser, app_models.PositionInOrganization,
+            extra=PositionInOrganizationInline.extra, formset=formset_class)
         yield formset, PositionInOrganizationInline(app_models.LocalizedUser, admin.site)
 
         for formset, inline in super(AuthorAdmin, self).get_formsets_with_inlines(request, obj):
@@ -169,6 +175,7 @@ class ArticleAttachInline(admin.TabularInline):
 class LocalizedArticleContentInline(admin.StackedInline):
     model = app_models.LocalizedArticleContent
     extra = 0
+    max_num = len(settings.LANGUAGES)
 
 
 class ArticleAdmin(JournalAdmin):
