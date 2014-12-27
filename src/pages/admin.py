@@ -16,7 +16,8 @@ class PageAdmin(admin.ModelAdmin):
 
     def display_link(self, obj=None):
         if obj:
-            return mark_safe(u'<a href="%s" target="_blank">%s</a>' % (obj.get_absolute_url(), obj.get_absolute_url()))
+            return mark_safe(u'<a href="%s" target="_blank">%s</a>' % (
+                obj.get_absolute_url(), obj.get_absolute_url()))
         return u''
     display_link.short_description = _(u'Link')
 

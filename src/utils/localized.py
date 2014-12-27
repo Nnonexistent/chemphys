@@ -37,4 +37,3 @@ class BaseLocalizedContent(models.Model):
 
     class Meta:
         abstract = True
-

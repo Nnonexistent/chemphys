@@ -49,5 +49,4 @@ def email_uniqueness_check(app_configs, **kwargs):
         unique_emails.append(email)
     return errors
 
-
-#TODO: tokens expiration, cleanup
+# TODO: tokens expiration, cleanup

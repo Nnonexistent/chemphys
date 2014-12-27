@@ -90,7 +90,8 @@ class OrganizationAdmin(JournalAdmin):
     inlines = [OrganizationLocalizedContentInline]
     list_display = ('__unicode__', 'moderation_status', 'obsolete', 'display_site')
     list_filter = ('moderation_status', 'obsolete')
-    search_fields = ('organizationlocalizedcontent__name', 'alt_names', 'previous__organizationlocalizedcontent__name', 'previous__alt_names')
+    search_fields = ('organizationlocalizedcontent__name', 'alt_names',
+                     'previous__organizationlocalizedcontent__name', 'previous__alt_names')
     raw_id_fields = ['previous']
 
     def display_site(self, obj=None):
@@ -128,12 +129,12 @@ class AuthorAdmin(JournalAdmin):
     def get_formsets_with_inlines(self, request, obj=None):
         formset_class = override_formset_factory(lambda x: x.user if x.user_id else None)
 
-        formset = inlineformset_factory(get_user_model(), app_models.LocalizedName, extra=0, formset=formset_class)
-        yield formset, LocalizedNameInline(get_user_model(), admin.site)
+        formset = inlineformset_factory(app_models.LocalizedUser, app_models.LocalizedName, extra=0, formset=formset_class)
+        yield formset, LocalizedNameInline(app_models.LocalizedUser, admin.site)
 
-        formset = inlineformset_factory(get_user_model(), app_models.PositionInOrganization, extra=0, formset=formset_class)
-        yield formset, PositionInOrganizationInline(get_user_model(), admin.site)
-        
+        formset = inlineformset_factory(app_models.LocalizedUser, app_models.PositionInOrganization, extra=0, formset=formset_class)
+        yield formset, PositionInOrganizationInline(app_models.LocalizedUser, admin.site)
+
         for formset, inline in super(AuthorAdmin, self).get_formsets_with_inlines(request, obj):
             yield formset, inline
 
@@ -184,7 +185,7 @@ class ArticleAdmin(JournalAdmin):
         return super(ArticleAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
 
     def display_title(self, obj=None, max_length=64):
-        if not obj: 
+        if not obj:
             return u''
         if len(obj.title) > max_length:
             return obj.title[:max_length-4].rstrip() + '...'
