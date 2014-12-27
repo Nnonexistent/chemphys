@@ -92,9 +92,18 @@
       </div>
     </nav>
 
-    {# TODO: messages #}
 
     <div class="container">
+
+      {% block messages %}
+          {% for m in messages %}
+          <div class="alert alert-info alert-dismissible {{ m.class }}" role="alert">
+              <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+              {{ m|urlizetrunc:32 }}
+          </div>
+          {% endfor %}
+      {% endblock %}
+
       {% block title %}<h1 class="h2">{{ title }}</h1>{% endblock %}
       {% block content %}{{ content }}{% endblock %}
     </div>
