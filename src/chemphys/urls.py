@@ -8,6 +8,7 @@ urlpatterns = patterns(
     url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^mailauth/', include('mailauth.urls')),
+    url(r'^logout$', 'django.contrib.auth.views.logout', {'next_page': '/'}, name='logout'),
 
     url(r'^$', 'journal.views.index', name='index'),
     url(r'^issues/$', 'journal.views.show_issues', name='show_issues'),
@@ -16,7 +17,6 @@ urlpatterns = patterns(
     url(r'^organizations/(\d+)/$', 'journal.views.show_organization', name='show_organization'),
     url(r'^authors/(\d+)/$', 'journal.views.show_author', name='show_author'),
 
-    url(r'^authors/auth/$', 'journal.views.auth_as_author', name='auth_as_author'),
     url(r'^articles/add/$', 'journal.views.add_article', name='add_article'),
 
     url(r'^([\w-]+)/$', 'pages.views.pages_page', name='pages_page'),

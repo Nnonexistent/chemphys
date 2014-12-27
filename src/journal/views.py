@@ -5,7 +5,6 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 
-from mailauth.forms import MailAuthForm
 from journal.models import Issue, Article, Organization, LocalizedUser
 
 
@@ -72,19 +71,3 @@ def show_author(request, id):
 
 def add_article(request):
     pass
-
-
-def auth_as_author(request):
-    if request.method == 'POST':
-        form = MailAuthForm(request.POST)
-        if form.is_valid():
-            form.save(uri_builder=request.build_absolute_uri)
-            messages.info(request, u'The authentication link was sent on your e-mail "%s"' % form.cleaned_data['email'])
-            return HttpResponseRedirect(reverse('index'))
-    else:
-        form = MailAuthForm()
-
-    return render(request, 'journal/auth.html', {
-        'title': _('Authentication'),
-        'form': form,
-    })
