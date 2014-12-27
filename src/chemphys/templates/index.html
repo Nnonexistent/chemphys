@@ -4,6 +4,7 @@
 {% block content %}
     {% if user.is_authenticated %}
         <p>{% blocktrans %}You are logged in as {{ user }}{% endblocktrans %}. <a href="{% url 'logout' %}">{% trans "Logout" %}</a></p>
+        <p><a href="{% url 'edit_author' %}">{% trans "Edit profile" %}</a></p>
         {% if user.is_staff %}
         <p><a href="{% url 'admin:index' %}">{% trans "Administration" %}</a></p>
         {% endif %}

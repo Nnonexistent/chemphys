@@ -2,10 +2,11 @@ from django.shortcuts import render
 from django.utils.translation import ugettext as _
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.contrib import messages
 
 from journal.models import Issue, Article, Organization, LocalizedUser
+from journal.forms import AuthorEditForm
 
 
 def index(request):
@@ -66,6 +67,27 @@ def show_author(request, id):
         'articles': articles,
         'orgs': orgs,
         'link': request.build_absolute_uri(),
+    })
+
+
+def edit_author(request):
+    if request.user.is_authenticated() and request.user.is_active:
+        user = request.user
+    else:
+        return HttpResponseForbidden()
+
+    if request.method == 'POST':
+        form = AuthorEditForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.info(request, _(u'Profile was updated'))
+            return HttpResponseRedirect(reverse('index'))
+    else:
+        form = AuthorEditForm(instance=user)
+
+    return render(request, 'journal/edit_author.html', {
+        'title': _(u'Edit profile'),
+        'form': form,
     })
 
 

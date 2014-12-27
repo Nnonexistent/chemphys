@@ -11,5 +11,6 @@ urlpatterns = patterns(
     url(r'^organizations/(\d+)/$', 'journal.views.show_organization', name='show_organization'),
     url(r'^authors/(\d+)/$', 'journal.views.show_author', name='show_author'),
 
+    url(r'^authors/edit/$', 'journal.views.edit_author', name='edit_author'),
     url(r'^articles/add/$', 'journal.views.add_article', name='add_article'),
 )
