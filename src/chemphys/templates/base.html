@@ -23,6 +23,9 @@
         margin: 4px 0;
         width: 80px;
     }
+    .langs input.visible-sm-block {
+        width: 30px;
+    }
     .navbar-brand span {
         display: inline-block;
         vertical-align: middle;
@@ -58,11 +61,25 @@
       <div class="container">
         <div class="navbar-header">
           <a class="navbar-brand" href="{% url "index" %}">
-            <span class="brand-left">{% trans "Физико-химическая<br />кинетика" %}</span>
+            <span class="brand-left visible-lg-inline-block visible-xs-inline-block">{% trans "Физико-химическая<br />кинетика" %}</span>
             <img src="{% static "img/logo.png" %}" alt="" />
-            <span class="brand-right">{% trans "в газовой<br />динамике" %}</span>
+            <span class="brand-right visible-lg-inline-block visible-xs-inline-block">{% trans "в газовой<br />динамике" %}</span>
           </a>
         </div>
+
+        <div class="nav navbar-nav langs navbar-right">
+        {% for lang_code, lang_name in LANGUAGES %}
+        {% get_language_info for lang_code as lang %}
+        <form action="{% url 'set_language' %}" method="post">
+            {% csrf_token %}
+            <input name="next" type="hidden" value="{{ request.get_full_path }}" />
+            <input name="language" type="hidden" value="{{ lang_code }}" />
+            <input type="submit" value="{{ lang.name_local }}" class="hidden-sm btn btn-xs btn-{% if lang_code == LANGUAGE_CODE %}primary{% else %}info{% endif %}" />
+            <input type="submit" value="{{ lang_code }}" class="visible-sm-block btn btn-xs btn-{% if lang_code == LANGUAGE_CODE %}primary{% else %}info{% endif %}" />
+        </form>
+        {% endfor %}
+        </div>
+
         <ul class="nav navbar-nav">
           <li class="dropdown">
             <a href="{% url "show_issues" %}" class="dropdown-toggle" data-toggle="dropdown">{% trans "Contents" %} <span class="caret"></span></a>
@@ -73,22 +90,11 @@
           {% pages_menu %}
         </ul>
 
-        <div class="nav navbar-nav langs navbar-right">
-        {% for lang_code, lang_name in LANGUAGES %}
-        {% get_language_info for lang_code as lang %}
-        <form action="{% url 'set_language' %}" method="post">
-            {% csrf_token %}
-            <input name="next" type="hidden" value="{{ request.get_full_path }}" />
-            <input name="language" type="hidden" value="{{ lang_code }}" />
-            <input type="submit" value="{{ lang.name_local }}" class="btn btn-xs btn-{% if lang_code == LANGUAGE_CODE %}primary{% else %}info{% endif %}" />
-        </form>
-        {% endfor %}
-        </div>
-
         <form class="navbar-form navbar-left">
             <div class="small adv-search"><a href="">{% trans "Advanced Search" %}</a></div>
             <input type="text" class="form-control col-lg-8" placeholder="{% trans "Search" %}">
         </form>
+
       </div>
     </nav>
 
