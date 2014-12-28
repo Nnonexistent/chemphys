@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.contrib import messages
 
 from journal.models import Issue, Article, Organization, LocalizedUser
-from journal.forms import AuthorEditForm
+from journal.forms import AuthorEditForm, LocalizedNameFormSet
 
 
 def index(request):
@@ -72,22 +72,26 @@ def show_author(request, id):
 
 def edit_author(request):
     if request.user.is_authenticated() and request.user.is_active:
-        user = request.user
+        user = LocalizedUser.objects.get(id=request.user.id)  # FIXME: excess db call
     else:
         return HttpResponseForbidden()
 
     if request.method == 'POST':
+        name_formset = LocalizedNameFormSet(request.POST, instance=user)
         form = AuthorEditForm(request.POST, instance=user)
-        if form.is_valid():
+        if form.is_valid() and name_formset.is_valid():
             form.save()
+            name_formset.save()
             messages.info(request, _(u'Profile was updated'))
             return HttpResponseRedirect(reverse('index'))
     else:
         form = AuthorEditForm(instance=user)
+        name_formset = LocalizedNameFormSet(instance=user)
 
     return render(request, 'journal/edit_author.html', {
         'title': _(u'Edit profile'),
         'form': form,
+        'name_formset': name_formset,
     })
 
 
