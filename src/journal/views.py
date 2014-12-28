@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.contrib import messages
 
 from journal.models import Issue, Article, Organization, LocalizedUser
-from journal.forms import AuthorEditForm, LocalizedNameFormSet
+from journal.forms import AuthorEditForm, LocalizedNameFormSet, PIOFormSet
 
 
 def index(request):
@@ -77,21 +77,25 @@ def edit_author(request):
         return HttpResponseForbidden()
 
     if request.method == 'POST':
-        name_formset = LocalizedNameFormSet(request.POST, instance=user)
+        name_formset = LocalizedNameFormSet(request.POST, instance=user, prefix='name')
+        org_formset = PIOFormSet(request.POST, instance=user, prefix='org')
         form = AuthorEditForm(request.POST, instance=user)
-        if form.is_valid() and name_formset.is_valid():
+        if form.is_valid() and name_formset.is_valid() and org_formset.is_valid():
             form.save()
             name_formset.save()
+            org_formset.save()
             messages.info(request, _(u'Profile was updated'))
             return HttpResponseRedirect(reverse('index'))
     else:
         form = AuthorEditForm(instance=user)
-        name_formset = LocalizedNameFormSet(instance=user)
+        name_formset = LocalizedNameFormSet(instance=user, prefix='name')
+        org_formset = PIOFormSet(instance=user, prefix='org')
 
     return render(request, 'journal/edit_author.html', {
         'title': _(u'Edit profile'),
         'form': form,
         'name_formset': name_formset,
+        'org_formset': org_formset,
     })
 
 

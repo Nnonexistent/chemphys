@@ -4,7 +4,20 @@
 {% block head %}{{ block.super }}
 <script type="text/javascript" src="//yastatic.net/jquery/2.1.3/jquery.min.js"></script>
 <script type="text/javascript">
+    var form_count = {{ org_formset.total_form_count }};
     $(function () {
+        $('#add_org').click(function() {
+            var max_num = parseInt($('#id_org-MAX_NUM_FORMS').val())
+            if (form_count < max_num) {
+                form_count++;
+                var form = '{% filter escapejs %}<div class="col-lg-8 col-md-12"><div class="panel panel-default"><div class="panel-body">{{ org_formset.empty_form }}</div></div></div>{% endfilter %}';
+                $(this).prev().append(form.replace(/__prefix__/g, form_count - 1));
+                $('#id_org-TOTAL_FORMS').val(form_count);
+                if (form_count == max_num) {
+                    $(this).addClass('disabled');
+                }
+            }
+        });
     });
 </script>
 {% endblock %}
@@ -15,34 +28,52 @@
 {% csrf_token %}
 
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-8 col-md-12">
         <div class="panel panel-default">
             <div class="panel-body">
             {{ form }}
             </div>
         </div>
     </div>
+</div>
 
 {{ name_formset.management_form }}
+<div class="row">
 {% for form in name_formset %}
-    <div class="col-lg-{{ name_formset.col_n }}">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-            {% for lang_code, lang_name in LANGUAGES %}
-                {% if lang_code == form.initial.lang %}{{ lang_name }}{% endif %}
-            {% endfor %}
-            </h4>
+    <div class="col-lg-{{ name_formset.col_lg }} col-md-{{ name_formset.col_md }}">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                {% for lang_code, lang_name in LANGUAGES %}
+                    {% if lang_code == form.initial.lang %}{{ lang_name }}{% endif %}
+                {% endfor %}
+                </h4>
+            </div>
+            <div class="panel-body">
+            {% language form.initial.lang %}
+                {{ form }}
+            {% endlanguage %}
+            </div>
         </div>
-        <div class="panel-body">
-        {% language form.initial.lang %}
-            {{ form }}
-        {% endlanguage %}
-        </div>
-    </div>
     </div>
 {% endfor %}
 </div>
+
+{{ org_formset.management_form }}
+<div class="row">
+{% for form in org_formset %}
+    <div class="col-lg-8 col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                {{ form }}
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+<a id="add_org" class="btn btn-sm btn-info">{% trans "Add Organization" %}</a>
+
+<hr />
 <input class="btn btn-primary" type="submit" value="{% trans "Save changes" %}" />
 </form>
 {% endblock %}

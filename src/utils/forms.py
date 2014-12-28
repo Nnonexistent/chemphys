@@ -25,6 +25,8 @@ class BootstrapForm(forms.ModelForm):
 
     def as_div(self):
         for field in self.fields.itervalues():
+            if isinstance(field, forms.BooleanField):
+                continue
             attrs = field.widget.attrs
             css_classes = attrs.get('class', '').split()
             if 'form-control' not in css_classes:
