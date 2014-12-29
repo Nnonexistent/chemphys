@@ -116,4 +116,20 @@ def search_organizations(request):
 
 
 def add_article(request):
-    pass
+    if not request.user.is_authenticated() or not request.user.is_active:
+        return HttpResponseForbidden()
+
+    if request.method == 'POST':
+        article = Article.objects.create()
+        article.senders.add(request.user)
+        return HttpResponseRedirect(reverse('adding_article', args=(article.id, article.status)))
+
+    return render(request, 'journal/add_article.html', {
+        'title': _(u'Add article'),
+    })
+
+
+def adding_article(request, article, step):
+    return render(request, 'journal/adding_article.html', {
+        'title': _(u'Add article'),
+    })

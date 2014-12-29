@@ -183,6 +183,7 @@ class ArticleAdmin(JournalAdmin):
     list_filter = ('status', 'issue', 'sections')
     list_display = ('display_title', 'issue', 'display_authors', 'display_reviews')
     inlines = (LocalizedArticleContentInline, ArticleAuthorInline, ArticleSourceInline, ArticleAttachInline, ArticleResolutionInline)
+    filter_horizontal = ['senders']  # TODO: raw_id_field
 
     # TODO: search by author names
 

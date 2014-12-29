@@ -11,12 +11,16 @@ from utils.localized import BaseLocalizedObject, BaseLocalizedContent
 
 
 ARTICLE_STATUSES = (
-    (0, _(u'New')),
-    (1, _(u'Rejected')),
-    (2, _(u'In review')),
-    (3, _(u'Reviewed')),
+    (0, _(u'Adding / Overview')),
+    (1, _(u'Adding / Abstract')),
+    (2, _(u'Adding / Authors')),
+    (3, _(u'Adding / Media')),
+    (11, _(u'New')),
+    (12, _(u'Rejected')),
+    (13, _(u'In review')),
+    (14, _(u'Reviewed')),
+    (15, _(u'In rework')),
     (10, _(u'Published')),
-    (5, _(u'In rework')),
 )
 REVIEW_STATUSES = (
     (0, _(u'Pending')),
@@ -105,6 +109,9 @@ class LocalizedUser(_get_user_model(), BaseLocalizedObject):
     @property
     def localized_last_name(self):
         return self.get_localized('last_name') or ''
+
+    def unpublished_articles(self):
+        return Article.objects.exclude(status=10).filter(models.Q(articleauthor__position__user=self) | models.Q(senders=self)).distinct()
 
 
 class Section(OrderedEntry):
@@ -205,6 +212,9 @@ class Author(ModeratedObject):
     def published_articles(self):
         return Article.objects.filter(status=10, articleauthor__position__user=self.user).distinct()
 
+    def unpublished_articles(self):
+        return Article.objects.exclude(status=10).filter(models.Q(articleauthor__position__user=self.user) | models.Q(senders=self.user)).distinct()
+
     @models.permalink
     def get_absolute_url(self):
         return 'show_author', [self.user_id]
@@ -262,6 +272,7 @@ class Article(BaseLocalizedObject):
     image = models.ImageField(verbose_name=_(u'Image'), upload_to=article_upload_to, blank=True, default='')
     content = models.FileField(verbose_name=_(u'Content'), upload_to='published', default='', blank=True)
 
+    senders = models.ManyToManyField(LocalizedUser, verbose_name=_(u'Senders'), blank=True)
     issue = models.ForeignKey('Issue', null=True, blank=True)
     sections = models.ManyToManyField('Section', blank=True)
 

@@ -58,6 +58,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.tz",
     "django.core.context_processors.request",
     "django.contrib.auth.context_processors.auth",
+    "journal.context_processors.user",
     "django.contrib.messages.context_processors.messages"
 )
 
