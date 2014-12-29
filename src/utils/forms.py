@@ -32,6 +32,7 @@ class BootstrapForm(forms.ModelForm):
             if 'form-control' not in css_classes:
                 css_classes.append('form-control')
                 attrs['class'] = u' '.join(set(css_classes))
+
         return self._html_output(
             normal_row='<div%(html_class_attr)s>%(errors)s %(label)s %(field)s%(help_text)s</div>',
             error_row='%s',
