@@ -2,7 +2,21 @@
 {% load i18n static %}
 
 {% block head %}{{ block.super }}
-<script type="text/javascript" src="//yastatic.net/jquery/2.1.3/jquery.min.js"></script>
+<link href="{% static "css/select2.css" %}" rel="stylesheet"/>
+<link href="{% static "css/select2-bootstrap.css" %}" rel="stylesheet"/>
+<style type="text/css">
+    div.select2-container .select2-choice {
+        background-image: none;
+        border: 1px solid #ddd;
+        height: 29px;
+    }
+    div.select2-container .select2-choice .select2-arrow {
+        background-image: none;
+        background-color: #fff;
+        border: none;
+    }
+</style>
+<script src="{% static "js/select2.min.js" %}"></script>
 <script type="text/javascript">
     var form_count = {{ org_formset.total_form_count }};
     $(function () {
@@ -13,11 +27,61 @@
                 var form = '{% filter escapejs %}{% include "journal/forms/position.html" with form=org_formset.empty_form %}{% endfilter %}';
                 $(this).prev().append(form.replace(/__prefix__/g, form_count - 1));
                 $('#id_org-TOTAL_FORMS').val(form_count);
+                org_select();
                 if (form_count == max_num) {
                     $(this).addClass('disabled');
                 }
             }
         });
+        org_select();
+
+        function show_new_org(el) {
+            el.parents('div.row').find('div.form-group:has([id$=-org_site]),.subform').show();
+        }
+        function hide_new_org(el) {
+            el.parents('div.row').find('div.form-group:has([id$=-org_site]),.subform').hide();
+        }
+
+        function org_select() {
+            $('select[id^=id_org-][id$=-organization]').each(function() {
+                var input = $('<input>');
+                var text = $(this).find(':selected').text();
+                input.attr({
+                    id: $(this).attr('id'),
+                    name: $(this).attr('name'),
+                    class: $(this).attr('class'),
+                    value: $(this).val()
+                });
+                $(this).after(input);
+                $(this).remove();
+                input.select2({
+                    minimumInputLength: 3,
+                    ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+                        url: "{% url 'search_organizations' %}",
+                        dataType: 'json',
+                        quietMillis: 250,
+                        data: function (term, page) {
+                            return {q: term};
+                        },
+                        results: function (data, page, query) {
+                            return {results: data.items};
+                        },
+                        cache: true
+                    },
+                    createSearchChoice: function (term) {
+                        return {id: '', text: '{% trans "Add new organization" %}'}
+                    }
+                });
+                input.select2('data', {id: input.val(), text: text});
+                input.on('change', function() {
+                    if (input.val()) {
+                        hide_new_org(input);
+                    } else {
+                        show_new_org(input);
+                    }
+                }).change();
+            });
+        }
     });
 </script>
 {% endblock %}

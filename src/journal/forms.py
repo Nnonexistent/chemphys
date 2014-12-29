@@ -48,12 +48,14 @@ class PIOForm(BootstrapForm):
 
     def __init__(self, *args, **kwargs):
         super(PIOForm, self).__init__(*args, **kwargs)
+        choices = [('', _(u'Add new organization'))]
+        initial = None
         if self.instance.id:
             initial = self.instance.organization
-        else:
-            initial = None
+            choices = [(initial.id, unicode(initial))]
         self.fields['organization'] = PositionInOrganization._meta.get_field('organization').formfield(
-            required=False, widget=forms.TextInput, initial=initial)
+            required=False, widget=forms.Select, initial=initial)
+        self.fields['organization'].widget.choices = choices
 
         for key, field in chain(self.iter_org_fields(), self.iter_loc_fields()):
             self.fields[key] = field.formfield(required=False)

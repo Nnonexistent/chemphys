@@ -1,8 +1,9 @@
+from django.db.models import Q
 from django.shortcuts import render
 from django.utils.translation import ugettext as _
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.http import HttpResponseRedirect, HttpResponseForbidden, JsonResponse
 from django.contrib import messages
 
 from journal.models import Issue, Article, Organization, LocalizedUser
@@ -97,6 +98,21 @@ def edit_author(request):
         'name_formset': name_formset,
         'org_formset': org_formset,
     })
+
+
+def search_organizations(request):
+    query = request.POST.get('q') or request.GET.get('q') or ''
+    query = query.strip()
+    if query:
+        qobjs = []
+        for arg in ('organizationlocalizedcontent__name', 'alt_names', 'previous__organizationlocalizedcontent__name', 'previous__alt_names'):
+            qobjs.append(Q(**{'%s__icontains' % arg: query}))
+        qobj = reduce(lambda x, y: x | y, qobjs)
+        orgs = Organization.objects.filter(moderation_status=2).filter(qobj).distinct()[:50]
+        out = [{'id': org.id, 'text': unicode(org)} for org in orgs]
+    else:
+        out = []
+    return JsonResponse({'items': out})
 
 
 def add_article(request):
