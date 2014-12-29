@@ -66,6 +66,7 @@ class PIOForm(BootstrapForm):
         if not self.cleaned_data.get('organization') and not self._errors.get('organization'):
             for key, field in chain(self.iter_org_fields(), self.iter_loc_fields()):
                 if not field.blank and not self.cleaned_data.get(key):
+                    # TODO: only one of all lang fields is required, not all
                     self._errors.setdefault(key, []).append(_(u'This field is required if new organization specified.'))
         return self.cleaned_data
 
@@ -110,6 +111,12 @@ class PIOForm(BootstrapForm):
 
     def as_div_common(self):
         self.fields = OrderedDict((k, v) for k, v in self.fields.items() if k not in dict(self.iter_loc_fields()))
+
+        # make delete field first
+        n = len(self._org_fields) + len(set(self._meta.fields))
+        self.fields = OrderedDict(self.fields.items()[n:] + self.fields.items()[:n])
+        self.fields['DELETE'].extra_classes = ['pull-right']
+
         out = self.as_div()
         self.fields = self._all_fields
         return out

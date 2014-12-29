@@ -27,13 +27,13 @@
                 var form = '{% filter escapejs %}{% include "journal/forms/position.html" with form=org_formset.empty_form %}{% endfilter %}';
                 $(this).prev().append(form.replace(/__prefix__/g, form_count - 1));
                 $('#id_org-TOTAL_FORMS').val(form_count);
-                org_select();
+                org_select(true);
                 if (form_count == max_num) {
                     $(this).addClass('disabled');
                 }
             }
         });
-        org_select();
+        org_select(false);
 
         function show_new_org(el) {
             el.parents('div.row').find('div.form-group:has([id$=-org_site]),.subform').show();
@@ -42,10 +42,15 @@
             el.parents('div.row').find('div.form-group:has([id$=-org_site]),.subform').hide();
         }
 
-        function org_select() {
+        function org_select(adding) {
             $('select[id^=id_org-][id$=-organization]').each(function() {
                 var input = $('<input>');
-                var text = $(this).find(':selected').text();
+                if (adding) {
+                    var text = '{% trans "Enter organization name" %}';
+                } else {
+                    var text = $(this).find(':selected').text();
+                }
+
                 input.attr({
                     id: $(this).attr('id'),
                     name: $(this).attr('name'),
@@ -73,13 +78,18 @@
                     }
                 });
                 input.select2('data', {id: input.val(), text: text});
-                input.on('change', function() {
-                    if (input.val()) {
+                input.on('select2-selecting', function(e) {
+                    if (e.val) {
                         hide_new_org(input);
                     } else {
                         show_new_org(input);
                     }
-                }).change();
+                });
+                if (adding) {
+                    hide_new_org(input);
+                } else {
+                    input.trigger($.Event('select2-selecting', {val: input.val()}));
+                }
             });
         }
     });
