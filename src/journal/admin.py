@@ -27,9 +27,9 @@ def override_formset_factory(get_real_instance):
 
 class JournalAdmin(admin.ModelAdmin):
     class Media:
-        js = ('js/admin.jquery.js',
+        js = ('admin/js/jquery.init-global.js',
               'js/jquery.autosize.min.js',
-              'js/admin.js')
+              'admin/js/misc.js')
 
 
 class SectionAdmin(JournalAdmin):
