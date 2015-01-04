@@ -81,6 +81,7 @@ class OrderedEntry(models.Model):
 
 
 # Due to changes in django 1.7 `django.contrib.auth.get_user_model` no longer works in model definition time
+# TODO: fire bug
 def _get_user_model():
     app_name, model_name = settings.AUTH_USER_MODEL.rsplit('.', 1)
     app = models.get_app(app_name)
@@ -111,7 +112,7 @@ class LocalizedUser(_get_user_model(), BaseLocalizedObject):
         return self.get_localized('last_name') or ''
 
     def unpublished_articles(self):
-        return Article.objects.exclude(status=10).filter(models.Q(articleauthor__position__user=self) | models.Q(senders=self)).distinct()
+        return Article.objects.exclude(status=10).filter(models.Q(articleauthor__author=self) | models.Q(senders=self)).distinct()
 
 
 class Section(OrderedEntry):
@@ -210,10 +211,10 @@ class Author(ModeratedObject):
         return self.user.get_full_name() or self.user.username
 
     def published_articles(self):
-        return Article.objects.filter(status=10, articleauthor__position__user=self.user).distinct()
+        return Article.objects.filter(status=10, articleauthor__author=self.user).distinct()
 
     def unpublished_articles(self):
-        return Article.objects.exclude(status=10).filter(models.Q(articleauthor__position__user=self.user) | models.Q(senders=self.user)).distinct()
+        return Article.objects.exclude(status=10).filter(models.Q(articleauthor__author=self.user) | models.Q(senders=self.user)).distinct()
 
     @models.permalink
     def get_absolute_url(self):
@@ -252,6 +253,7 @@ class PositionInOrganization(models.Model):
         ordering = ['id']
         verbose_name = _(u'Position in organization')
         verbose_name_plural = _(u'Position in organizations')
+        unique_together = [('user', 'organization')]
 
     def __unicode__(self):
         return u'%s (%s, %s)' % (self.user.get_full_name() or self.user, self.position, self.organization)
@@ -292,7 +294,7 @@ class Article(BaseLocalizedObject):
     def get_authors(self):
         authors = []
         for aa in self.articleauthor_set.all():
-            user = aa.position.user
+            user = aa.author
             if user not in authors:
                 authors.append(user)
         return authors
@@ -334,7 +336,8 @@ class LocalizedArticleContent(BaseLocalizedContent):
 
 class ArticleAuthor(OrderedEntry):
     article = models.ForeignKey(Article, verbose_name=Article._meta.verbose_name)
-    position = models.ForeignKey(PositionInOrganization, verbose_name=_(u'Author'))
+    author = models.ForeignKey(LocalizedUser, verbose_name=_(u'Author'))
+    organization = models.ForeignKey(Organization, verbose_name=_(u'Organization'))
 
     _order_lookup_field = 'article'
 
@@ -342,10 +345,10 @@ class ArticleAuthor(OrderedEntry):
         verbose_name = _(u'Article author')
         verbose_name_plural = _(u'Article authors')
         ordering = OrderedEntry.Meta.ordering
-        unique_together = [('article', 'position')]
+        unique_together = [('article', 'author', 'organization')]
 
     def __unicode__(self):
-        return unicode(self.position)
+        return u'%s (%s)' % (self.author, self.organization)
 
 
 class ArticleAttach(OrderedEntry):
