@@ -49,12 +49,23 @@ class PIOForm(BootstrapForm):
     def __init__(self, *args, **kwargs):
         super(PIOForm, self).__init__(*args, **kwargs)
         choices = [('', _(u'Add new organization'))]
-        initial = None
+
+        org = None
         if self.instance.id:
-            initial = self.instance.organization
-            choices = [(initial.id, unicode(initial))]
+            org = self.instance.organization
+        else:
+            key = u'%s-organization' % self.prefix
+            if self.data.get(key):
+                try:
+                    org = Organization.objects.get(id=int(self.data[key]))
+                except ValueError:
+                    pass
+
+        if org:
+            choices = [(org.id, unicode(org))]
+
         self.fields['organization'] = PositionInOrganization._meta.get_field('organization').formfield(
-            required=False, widget=forms.Select, initial=initial)
+            required=False, widget=forms.Select, initial=org)
         self.fields['organization'].widget.choices = choices
 
         for key, field in chain(self.iter_org_fields(), self.iter_loc_fields()):
@@ -136,5 +147,17 @@ class PIOForm(BootstrapForm):
         return out
 
 
+class BasePIOFormSet(BaseInlineFormSet):
+    def clean(self):
+        if any(self.errors):
+            return
+        orgs = []
+        for form in self.forms:
+            org = form.cleaned_data['organization']
+            if org in orgs:
+                form._errors.setdefault('organization', []).append(_(u'This organization is already used.'))
+            orgs.append(org)
+
+
 PIOFormSet = inlineformset_factory(LocalizedUser, PositionInOrganization, fields=['position'],
-    extra=0, can_delete=True, form=PIOForm)
+    extra=0, can_delete=True, form=PIOForm, formset=BasePIOFormSet)

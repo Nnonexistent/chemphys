@@ -121,7 +121,7 @@ def add_article(request):
 
     if request.method == 'POST':
         article = Article.objects.create()
-        article.senders =LocalizedUser.objects.filter(id=request.user.id)
+        article.senders = LocalizedUser.objects.filter(id=request.user.id)
         return HttpResponseRedirect(reverse('adding_article', args=(article.id, article.status)))
 
     return render(request, 'journal/add_article.html', {

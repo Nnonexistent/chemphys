@@ -61,7 +61,7 @@
                 $(this).remove();
                 input.select2({
                     minimumInputLength: 3,
-                    ajax: { // instead of writing the function to execute the request we use Select2's convenient helper
+                    ajax: {
                         url: "{% url 'search_organizations' %}",
                         dataType: 'json',
                         quietMillis: 250,
@@ -73,6 +73,7 @@
                         },
                         cache: true
                     },
+                    createSearchChoicePosition: 'bottom',
                     createSearchChoice: function (term) {
                         return {id: '', text: '{% trans "Add new organization" %}'}
                     }
