@@ -9,7 +9,8 @@ from django.utils.translation import ugettext as _
 from django.db import transaction
 
 from utils.forms import BootstrapForm, NullForm
-from journal.models import Author, LocalizedName, LocalizedUser, PositionInOrganization, Organization, OrganizationLocalizedContent, Article
+from journal.models import Author, LocalizedName, LocalizedUser, PositionInOrganization, Organization, OrganizationLocalizedContent, Article, LocalizedArticleContent
+from journal.forms.localized import BaseLocalizedForm, BaseLocalizedFormSet
 
 
 class AuthorEditForm(BootstrapForm):
@@ -18,28 +19,9 @@ class AuthorEditForm(BootstrapForm):
         fields = ['email']
 
 
-class LocalizedNameForm(BootstrapForm):
-    class Meta:
-        model = LocalizedName
-
-    def __init__(self, *args, **kwargs):
-        kwargs['label_suffix'] = kwargs.pop('label_suffix', '')
-        super(LocalizedNameForm, self).__init__(*args, **kwargs)
-        self.fields['lang'].widget = forms.HiddenInput()
-
-
-class BaseLocalizedNameFormSet(BaseInlineFormSet):
-    def __init__(self, *args, **kwargs):
-        kwargs['initial'] = kwargs.pop('initial', None) or [dict(lang=k) for k, v in settings.LANGUAGES]
-        super(BaseLocalizedNameFormSet, self).__init__(*args, **kwargs)
-
-    def col_md(self):
-        return 12 / len(settings.LANGUAGES)
-
-
 LocalizedNameFormSet = inlineformset_factory(LocalizedUser, LocalizedName,
     extra=len(settings.LANGUAGES), max_num=len(settings.LANGUAGES), can_delete=False,
-    form=LocalizedNameForm, formset=BaseLocalizedNameFormSet)
+    form=BaseLocalizedForm, formset=BaseLocalizedFormSet)
 
 
 class PIOForm(BootstrapForm):
@@ -174,8 +156,13 @@ class OverviewArticleForm(BootstrapForm):
         self.fields['sections'].widget = forms.CheckboxSelectMultiple(choices=self.fields['sections'].widget.choices)
 
 
+LocalizedArticleContentFormSet = inlineformset_factory(Article, LocalizedArticleContent,
+    fields=('lang', 'title'), extra=len(settings.LANGUAGES), max_num=len(settings.LANGUAGES),
+    can_delete=False, form=BaseLocalizedForm, formset=BaseLocalizedFormSet)
+
+
 ARTICLE_ADDING_FORMS = {
-    0: (OverviewArticleForm, NullForm),
+    0: (OverviewArticleForm, LocalizedArticleContentFormSet),
     1: (NullForm, NullForm),
     2: (NullForm, NullForm),
     3: (NullForm, NullForm),

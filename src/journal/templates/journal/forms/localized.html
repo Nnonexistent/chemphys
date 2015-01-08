@@ -1,0 +1,23 @@
+{% load i18n %}
+
+{{ formset.management_form }}
+<div class="row">
+{% for form in formset %}
+    <div class="col-md-{{ formset.col_md }}">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                {% for lang_code, lang_name in LANGUAGES %}
+                    {% if lang_code == form.initial.lang %}{{ lang_name }}{% endif %}
+                {% endfor %}
+                </h4>
+            </div>
+            <div class="panel-body">
+            {% language form.initial.lang %}
+                {{ form }}
+            {% endlanguage %}
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>

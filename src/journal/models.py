@@ -277,7 +277,7 @@ class Article(BaseLocalizedObject):
 
     senders = models.ManyToManyField(LocalizedUser, verbose_name=_(u'Senders'), blank=True)
     issue = models.ForeignKey('Issue', null=True, blank=True)
-    sections = models.ManyToManyField('Section', blank=True)
+    sections = models.ManyToManyField(Section, blank=True)
 
     class Meta:
         ordering = ['date_in']
