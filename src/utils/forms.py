@@ -27,7 +27,7 @@ class BootstrapForm(forms.ModelForm):
     def as_div(self):
         # FIXME: find a better way
         for field in self.fields.itervalues():
-            if isinstance(field, forms.BooleanField):
+            if isinstance(field.widget, (forms.CheckboxInput, forms.CheckboxSelectMultiple)):
                 continue
             attrs = field.widget.attrs
             css_classes = attrs.get('class', '').split()
@@ -52,6 +52,9 @@ class NullForm(object):
 
     def save(self, *args, **kwargs):
         return self.instance
+
+    def save_m2m(self, *args, **kwargs):
+        return
 
     def __unicode__(self):
         return u''

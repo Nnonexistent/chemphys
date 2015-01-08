@@ -143,7 +143,7 @@ def adding_article(request, article_id, step):
     step = int(step)
     final = (step == 3)
     article = get_object_or_404(Article, id=article_id, senders=request.user, status__in=ARTICLE_ADDING_STATUSES, status__gte=step)
-    Form, FormSet = ARTICLE_ADDING_FORMS[article.status]
+    Form, FormSet = ARTICLE_ADDING_FORMS[step]
 
     if request.method == 'POST':
         form = Form(request.POST, request.FILES, instance=article)
@@ -159,6 +159,7 @@ def adding_article(request, article_id, step):
                 article.status = step + 1
                 messages.info(request, _(u'Article draft was updated.'))
                 continue_url = reverse('adding_article', args=(article_id, article.status))
+            form.save_m2m()
             article.save()
             return HttpResponseRedirect(continue_url)
     else:

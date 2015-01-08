@@ -9,7 +9,7 @@ from django.utils.translation import ugettext as _
 from django.db import transaction
 
 from utils.forms import BootstrapForm, NullForm
-from journal.models import Author, LocalizedName, LocalizedUser, PositionInOrganization, Organization, OrganizationLocalizedContent
+from journal.models import Author, LocalizedName, LocalizedUser, PositionInOrganization, Organization, OrganizationLocalizedContent, Article
 
 
 class AuthorEditForm(BootstrapForm):
@@ -163,8 +163,19 @@ PIOFormSet = inlineformset_factory(LocalizedUser, PositionInOrganization, fields
     extra=0, can_delete=True, form=PIOForm, formset=BasePIOFormSet)
 
 
+class OverviewArticleForm(BootstrapForm):
+    class Meta:
+        model = Article
+        fields = ('sections', 'image')
+
+    def __init__(self, *args, **kwargs):
+        super(OverviewArticleForm, self).__init__(*args, **kwargs)
+        self.fields['sections'].help_text = ''
+        self.fields['sections'].widget = forms.CheckboxSelectMultiple(choices=self.fields['sections'].widget.choices)
+
+
 ARTICLE_ADDING_FORMS = {
-    0: (NullForm, NullForm),
+    0: (OverviewArticleForm, NullForm),
     1: (NullForm, NullForm),
     2: (NullForm, NullForm),
     3: (NullForm, NullForm),
