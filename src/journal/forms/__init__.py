@@ -9,8 +9,8 @@ from django.utils.translation import ugettext as _
 from django.db import transaction
 
 from utils.forms import BootstrapForm, NullForm
+from utils.localized import BaseLocalizedForm, BaseLocalizedFormSet
 from journal.models import Author, LocalizedName, LocalizedUser, PositionInOrganization, Organization, OrganizationLocalizedContent, Article, LocalizedArticleContent
-from journal.forms.localized import BaseLocalizedForm, BaseLocalizedFormSet
 
 
 class AuthorEditForm(BootstrapForm):
