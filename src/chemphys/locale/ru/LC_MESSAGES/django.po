@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-08 12:28+0300\n"
-"PO-Revision-Date: 2015-01-08 12:49+0300\n"
-"Last-Translator: Nik Sergievskiy <nnonexistent@gmail.com>\n"
+"PO-Revision-Date: 2015-01-09 00:54+0300\n"
+"Last-Translator: Elena Sergievska <skubird@gmail.com>\n"
 "Language-Team: \n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -56,15 +56,15 @@ msgstr "Удалить?"
 
 #: templates/base.html:11
 msgid "Физико-химическая кинетика в газовой динамике"
-msgstr ""
+msgstr "Физико-химическая кинетика в газовой динамике"
 
 #: templates/base.html:78
 msgid "Физико-химическая<br />кинетика"
-msgstr ""
+msgstr "Физико-химическая<br />кинетика"
 
 #: templates/base.html:80
 msgid "в газовой<br />динамике"
-msgstr ""
+msgstr "в газовой<br />динамике"
 
 #: templates/base.html:99
 msgid "Contents"

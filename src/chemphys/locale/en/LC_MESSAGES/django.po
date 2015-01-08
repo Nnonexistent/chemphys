@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-08 12:28+0300\n"
-"PO-Revision-Date: 2015-01-09 00:45+0300\n"
+"PO-Revision-Date: 2015-01-09 00:54+0300\n"
 "Last-Translator: Elena Sergievska <skubird@gmail.com>\n"
 "Language-Team: Chemphys <skubird@gmail.com>\n"
 "Language: en\n"
@@ -31,92 +31,92 @@ msgstr "Django site admin"
 
 #: templates/admin/base_site.html:9
 msgid "Journal administration"
-msgstr ""
+msgstr "Journal administration"
 
 #: templates/admin/edit_inline/stacked.html:9
 msgid "View on site"
-msgstr ""
+msgstr "View on site"
 
 #: templates/admin/edit_inline/stacked.html:26
 #: templates/admin/edit_inline/tabular.html:74
 msgid "Remove"
-msgstr ""
+msgstr "Remove"
 
 #: templates/admin/edit_inline/stacked.html:27
 #: templates/admin/edit_inline/tabular.html:73
 #, python-format
 msgid "Add another %(verbose_name)s"
-msgstr ""
+msgstr "Add another %(verbose_name)s"
 
 #: templates/admin/edit_inline/tabular.html:17
 msgid "Delete?"
-msgstr ""
+msgstr "Delete?"
 
 #: templates/base.html:11
 msgid "Физико-химическая кинетика в газовой динамике"
-msgstr ""
+msgstr "Physical-Chemical Kinetics in Gas Dynamics"
 
 #: templates/base.html:78
 msgid "Физико-химическая<br />кинетика"
-msgstr ""
+msgstr "Physical-Chemical<br />Kinetics"
 
 #: templates/base.html:80
 msgid "в газовой<br />динамике"
-msgstr ""
+msgstr "in Gas<br />Dynamics"
 
 #: templates/base.html:99
 msgid "Contents"
-msgstr ""
+msgstr "Contents"
 
 #: templates/base.html:108
 msgid "Advanced Search"
-msgstr ""
+msgstr "Advanced Search"
 
 #: templates/base.html:109
 msgid "Search"
-msgstr ""
+msgstr "Search"
 
 #: templates/base.html:134
 msgid "Институт Механики МГУ"
-msgstr ""
+msgstr "Institute of Mechanics of Moscow State University, Russia"
 
 #: templates/base.html:137
 msgid "Свидетельство СМИ: Эл № 77-6360 от 10 июля 2002 г."
-msgstr ""
+msgstr "Certificate of Mass Media Registration: digital № 77-6360, Jun. 10, 2002."
 
 #: templates/base.html:138
 msgid "Журнал издается с 2003 года"
-msgstr ""
+msgstr "Published since 2003"
 
 #: templates/base.html:139
 msgid "Периодичность: 4 выпуска в год"
-msgstr ""
+msgstr "4 issues per year"
 
 #: templates/index.html:6
 #, python-format
 msgid "You are logged in as %(user)s"
-msgstr ""
+msgstr "You are logged in as %(user)s"
 
 #: templates/index.html:6
 msgid "Logout"
-msgstr ""
+msgstr "Logout"
 
 #: templates/index.html:7
 msgid "Edit profile"
-msgstr ""
+msgstr "Edit profile"
 
 #: templates/index.html:8
 msgid "Add article"
-msgstr ""
+msgstr "Add article"
 
 #: templates/index.html:10
 msgid "Unpublished articles"
-msgstr ""
+msgstr "Unpublished articles"
 
 #: templates/index.html:27
 msgid "Administration"
-msgstr ""
+msgstr "Administration"
 
 #: templates/index.html:30
 msgid "Login as author"
-msgstr ""
+msgstr "Login as author"

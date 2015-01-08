@@ -3,339 +3,336 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-08 12:28+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2015-01-09 01:12+0300\n"
+"Last-Translator: Elena Sergievska <skubird@gmail.com>\n"
+"Language-Team: Chemphys <skubird@gmail.com>\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.7.1\n"
 
 #: admin.py:44 models.py:121
 msgid "Moderators"
-msgstr ""
+msgstr "Модераторы"
 
 #: admin.py:50 admin.py:251 models.py:285 templates/journal/author.html:10
 #: templates/journal/org.html:10
 msgid "Articles"
-msgstr ""
+msgstr "Статьи"
 
 #: admin.py:70
 msgid "Moderated sections"
-msgstr ""
+msgstr "Модерируемые разделы"
 
 #: admin.py:76 admin.py:128 models.py:120 models.py:194 models.py:411
 msgid "Name"
-msgstr ""
+msgstr "Имя"
 
 #: admin.py:102
 msgid "Site"
-msgstr ""
+msgstr "Сайт"
 
 #: admin.py:201 models.py:326
 msgid "Title"
-msgstr ""
+msgstr "Название"
 
 #: admin.py:211 models.py:209 templates/journal/org.html:9
 msgid "Authors"
-msgstr ""
+msgstr "Авторы"
 
 #: admin.py:224 models.py:396 models.py:439
 msgid "Reviews"
-msgstr ""
+msgstr "Рецензии"
 
 #: forms.py:51 templates/journal/edit_author.html:78
 msgid "Add new organization"
-msgstr ""
+msgstr "Добавить новую огранизацию"
 
 #: forms.py:81
 msgid "This field is required if new organization specified."
-msgstr ""
+msgstr "Это обязательное поле для новой организации"
 
 #: forms.py:158
 msgid "This organization is already used."
-msgstr ""
+msgstr "Такая организация уже есть в системе"
 
 #: models.py:14
 msgid "Adding / Overview"
-msgstr ""
+msgstr "Добавить статью / Общая информация"
 
 #: models.py:15
 msgid "Adding / Abstract"
-msgstr ""
+msgstr "Добавить статью / Абстракт"
 
 #: models.py:16
 msgid "Adding / Authors"
-msgstr ""
+msgstr "Добавить статью  / Авторы"
 
 #: models.py:17
 msgid "Adding / Media"
-msgstr ""
+msgstr "Добавить статью / Медиа-файлы"
 
 #: models.py:18 models.py:38
 msgid "New"
-msgstr ""
+msgstr "Новая статья"
 
 #: models.py:19 models.py:33 models.py:39
 msgid "Rejected"
-msgstr ""
+msgstr "Отклонена"
 
 #: models.py:20
 msgid "In review"
-msgstr ""
+msgstr "Проверяется"
 
 #: models.py:21
 msgid "Reviewed"
-msgstr ""
+msgstr "Проверена"
 
 #: models.py:22
 msgid "In rework"
-msgstr ""
+msgstr "На перераобтке"
 
 #: models.py:23
 msgid "Published"
-msgstr ""
+msgstr "Опубликована"
 
 #: models.py:27
 msgid "Pending"
-msgstr ""
+msgstr "Отправляется"
 
 #: models.py:28
 msgid "Unfinished"
-msgstr ""
+msgstr "Черновик"
 
 #: models.py:29
 msgid "Done"
-msgstr ""
+msgstr "Готово"
 
 #: models.py:32
 msgid "None"
-msgstr ""
+msgstr "Нет"
 
 #: models.py:34
 msgid "Rework required"
-msgstr ""
+msgstr "Требуется переработка"
 
 #: models.py:35 models.py:40
 msgid "Approved"
-msgstr ""
+msgstr "Подтверждена"
 
 #: models.py:43
 msgid "Header"
-msgstr ""
+msgstr "Заголовок"
 
 #: models.py:44
 msgid "Choices field"
-msgstr ""
+msgstr "Поле с выбором вариантов"
 
 #: models.py:45
 msgid "Text string"
-msgstr ""
+msgstr "Текстовая строка"
 
 #: models.py:46
 msgid "Text field"
-msgstr ""
+msgstr "Текстовое поле"
 
 #: models.py:47
 msgid "Checkbox"
-msgstr ""
+msgstr "Чекбокс"
 
 #: models.py:50
 msgid "Generic"
-msgstr ""
+msgstr "Общая информация"
 
 #: models.py:51 models.py:275
 msgid "Image"
-msgstr ""
+msgstr "Изображение"
 
 #: models.py:52
 msgid "Video"
-msgstr ""
+msgstr "Видео"
 
 #: models.py:57
 msgid "Moderation status"
-msgstr ""
+msgstr "Статус проверки"
 
 #: models.py:64
 msgid "Order"
-msgstr ""
+msgstr "Порядок"
 
 #: models.py:125
 msgid "Section"
-msgstr ""
+msgstr "Секция"
 
 #: models.py:126
 msgid "Sections"
-msgstr ""
+msgstr "Секции"
 
 #: models.py:133 models.py:204 models.py:226 models.py:249
 msgid "User"
-msgstr ""
+msgstr "Пользователь"
 
 #: models.py:135
 msgid "Chief editor"
-msgstr ""
+msgstr "Главный редактор"
 
 #: models.py:136
 msgid "Editor"
-msgstr ""
+msgstr "Редактор"
 
 #: models.py:137 models.py:426
 msgid "Reviewer"
-msgstr ""
+msgstr "Рецензент"
 
 #: models.py:141
 msgid "Staff member"
-msgstr ""
+msgstr "Сотрудник"
 
 #: models.py:142
 msgid "Staff members"
-msgstr ""
+msgstr "Сотрудники"
 
 #: models.py:154
 msgid "Short name"
-msgstr ""
+msgstr "Краткое имя"
 
 #: models.py:154
 msgid "for admin site"
-msgstr ""
+msgstr "for admin site"
 
 #: models.py:155
 msgid "Alternative names"
-msgstr ""
+msgstr "Альтернативные имена"
 
 #: models.py:155
 msgid "one per line"
-msgstr ""
+msgstr "one per line"
 
 #: models.py:157
 msgid "Site URL"
-msgstr ""
+msgstr "URL сайта"
 
 #: models.py:159
 msgid "Obsolete"
-msgstr ""
+msgstr "Устаревшая информация"
 
 #: models.py:160
 msgid "Previous versions"
-msgstr ""
+msgstr "Предыдущие версии"
 
 #: models.py:164 models.py:250 models.py:344
 msgid "Organization"
-msgstr ""
+msgstr "Организация"
 
 #: models.py:165 templates/journal/author.html:9
 #: templates/journal/edit_author.html:137
 msgid "Organizations"
-msgstr ""
+msgstr "Организации"
 
 #: models.py:195
 msgid "Country"
-msgstr ""
+msgstr "Страна"
 
 #: models.py:196
 msgid "City"
-msgstr ""
+msgstr "Город"
 
 #: models.py:197
 msgid "Address"
-msgstr ""
+msgstr "Адрес"
 
 #: models.py:208 models.py:343 templates/journal/article.html:51
-#, fuzzy
 msgid "Author"
-msgstr ""
-"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "Автор"
 
 #: models.py:228
 msgid "First name"
-msgstr ""
+msgstr "Имя"
 
 #: models.py:229
 msgid "Last name"
-msgstr ""
+msgstr "Фамилия"
 
 #: models.py:233
 msgid "Localized name"
-msgstr ""
+msgstr "Имя на языке статьи"
 
 #: models.py:234
 msgid "Localized names"
-msgstr ""
+msgstr "Имена на языке статьи"
 
 #: models.py:251
 msgid "Position"
-msgstr ""
+msgstr "Должность"
 
 #: models.py:255
 msgid "Position in organization"
-msgstr ""
+msgstr "Должность в организации"
 
 #: models.py:256
 msgid "Position in organizations"
-msgstr ""
+msgstr "Должность в организация"
 
 #: models.py:269 models.py:397 models.py:427
 msgid "Status"
-msgstr ""
+msgstr "Статус"
 
 #: models.py:270
 msgid "Date in"
-msgstr ""
+msgstr "В системе с"
 
 #: models.py:271
 msgid "Publish date"
-msgstr ""
+msgstr "Дата публикации"
 
 #: models.py:272
 msgid "Old number"
-msgstr ""
+msgstr "Старый номер"
 
 #: models.py:273
 msgid "to link consistency with old articles"
-msgstr ""
+msgstr "чтобы работали ссылки в старых статьях"
 
 #: models.py:276
 msgid "Content"
-msgstr ""
+msgstr "Содержимое"
 
 #: models.py:278
 msgid "Senders"
-msgstr ""
+msgstr "Отправители"
 
 #: models.py:284
 msgid "Article"
-msgstr ""
+msgstr "Статья"
 
 #: models.py:288
 #, python-format
 msgid "Article %s"
-msgstr ""
+msgstr "Статьи %s"
 
 #: models.py:288
 msgid "New article"
-msgstr ""
+msgstr "Новая статья"
 
 #: models.py:327
 msgid "Abstract"
-msgstr ""
+msgstr "Абстракт"
 
 #: models.py:328
 msgid "Keywords"
-msgstr ""
+msgstr "Ключевые слова"
 
 #: models.py:329 templates/journal/article.html:29
 msgid "References"
-msgstr ""
+msgstr "Ссылки"
 
 #: models.py:333 models.py:334
 msgid "Localized article content"
@@ -348,35 +345,35 @@ msgstr ""
 
 #: models.py:349
 msgid "Article author"
-msgstr ""
+msgstr "Автор статьи"
 
 #: models.py:350
 msgid "Article authors"
-msgstr ""
+msgstr "Авторы статьи"
 
 #: models.py:360
 msgid "Attach type"
-msgstr ""
+msgstr "Тип вложения"
 
 #: models.py:361 models.py:380 models.py:447
 msgid "File"
-msgstr ""
+msgstr "Файл"
 
 #: models.py:362 models.py:448
 msgid "Comment"
-msgstr ""
+msgstr "Комментарий"
 
 #: models.py:363 models.py:379 models.py:395
 msgid "Date created"
-msgstr ""
+msgstr "Дата создания"
 
 #: models.py:368
 msgid "Article attach"
-msgstr ""
+msgstr "Вложение к статье"
 
 #: models.py:369
 msgid "Article attaches"
-msgstr ""
+msgstr "Вложение к статьям"
 
 #: models.py:373
 #, python-format
@@ -385,15 +382,15 @@ msgstr ""
 
 #: models.py:381
 msgid "Staff comment"
-msgstr ""
+msgstr "Комментарий"
 
 #: models.py:385
 msgid "Article source"
-msgstr ""
+msgstr "Источник статьи"
 
 #: models.py:386
 msgid "Article sources"
-msgstr ""
+msgstr "Источники статьи"
 
 #: models.py:389
 #, python-format
@@ -402,7 +399,7 @@ msgstr ""
 
 #: models.py:398
 msgid "Text"
-msgstr ""
+msgstr "Текст"
 
 #: models.py:402
 msgid "Article resolution"
@@ -419,11 +416,11 @@ msgstr ""
 
 #: models.py:410
 msgid "Field type"
-msgstr ""
+msgstr "Тип поля"
 
 #: models.py:412
 msgid "Description"
-msgstr ""
+msgstr "Описание"
 
 #: models.py:413
 msgid "Choices"
@@ -431,15 +428,15 @@ msgstr ""
 
 #: models.py:417
 msgid "Review field"
-msgstr ""
+msgstr "Поле для рецензии"
 
 #: models.py:418
 msgid "Review fields"
-msgstr ""
+msgstr "Поле для рецензий"
 
 #: models.py:428
 msgid "Created"
-msgstr ""
+msgstr "Создано"
 
 #: models.py:430
 msgid "Field values"
@@ -447,11 +444,11 @@ msgstr ""
 
 #: models.py:432
 msgid "Comment for authors"
-msgstr ""
+msgstr "Комментарий авторов"
 
 #: models.py:433
 msgid "Comment for editors"
-msgstr ""
+msgstr "Комментарий издателей"
 
 #: models.py:434
 msgid "Resolution"
@@ -459,7 +456,7 @@ msgstr ""
 
 #: models.py:438
 msgid "Review"
-msgstr ""
+msgstr "Рецензия"
 
 #: models.py:442
 #, python-format
@@ -481,7 +478,7 @@ msgstr ""
 
 #: models.py:460
 msgid "Number"
-msgstr ""
+msgstr "Номер"
 
 #: models.py:461
 msgid "Volume"
@@ -489,11 +486,11 @@ msgstr ""
 
 #: models.py:462
 msgid "Year"
-msgstr ""
+msgstr "Год"
 
 #: models.py:465 models.py:466 templates/journal/article.html:56
 msgid "Issue"
-msgstr ""
+msgstr "Выпуск"
 
 #: models.py:471
 #, python-format
@@ -507,35 +504,35 @@ msgstr ""
 
 #: templates/journal/add_article.html:9
 msgid "Proceed"
-msgstr ""
+msgstr "Отправить"
 
 #: templates/journal/adding_article.html:9
 msgid "Proceed to next step"
-msgstr ""
+msgstr "Следующий шаг"
 
 #: templates/journal/article.html:23
 msgid "Overview"
-msgstr ""
+msgstr "Общая информация"
 
 #: templates/journal/article.html:26
 msgid "Media"
-msgstr ""
+msgstr "Медиа-файлы"
 
 #: templates/journal/article.html:57
 msgid "Permanent link to this article"
-msgstr ""
+msgstr "Постоянная ссылка на статью"
 
 #: templates/journal/edit_author.html:49
 msgid "Enter organization name"
-msgstr ""
+msgstr "Введите название организации"
 
 #: templates/journal/edit_author.html:144
 msgid "Add Organization"
-msgstr ""
+msgstr "Добавить организацию"
 
 #: templates/journal/edit_author.html:147
 msgid "Save changes"
-msgstr ""
+msgstr "Сохранить изменения"
 
 #: templates/journal/mail/auth.txt:2
 #, python-format
@@ -548,36 +545,46 @@ msgid ""
 "%(link)s\n"
 "\n"
 msgstr ""
+"\n"
+"Здравствуйте,\n"
+"\n"
+"чтобы войти как автор на http://chemphys.edu.ru/, перейдите по следующей "
+"ссылке:\n"
+"%(link)s\n"
+"\n"
 
 #: templates/journal/org.html:20
 #, python-format
 msgid "One article"
 msgid_plural "%(count)s articles"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%(count)s статья"
+msgstr[1] "%(count)s статьи"
+msgstr[2] "%(count)s статей"
 
 #: views.py:19
 msgid "Index"
-msgstr ""
+msgstr "Оглавление"
 
 #: views.py:88
 msgid "Profile was updated"
-msgstr ""
+msgstr "Профиль был обновлен"
 
 #: views.py:96
 msgid "Edit profile"
-msgstr ""
+msgstr "Редактировать профиль"
 
 #: views.py:128 views.py:159
 msgid "Add article"
-msgstr ""
+msgstr "Добавить статью"
 
 #: views.py:146
 msgid ""
 "Thank you for submission. Your article will be reviewed by our staff. We "
 "will notify you soon about progress."
 msgstr ""
+"Статья отправлена на проверку. Мы будем уведомлять вас по почте о том, "
+"как обстоят дела. Спасибо!"
 
 #: views.py:150
 msgid "Article draft was updated."
-msgstr ""
+msgstr "Черновик статьи был обновлён."

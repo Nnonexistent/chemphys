@@ -3,537 +3,535 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-08 12:28+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2015-01-09 00:57+0300\n"
+"Last-Translator: Elena Sergievska <skubird@gmail.com>\n"
+"Language-Team: Chemphyes <skubird@gmail.com>\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.7.1\n"
 
 #: admin.py:44 models.py:121
 msgid "Moderators"
-msgstr ""
+msgstr "Moderators"
 
 #: admin.py:50 admin.py:251 models.py:285 templates/journal/author.html:10
 #: templates/journal/org.html:10
 msgid "Articles"
-msgstr ""
+msgstr "Articles"
 
 #: admin.py:70
 msgid "Moderated sections"
-msgstr ""
+msgstr "Moderated sections"
 
 #: admin.py:76 admin.py:128 models.py:120 models.py:194 models.py:411
 msgid "Name"
-msgstr ""
+msgstr "Name"
 
 #: admin.py:102
 msgid "Site"
-msgstr ""
+msgstr "Site"
 
 #: admin.py:201 models.py:326
 msgid "Title"
-msgstr ""
+msgstr "Title"
 
 #: admin.py:211 models.py:209 templates/journal/org.html:9
 msgid "Authors"
-msgstr ""
+msgstr "Authors"
 
 #: admin.py:224 models.py:396 models.py:439
 msgid "Reviews"
-msgstr ""
+msgstr "Reviews"
 
 #: forms.py:51 templates/journal/edit_author.html:78
 msgid "Add new organization"
-msgstr ""
+msgstr "Add new organization"
 
 #: forms.py:81
 msgid "This field is required if new organization specified."
-msgstr ""
+msgstr "This field is required if new organization specified."
 
 #: forms.py:158
 msgid "This organization is already used."
-msgstr ""
+msgstr "This organization is already used."
 
 #: models.py:14
 msgid "Adding / Overview"
-msgstr ""
+msgstr "Adding / Overview"
 
 #: models.py:15
 msgid "Adding / Abstract"
-msgstr ""
+msgstr "Adding / Abstract"
 
 #: models.py:16
 msgid "Adding / Authors"
-msgstr ""
+msgstr "Adding / Authors"
 
 #: models.py:17
 msgid "Adding / Media"
-msgstr ""
+msgstr "Adding / Media"
 
 #: models.py:18 models.py:38
 msgid "New"
-msgstr ""
+msgstr "New"
 
 #: models.py:19 models.py:33 models.py:39
 msgid "Rejected"
-msgstr ""
+msgstr "Rejected"
 
 #: models.py:20
 msgid "In review"
-msgstr ""
+msgstr "In review"
 
 #: models.py:21
 msgid "Reviewed"
-msgstr ""
+msgstr "Reviewed"
 
 #: models.py:22
 msgid "In rework"
-msgstr ""
+msgstr "In rework"
 
 #: models.py:23
 msgid "Published"
-msgstr ""
+msgstr "Published"
 
 #: models.py:27
 msgid "Pending"
-msgstr ""
+msgstr "Pending"
 
 #: models.py:28
 msgid "Unfinished"
-msgstr ""
+msgstr "Unfinished"
 
 #: models.py:29
 msgid "Done"
-msgstr ""
+msgstr "Done"
 
 #: models.py:32
 msgid "None"
-msgstr ""
+msgstr "None"
 
 #: models.py:34
 msgid "Rework required"
-msgstr ""
+msgstr "Rework required"
 
 #: models.py:35 models.py:40
 msgid "Approved"
-msgstr ""
+msgstr "Approved"
 
 #: models.py:43
 msgid "Header"
-msgstr ""
+msgstr "Header"
 
 #: models.py:44
 msgid "Choices field"
-msgstr ""
+msgstr "Choices field"
 
 #: models.py:45
 msgid "Text string"
-msgstr ""
+msgstr "Text string"
 
 #: models.py:46
 msgid "Text field"
-msgstr ""
+msgstr "Text field"
 
 #: models.py:47
 msgid "Checkbox"
-msgstr ""
+msgstr "Checkbox"
 
 #: models.py:50
 msgid "Generic"
-msgstr ""
+msgstr "Generic"
 
 #: models.py:51 models.py:275
 msgid "Image"
-msgstr ""
+msgstr "Image"
 
 #: models.py:52
 msgid "Video"
-msgstr ""
+msgstr "Video"
 
 #: models.py:57
 msgid "Moderation status"
-msgstr ""
+msgstr "Moderation status"
 
 #: models.py:64
 msgid "Order"
-msgstr ""
+msgstr "Order"
 
 #: models.py:125
 msgid "Section"
-msgstr ""
+msgstr "Section"
 
 #: models.py:126
 msgid "Sections"
-msgstr ""
+msgstr "Sections"
 
 #: models.py:133 models.py:204 models.py:226 models.py:249
 msgid "User"
-msgstr ""
+msgstr "User"
 
 #: models.py:135
 msgid "Chief editor"
-msgstr ""
+msgstr "Chief editor"
 
 #: models.py:136
 msgid "Editor"
-msgstr ""
+msgstr "Editor"
 
 #: models.py:137 models.py:426
 msgid "Reviewer"
-msgstr ""
+msgstr "Reviewer"
 
 #: models.py:141
 msgid "Staff member"
-msgstr ""
+msgstr "Staff member"
 
 #: models.py:142
 msgid "Staff members"
-msgstr ""
+msgstr "Staff members"
 
 #: models.py:154
 msgid "Short name"
-msgstr ""
+msgstr "Short name"
 
 #: models.py:154
 msgid "for admin site"
-msgstr ""
+msgstr "for admin site"
 
 #: models.py:155
 msgid "Alternative names"
-msgstr ""
+msgstr "Alternative names"
 
 #: models.py:155
 msgid "one per line"
-msgstr ""
+msgstr "one per line"
 
 #: models.py:157
 msgid "Site URL"
-msgstr ""
+msgstr "Site URL"
 
 #: models.py:159
 msgid "Obsolete"
-msgstr ""
+msgstr "Obsolete"
 
 #: models.py:160
 msgid "Previous versions"
-msgstr ""
+msgstr "Previous versions"
 
 #: models.py:164 models.py:250 models.py:344
 msgid "Organization"
-msgstr ""
+msgstr "Organization"
 
 #: models.py:165 templates/journal/author.html:9
 #: templates/journal/edit_author.html:137
 msgid "Organizations"
-msgstr ""
+msgstr "Organizations"
 
 #: models.py:195
 msgid "Country"
-msgstr ""
+msgstr "Country"
 
 #: models.py:196
 msgid "City"
-msgstr ""
+msgstr "City"
 
 #: models.py:197
 msgid "Address"
-msgstr ""
+msgstr "Address"
 
 #: models.py:208 models.py:343 templates/journal/article.html:51
-#, fuzzy
 msgid "Author"
-msgstr ""
-"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
-"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+msgstr "Author"
 
 #: models.py:228
 msgid "First name"
-msgstr ""
+msgstr "First name"
 
 #: models.py:229
 msgid "Last name"
-msgstr ""
+msgstr "Last name"
 
 #: models.py:233
 msgid "Localized name"
-msgstr ""
+msgstr "Localized name"
 
 #: models.py:234
 msgid "Localized names"
-msgstr ""
+msgstr "Localized names"
 
 #: models.py:251
 msgid "Position"
-msgstr ""
+msgstr "Position"
 
 #: models.py:255
 msgid "Position in organization"
-msgstr ""
+msgstr "Position in organization"
 
 #: models.py:256
 msgid "Position in organizations"
-msgstr ""
+msgstr "Position in organizations"
 
 #: models.py:269 models.py:397 models.py:427
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: models.py:270
 msgid "Date in"
-msgstr ""
+msgstr "Date in"
 
 #: models.py:271
 msgid "Publish date"
-msgstr ""
+msgstr "Publish date"
 
 #: models.py:272
 msgid "Old number"
-msgstr ""
+msgstr "Old number"
 
 #: models.py:273
 msgid "to link consistency with old articles"
-msgstr ""
+msgstr "to link consistency with old articles"
 
 #: models.py:276
 msgid "Content"
-msgstr ""
+msgstr "Content"
 
 #: models.py:278
 msgid "Senders"
-msgstr ""
+msgstr "Senders"
 
 #: models.py:284
 msgid "Article"
-msgstr ""
+msgstr "Article"
 
 #: models.py:288
 #, python-format
 msgid "Article %s"
-msgstr ""
+msgstr "Article %s"
 
 #: models.py:288
 msgid "New article"
-msgstr ""
+msgstr "New article"
 
 #: models.py:327
 msgid "Abstract"
-msgstr ""
+msgstr "Abstract"
 
 #: models.py:328
 msgid "Keywords"
-msgstr ""
+msgstr "Keywords"
 
 #: models.py:329 templates/journal/article.html:29
 msgid "References"
-msgstr ""
+msgstr "References"
 
 #: models.py:333 models.py:334
 msgid "Localized article content"
-msgstr ""
+msgstr "Localized article content"
 
 #: models.py:338
 #, python-format
 msgid "Loclized content for %s"
-msgstr ""
+msgstr "Loclized content for %s"
 
 #: models.py:349
 msgid "Article author"
-msgstr ""
+msgstr "Article author"
 
 #: models.py:350
 msgid "Article authors"
-msgstr ""
+msgstr "Article authors"
 
 #: models.py:360
 msgid "Attach type"
-msgstr ""
+msgstr "Attach type"
 
 #: models.py:361 models.py:380 models.py:447
 msgid "File"
-msgstr ""
+msgstr "File"
 
 #: models.py:362 models.py:448
 msgid "Comment"
-msgstr ""
+msgstr "Comment"
 
 #: models.py:363 models.py:379 models.py:395
 msgid "Date created"
-msgstr ""
+msgstr "Date created"
 
 #: models.py:368
 msgid "Article attach"
-msgstr ""
+msgstr "Article attach"
 
 #: models.py:369
 msgid "Article attaches"
-msgstr ""
+msgstr "Article attaches"
 
 #: models.py:373
 #, python-format
 msgid "Attach for %s"
-msgstr ""
+msgstr "Attach for %s"
 
 #: models.py:381
 msgid "Staff comment"
-msgstr ""
+msgstr "Staff comment"
 
 #: models.py:385
 msgid "Article source"
-msgstr ""
+msgstr "Article source"
 
 #: models.py:386
 msgid "Article sources"
-msgstr ""
+msgstr "Article sources"
 
 #: models.py:389
 #, python-format
 msgid "Source of %s"
-msgstr ""
+msgstr "Source of %s"
 
 #: models.py:398
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: models.py:402
 msgid "Article resolution"
-msgstr ""
+msgstr "Article resolution"
 
 #: models.py:403
 msgid "Article resolutions"
-msgstr ""
+msgstr "Article resolutions"
 
 #: models.py:406
 #, python-format
 msgid "Resolution for %s"
-msgstr ""
+msgstr "Resolution for %s"
 
 #: models.py:410
 msgid "Field type"
-msgstr ""
+msgstr "Field type"
 
 #: models.py:412
 msgid "Description"
-msgstr ""
+msgstr "Description"
 
 #: models.py:413
 msgid "Choices"
-msgstr ""
+msgstr "Choices"
 
 #: models.py:417
 msgid "Review field"
-msgstr ""
+msgstr "Review field"
 
 #: models.py:418
 msgid "Review fields"
-msgstr ""
+msgstr "Review fields"
 
 #: models.py:428
 msgid "Created"
-msgstr ""
+msgstr "Created"
 
 #: models.py:430
 msgid "Field values"
-msgstr ""
+msgstr "Field values"
 
 #: models.py:432
 msgid "Comment for authors"
-msgstr ""
+msgstr "Comment for authors"
 
 #: models.py:433
 msgid "Comment for editors"
-msgstr ""
+msgstr "Comment for editors"
 
 #: models.py:434
 msgid "Resolution"
-msgstr ""
+msgstr "Resolution"
 
 #: models.py:438
 msgid "Review"
-msgstr ""
+msgstr "Review"
 
 #: models.py:442
 #, python-format
 msgid "Review for %s"
-msgstr ""
+msgstr "Review for %s"
 
 #: models.py:452
 msgid "Review file"
-msgstr ""
+msgstr "Review file"
 
 #: models.py:453
 msgid "Review files"
-msgstr ""
+msgstr "Review files"
 
 #: models.py:456
 #, python-format
 msgid "File for review for %s"
-msgstr ""
+msgstr "File for review for %s"
 
 #: models.py:460
 msgid "Number"
-msgstr ""
+msgstr "Number"
 
 #: models.py:461
 msgid "Volume"
-msgstr ""
+msgstr "Volume"
 
 #: models.py:462
 msgid "Year"
-msgstr ""
+msgstr "Year"
 
 #: models.py:465 models.py:466 templates/journal/article.html:56
 msgid "Issue"
-msgstr ""
+msgstr "Issue"
 
 #: models.py:471
 #, python-format
 msgid "Volume %(volume)s, issue %(number)s, %(year)s year"
-msgstr ""
+msgstr "Volume %(volume)s, issue %(number)s, %(year)s year"
 
 #: models.py:473
 #, python-format
 msgid "Volume %(volume)s, %(year)s year"
-msgstr ""
+msgstr "Volume %(volume)s, %(year)s year"
 
 #: templates/journal/add_article.html:9
 msgid "Proceed"
-msgstr ""
+msgstr "Proceed"
 
 #: templates/journal/adding_article.html:9
 msgid "Proceed to next step"
-msgstr ""
+msgstr "Proceed to next step"
 
 #: templates/journal/article.html:23
 msgid "Overview"
-msgstr ""
+msgstr "Overview"
 
 #: templates/journal/article.html:26
 msgid "Media"
-msgstr ""
+msgstr "Media"
 
 #: templates/journal/article.html:57
 msgid "Permanent link to this article"
-msgstr ""
+msgstr "Permanent link to this article"
 
 #: templates/journal/edit_author.html:49
 msgid "Enter organization name"
-msgstr ""
+msgstr "Enter organization name"
 
 #: templates/journal/edit_author.html:144
 msgid "Add Organization"
-msgstr ""
+msgstr "Add Organization"
 
 #: templates/journal/edit_author.html:147
 msgid "Save changes"
-msgstr ""
+msgstr "Save changes"
 
 #: templates/journal/mail/auth.txt:2
 #, python-format
@@ -546,36 +544,45 @@ msgid ""
 "%(link)s\n"
 "\n"
 msgstr ""
+"\n"
+"Hello,\n"
+"\n"
+"to enter on http://chemphys.edu.ru/ as author please proceed to the "
+"following link:\n"
+"%(link)s\n"
+"\n"
 
 #: templates/journal/org.html:20
 #, python-format
 msgid "One article"
 msgid_plural "%(count)s articles"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "One article"
+msgstr[1] "%(count)s articles"
 
 #: views.py:19
 msgid "Index"
-msgstr ""
+msgstr "Index"
 
 #: views.py:88
 msgid "Profile was updated"
-msgstr ""
+msgstr "Profile was updated"
 
 #: views.py:96
 msgid "Edit profile"
-msgstr ""
+msgstr "Edit profile"
 
 #: views.py:128 views.py:159
 msgid "Add article"
-msgstr ""
+msgstr "Add article"
 
 #: views.py:146
 msgid ""
 "Thank you for submission. Your article will be reviewed by our staff. We "
 "will notify you soon about progress."
 msgstr ""
+"Thank you for submission. Your article will be reviewed by our staff. We "
+"will notify you soon about progress."
 
 #: views.py:150
 msgid "Article draft was updated."
-msgstr ""
+msgstr "Article draft was updated."

@@ -3,56 +3,56 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-08 12:28+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2015-01-09 01:15+0300\n"
+"Last-Translator: Elena Sergievska <skubird@gmail.com>\n"
+"Language-Team: Chemphys <skubird@gmail.com>\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.1\n"
 
 #: admin.py:24
 msgid "Link"
-msgstr ""
+msgstr "Link"
 
 #: models.py:9
 msgid "Order"
-msgstr ""
+msgstr "Order"
 
 #: models.py:10
 msgid "URL part"
-msgstr ""
+msgstr "URL part"
 
 #: models.py:11
 msgid "Visible in menu"
-msgstr ""
+msgstr "Visible in menu"
 
 #: models.py:15
 msgid "Page"
-msgstr ""
+msgstr "Page"
 
 #: models.py:16
 msgid "Pages"
-msgstr ""
+msgstr "Pages"
 
 #: models.py:45
 msgid "Title"
-msgstr ""
+msgstr "Title"
 
 #: models.py:46
 msgid "Content"
-msgstr ""
+msgstr "Content"
 
 #: models.py:50
 msgid "Localized page content"
-msgstr ""
+msgstr "Localized page content"
 
 #: models.py:51
 msgid "Localized page contents"
-msgstr ""
+msgstr "Localized page contents"
