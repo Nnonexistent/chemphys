@@ -1,0 +1,583 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-01-08 12:28+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: admin.py:44 models.py:121
+msgid "Moderators"
+msgstr ""
+
+#: admin.py:50 admin.py:251 models.py:285 templates/journal/author.html:10
+#: templates/journal/org.html:10
+msgid "Articles"
+msgstr ""
+
+#: admin.py:70
+msgid "Moderated sections"
+msgstr ""
+
+#: admin.py:76 admin.py:128 models.py:120 models.py:194 models.py:411
+msgid "Name"
+msgstr ""
+
+#: admin.py:102
+msgid "Site"
+msgstr ""
+
+#: admin.py:201 models.py:326
+msgid "Title"
+msgstr ""
+
+#: admin.py:211 models.py:209 templates/journal/org.html:9
+msgid "Authors"
+msgstr ""
+
+#: admin.py:224 models.py:396 models.py:439
+msgid "Reviews"
+msgstr ""
+
+#: forms.py:51 templates/journal/edit_author.html:78
+msgid "Add new organization"
+msgstr ""
+
+#: forms.py:81
+msgid "This field is required if new organization specified."
+msgstr ""
+
+#: forms.py:158
+msgid "This organization is already used."
+msgstr ""
+
+#: models.py:14
+msgid "Adding / Overview"
+msgstr ""
+
+#: models.py:15
+msgid "Adding / Abstract"
+msgstr ""
+
+#: models.py:16
+msgid "Adding / Authors"
+msgstr ""
+
+#: models.py:17
+msgid "Adding / Media"
+msgstr ""
+
+#: models.py:18 models.py:38
+msgid "New"
+msgstr ""
+
+#: models.py:19 models.py:33 models.py:39
+msgid "Rejected"
+msgstr ""
+
+#: models.py:20
+msgid "In review"
+msgstr ""
+
+#: models.py:21
+msgid "Reviewed"
+msgstr ""
+
+#: models.py:22
+msgid "In rework"
+msgstr ""
+
+#: models.py:23
+msgid "Published"
+msgstr ""
+
+#: models.py:27
+msgid "Pending"
+msgstr ""
+
+#: models.py:28
+msgid "Unfinished"
+msgstr ""
+
+#: models.py:29
+msgid "Done"
+msgstr ""
+
+#: models.py:32
+msgid "None"
+msgstr ""
+
+#: models.py:34
+msgid "Rework required"
+msgstr ""
+
+#: models.py:35 models.py:40
+msgid "Approved"
+msgstr ""
+
+#: models.py:43
+msgid "Header"
+msgstr ""
+
+#: models.py:44
+msgid "Choices field"
+msgstr ""
+
+#: models.py:45
+msgid "Text string"
+msgstr ""
+
+#: models.py:46
+msgid "Text field"
+msgstr ""
+
+#: models.py:47
+msgid "Checkbox"
+msgstr ""
+
+#: models.py:50
+msgid "Generic"
+msgstr ""
+
+#: models.py:51 models.py:275
+msgid "Image"
+msgstr ""
+
+#: models.py:52
+msgid "Video"
+msgstr ""
+
+#: models.py:57
+msgid "Moderation status"
+msgstr ""
+
+#: models.py:64
+msgid "Order"
+msgstr ""
+
+#: models.py:125
+msgid "Section"
+msgstr ""
+
+#: models.py:126
+msgid "Sections"
+msgstr ""
+
+#: models.py:133 models.py:204 models.py:226 models.py:249
+msgid "User"
+msgstr ""
+
+#: models.py:135
+msgid "Chief editor"
+msgstr ""
+
+#: models.py:136
+msgid "Editor"
+msgstr ""
+
+#: models.py:137 models.py:426
+msgid "Reviewer"
+msgstr ""
+
+#: models.py:141
+msgid "Staff member"
+msgstr ""
+
+#: models.py:142
+msgid "Staff members"
+msgstr ""
+
+#: models.py:154
+msgid "Short name"
+msgstr ""
+
+#: models.py:154
+msgid "for admin site"
+msgstr ""
+
+#: models.py:155
+msgid "Alternative names"
+msgstr ""
+
+#: models.py:155
+msgid "one per line"
+msgstr ""
+
+#: models.py:157
+msgid "Site URL"
+msgstr ""
+
+#: models.py:159
+msgid "Obsolete"
+msgstr ""
+
+#: models.py:160
+msgid "Previous versions"
+msgstr ""
+
+#: models.py:164 models.py:250 models.py:344
+msgid "Organization"
+msgstr ""
+
+#: models.py:165 templates/journal/author.html:9
+#: templates/journal/edit_author.html:137
+msgid "Organizations"
+msgstr ""
+
+#: models.py:195
+msgid "Country"
+msgstr ""
+
+#: models.py:196
+msgid "City"
+msgstr ""
+
+#: models.py:197
+msgid "Address"
+msgstr ""
+
+#: models.py:208 models.py:343 templates/journal/article.html:51
+#, fuzzy
+msgid "Author"
+msgstr ""
+"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+"#-#-#-#-#  django.pot (PACKAGE VERSION)  #-#-#-#-#\n"
+
+#: models.py:228
+msgid "First name"
+msgstr ""
+
+#: models.py:229
+msgid "Last name"
+msgstr ""
+
+#: models.py:233
+msgid "Localized name"
+msgstr ""
+
+#: models.py:234
+msgid "Localized names"
+msgstr ""
+
+#: models.py:251
+msgid "Position"
+msgstr ""
+
+#: models.py:255
+msgid "Position in organization"
+msgstr ""
+
+#: models.py:256
+msgid "Position in organizations"
+msgstr ""
+
+#: models.py:269 models.py:397 models.py:427
+msgid "Status"
+msgstr ""
+
+#: models.py:270
+msgid "Date in"
+msgstr ""
+
+#: models.py:271
+msgid "Publish date"
+msgstr ""
+
+#: models.py:272
+msgid "Old number"
+msgstr ""
+
+#: models.py:273
+msgid "to link consistency with old articles"
+msgstr ""
+
+#: models.py:276
+msgid "Content"
+msgstr ""
+
+#: models.py:278
+msgid "Senders"
+msgstr ""
+
+#: models.py:284
+msgid "Article"
+msgstr ""
+
+#: models.py:288
+#, python-format
+msgid "Article %s"
+msgstr ""
+
+#: models.py:288
+msgid "New article"
+msgstr ""
+
+#: models.py:327
+msgid "Abstract"
+msgstr ""
+
+#: models.py:328
+msgid "Keywords"
+msgstr ""
+
+#: models.py:329 templates/journal/article.html:29
+msgid "References"
+msgstr ""
+
+#: models.py:333 models.py:334
+msgid "Localized article content"
+msgstr ""
+
+#: models.py:338
+#, python-format
+msgid "Loclized content for %s"
+msgstr ""
+
+#: models.py:349
+msgid "Article author"
+msgstr ""
+
+#: models.py:350
+msgid "Article authors"
+msgstr ""
+
+#: models.py:360
+msgid "Attach type"
+msgstr ""
+
+#: models.py:361 models.py:380 models.py:447
+msgid "File"
+msgstr ""
+
+#: models.py:362 models.py:448
+msgid "Comment"
+msgstr ""
+
+#: models.py:363 models.py:379 models.py:395
+msgid "Date created"
+msgstr ""
+
+#: models.py:368
+msgid "Article attach"
+msgstr ""
+
+#: models.py:369
+msgid "Article attaches"
+msgstr ""
+
+#: models.py:373
+#, python-format
+msgid "Attach for %s"
+msgstr ""
+
+#: models.py:381
+msgid "Staff comment"
+msgstr ""
+
+#: models.py:385
+msgid "Article source"
+msgstr ""
+
+#: models.py:386
+msgid "Article sources"
+msgstr ""
+
+#: models.py:389
+#, python-format
+msgid "Source of %s"
+msgstr ""
+
+#: models.py:398
+msgid "Text"
+msgstr ""
+
+#: models.py:402
+msgid "Article resolution"
+msgstr ""
+
+#: models.py:403
+msgid "Article resolutions"
+msgstr ""
+
+#: models.py:406
+#, python-format
+msgid "Resolution for %s"
+msgstr ""
+
+#: models.py:410
+msgid "Field type"
+msgstr ""
+
+#: models.py:412
+msgid "Description"
+msgstr ""
+
+#: models.py:413
+msgid "Choices"
+msgstr ""
+
+#: models.py:417
+msgid "Review field"
+msgstr ""
+
+#: models.py:418
+msgid "Review fields"
+msgstr ""
+
+#: models.py:428
+msgid "Created"
+msgstr ""
+
+#: models.py:430
+msgid "Field values"
+msgstr ""
+
+#: models.py:432
+msgid "Comment for authors"
+msgstr ""
+
+#: models.py:433
+msgid "Comment for editors"
+msgstr ""
+
+#: models.py:434
+msgid "Resolution"
+msgstr ""
+
+#: models.py:438
+msgid "Review"
+msgstr ""
+
+#: models.py:442
+#, python-format
+msgid "Review for %s"
+msgstr ""
+
+#: models.py:452
+msgid "Review file"
+msgstr ""
+
+#: models.py:453
+msgid "Review files"
+msgstr ""
+
+#: models.py:456
+#, python-format
+msgid "File for review for %s"
+msgstr ""
+
+#: models.py:460
+msgid "Number"
+msgstr ""
+
+#: models.py:461
+msgid "Volume"
+msgstr ""
+
+#: models.py:462
+msgid "Year"
+msgstr ""
+
+#: models.py:465 models.py:466 templates/journal/article.html:56
+msgid "Issue"
+msgstr ""
+
+#: models.py:471
+#, python-format
+msgid "Volume %(volume)s, issue %(number)s, %(year)s year"
+msgstr ""
+
+#: models.py:473
+#, python-format
+msgid "Volume %(volume)s, %(year)s year"
+msgstr ""
+
+#: templates/journal/add_article.html:9
+msgid "Proceed"
+msgstr ""
+
+#: templates/journal/adding_article.html:9
+msgid "Proceed to next step"
+msgstr ""
+
+#: templates/journal/article.html:23
+msgid "Overview"
+msgstr ""
+
+#: templates/journal/article.html:26
+msgid "Media"
+msgstr ""
+
+#: templates/journal/article.html:57
+msgid "Permanent link to this article"
+msgstr ""
+
+#: templates/journal/edit_author.html:49
+msgid "Enter organization name"
+msgstr ""
+
+#: templates/journal/edit_author.html:144
+msgid "Add Organization"
+msgstr ""
+
+#: templates/journal/edit_author.html:147
+msgid "Save changes"
+msgstr ""
+
+#: templates/journal/mail/auth.txt:2
+#, python-format
+msgid ""
+"\n"
+"Hello,\n"
+"\n"
+"to enter on http://chemphys.edu.ru/ as author please proceed to the "
+"following link:\n"
+"%(link)s\n"
+"\n"
+msgstr ""
+
+#: templates/journal/org.html:20
+#, python-format
+msgid "One article"
+msgid_plural "%(count)s articles"
+msgstr[0] ""
+msgstr[1] ""
+
+#: views.py:19
+msgid "Index"
+msgstr ""
+
+#: views.py:88
+msgid "Profile was updated"
+msgstr ""
+
+#: views.py:96
+msgid "Edit profile"
+msgstr ""
+
+#: views.py:128 views.py:159
+msgid "Add article"
+msgstr ""
+
+#: views.py:146
+msgid ""
+"Thank you for submission. Your article will be reviewed by our staff. We "
+"will notify you soon about progress."
+msgstr ""
+
+#: views.py:150
+msgid "Article draft was updated."
+msgstr ""

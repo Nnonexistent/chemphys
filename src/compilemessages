@@ -1,0 +1,12 @@
+#!/bin/bash
+
+cd journal
+../manage.py compilemessages --traceback
+cd ../mailauth
+../manage.py compilemessages --traceback
+cd ../pages
+../manage.py compilemessages --traceback
+cd ../utils
+../manage.py compilemessages --traceback
+cd ../chemphys
+../manage.py compilemessages --traceback

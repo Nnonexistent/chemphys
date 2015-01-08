@@ -1,0 +1,12 @@
+#!/bin/bash
+
+cd journal
+../manage.py makemessages -l ru -l en --traceback
+cd ../mailauth
+../manage.py makemessages -l ru -l en --traceback
+cd ../pages
+../manage.py makemessages -l ru -l en --traceback
+cd ../utils
+../manage.py makemessages -l ru -l en --traceback
+cd ../chemphys
+../manage.py makemessages -l ru -l en --traceback
