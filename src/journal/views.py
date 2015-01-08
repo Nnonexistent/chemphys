@@ -1,3 +1,5 @@
+from collections import OrderedDict
+
 from django.db.models import Q
 from django.shortcuts import render
 from django.utils.translation import ugettext as _
@@ -129,10 +131,18 @@ def add_article(request):
     })
 
 
+ARTICLE_ADDING_TITLES = OrderedDict((
+    (0, _(u'Overview')),
+    (1, _(u'Abstract')),
+    (2, _(u'Authors')),
+    (3, _(u'Media')),
+))
+
+
 def adding_article(request, article_id, step):
     step = int(step)
-    final = step == 3
-    article = get_object_or_404(Article, id=article_id, senders=request.user, status__in=ARTICLE_ADDING_STATUSES)
+    final = (step == 3)
+    article = get_object_or_404(Article, id=article_id, senders=request.user, status__in=ARTICLE_ADDING_STATUSES, status__gte=step)
     Form, FormSet = ARTICLE_ADDING_FORMS[article.status]
 
     if request.method == 'POST':
@@ -156,7 +166,10 @@ def adding_article(request, article_id, step):
         formset = FormSet(instance=article)
 
     return render(request, 'journal/adding_article.html', {
-        'title': _(u'Add article'),
+        'title': u'%s: %s' % (_(u'Add article'), ARTICLE_ADDING_TITLES[step]),
+        'ARTICLE_ADDING_TITLES': ARTICLE_ADDING_TITLES,
+        'step': step,
+        'article': article,
         'form': form,
         'formset': formset,
         'final': final,
