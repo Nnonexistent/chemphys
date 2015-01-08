@@ -62,13 +62,14 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.messages.context_processors.messages"
 )
 
-TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'chemphys', 'templates'),)
+TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'chemphys', 'templates'), )
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'mailauth.backend.MailAuthBackend',
 )
 
+LOCALE_PATHS = (os.path.join(BASE_DIR, 'chemphys', 'locale'), )
 LANGUAGES = (
     ('ru', _('Russian')),
     ('en', _('English')),
