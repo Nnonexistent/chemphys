@@ -11,7 +11,13 @@
         <table class="table">
             {% for article in loc_user.unpublished_articles %}
             <tr>
-                <td><a href="{% url "adding_article" article.id article.status %}">{{ article }}</a></td>
+                <td>
+                    {% if article.adding %}
+                    <a href="{% url "adding_article" article.id article.status %}">{{ article }}</a>
+                    {% else %}
+                    {{ article }}
+                    {% endif %}
+                </td>
                 <td>{{ article.get_status_display }}</td>
             </tr>
             {% endfor %}

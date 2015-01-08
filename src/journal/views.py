@@ -6,8 +6,8 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponseForbidden, JsonResponse
 from django.contrib import messages
 
-from journal.models import Issue, Article, Organization, LocalizedUser
-from journal.forms import AuthorEditForm, LocalizedNameFormSet, PIOFormSet
+from journal.models import Issue, Article, Organization, LocalizedUser, ARTICLE_ADDING_STATUSES
+from journal.forms import AuthorEditForm, LocalizedNameFormSet, PIOFormSet, ARTICLE_ADDING_FORMS
 
 
 def index(request):
@@ -129,7 +129,39 @@ def add_article(request):
     })
 
 
-def adding_article(request, article, step):
+def adding_article(request, article_id, step):
+    step = int(step)
+    article = get_object_or_404(Article, id=article_id, senders=request.user, status__in=ARTICLE_ADDING_STATUSES)
+    Form, FormSet = ARTICLE_ADDING_FORMS[article.status]
+
+    if article.status == 3:
+        final = True
+        continue_url = reverse('index')
+    else:
+        final = False
+        continue_url = reverse('adding_article', args=(article_id, article.status))
+
+    if request.method == 'POST':
+        form = Form(request.POST, request.FILES, instance=article)
+        formset = FormSet(request.POST, instance=article)
+        if form.is_valid() and formset.is_valid():
+            formset.save()
+            article = form.save(commit=False)
+            if final:
+                article.status = 11
+                messages.success(request, _(u'Thank you for submission. Your article will be reviewed by our staff. We will notify you soon about progress.'))
+            else:
+                article.status = step + 1
+                messages.info(request, _(u'Article draft was updated.'))
+            article.save()
+            return HttpResponseRedirect(continue_url)
+    else:
+        form = Form(instance=article)
+        formset = FormSet(instance=article)
+
     return render(request, 'journal/adding_article.html', {
         'title': _(u'Add article'),
+        'form': form,
+        'formset': formset,
+        'final': final,
     })

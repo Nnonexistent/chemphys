@@ -8,7 +8,7 @@ from django.forms.models import inlineformset_factory, BaseInlineFormSet
 from django.utils.translation import ugettext as _
 from django.db import transaction
 
-from utils.forms import BootstrapForm
+from utils.forms import BootstrapForm, NullForm
 from journal.models import Author, LocalizedName, LocalizedUser, PositionInOrganization, Organization, OrganizationLocalizedContent
 
 
@@ -161,3 +161,11 @@ class BasePIOFormSet(BaseInlineFormSet):
 
 PIOFormSet = inlineformset_factory(LocalizedUser, PositionInOrganization, fields=['position'],
     extra=0, can_delete=True, form=PIOForm, formset=BasePIOFormSet)
+
+
+ARTICLE_ADDING_FORMS = {
+    0: (NullForm, NullForm),
+    1: (NullForm, NullForm),
+    2: (NullForm, NullForm),
+    3: (NullForm, NullForm),
+}

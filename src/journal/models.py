@@ -22,6 +22,7 @@ ARTICLE_STATUSES = (
     (15, _(u'In rework')),
     (10, _(u'Published')),
 )
+ARTICLE_ADDING_STATUSES = (0, 1, 2, 3)
 REVIEW_STATUSES = (
     (0, _(u'Pending')),
     (1, _(u'Unfinished')),
@@ -314,6 +315,9 @@ class Article(BaseLocalizedObject):
     @property
     def references(self):
         return self.get_localized('references') or ''
+
+    def adding(self):
+        return self.status in ARTICLE_ADDING_STATUSES
 
 
 class LocalizedArticleContent(BaseLocalizedContent):

@@ -41,3 +41,17 @@ class BootstrapForm(forms.ModelForm):
             row_ender='</div>',
             help_text_html=' <p class="helptext">%s</p>',
             errors_on_separate_row=False)
+
+
+class NullForm(object):
+    def __init__(self, *args, **kwargs):
+        self.instance = kwargs.pop('instance', None)
+
+    def is_valid(self):
+        return True
+
+    def save(self, *args, **kwargs):
+        return self.instance
+
+    def __unicode__(self):
+        return u''
