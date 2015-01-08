@@ -13,15 +13,12 @@
 
 <br />
 <br />
-<br />
 
 <form method="post"{% if form.is_multipart %} enctype="multipart/form-data" {% endif %}>
     {% csrf_token %}
 
-    {{ form }}
-
     {{ formset }}
-
+    {{ form }}
     <button class="btn btn-primary" type="submit" />
         {% trans "Save and proceed to next step" %}
         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
