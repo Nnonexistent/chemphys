@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-01-08 12:28+0300\n"
-"PO-Revision-Date: 2015-01-09 01:16+0300\n"
-"Last-Translator: Elena Sergievska <skubird@gmail.com>\n"
+"PO-Revision-Date: 2015-01-09 12:20+0300\n"
+"Last-Translator: Nik Sergievskiy <nnonexistent@gmail.com>\n"
 "Language-Team: Chemphys <skubird@gmail.com>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -29,11 +29,11 @@ msgstr "Порядок"
 
 #: models.py:10
 msgid "URL part"
-msgstr "URL part"
+msgstr "Часть URL"
 
 #: models.py:11
 msgid "Visible in menu"
-msgstr "Отображение в меню"
+msgstr "Показывать в меню"
 
 #: models.py:15
 msgid "Page"
@@ -53,8 +53,8 @@ msgstr "Содержимое"
 
 #: models.py:50
 msgid "Localized page content"
-msgstr ""
+msgstr "Локализованное содержимое страницы"
 
 #: models.py:51
 msgid "Localized page contents"
-msgstr ""
+msgstr "Локализованное содержимое страниц"
