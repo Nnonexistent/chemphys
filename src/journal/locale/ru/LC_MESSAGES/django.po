@@ -407,7 +407,7 @@ msgstr "Решение по статье"
 
 #: models.py:403
 msgid "Article resolutions"
-msgstr "Рещения по статье"
+msgstr "Решения по статье"
 
 #: models.py:406
 #, python-format

@@ -5,7 +5,7 @@ from django.utils.translation import ugettext as _
 
 from utils.forms import BootstrapForm, NullForm
 from utils.localized import BaseLocalizedForm, BaseLocalizedFormSet
-from journal.models import Article, LocalizedArticleContent
+from journal.models import Article, LocalizedArticleContent, ArticleSource
 
 
 class OverviewArticleForm(BootstrapForm):
@@ -17,6 +17,20 @@ class OverviewArticleForm(BootstrapForm):
         super(OverviewArticleForm, self).__init__(*args, **kwargs)
         self.fields['sections'].help_text = ''
         self.fields['sections'].widget = forms.CheckboxSelectMultiple(choices=self.fields['sections'].widget.choices)
+        try:
+            initial_file = self.instance.articlesource_set.latest().file
+        except ArticleSource.DoesNotExist:
+            initial_file = None
+        self.fields['file'] = forms.FileField(label=_(u'Article file'), required=True, initial=initial_file)
+
+
+
+    def save(self, commit=True):
+        obj = super(OverviewArticleForm, self).save(commit)
+        # We believe article is already has an id
+        if self.files.get('file'):
+            obj.articlesource_set.add(ArticleSource.objects.create(article=obj, file=self.files['file']))
+        return obj
 
 
 LocalizedArticleTitleFormSet = inlineformset_factory(Article, LocalizedArticleContent,

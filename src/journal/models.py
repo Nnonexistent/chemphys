@@ -286,6 +286,7 @@ class Article(BaseLocalizedObject):
 
     def __unicode__(self):
         return self.title or ((_(u'Article %s') % self.id) if self.id else _(u'New article'))
+    __unicode__.short_description = _(u'Title')
 
     def get_absolute_url(self):
         if self.issue:
@@ -368,6 +369,7 @@ class ArticleAttach(OrderedEntry):
         verbose_name = _(u'Article attach')
         verbose_name_plural = _(u'Article attaches')
         ordering = OrderedEntry.Meta.ordering
+        get_latest_by = 'date_created'
 
     def __unicode__(self):
         return _(u'Attach for %s') % self.article
@@ -384,6 +386,7 @@ class ArticleSource(models.Model):
         ordering = ['date_created']
         verbose_name = _(u'Article source')
         verbose_name_plural = _(u'Article sources')
+        get_latest_by = 'date_created'
 
     def __unicode__(self):
         return _(u'Source of %s') % self.article
@@ -401,6 +404,7 @@ class ArticleResolution(models.Model):
         ordering = ['date_created']
         verbose_name = _(u'Article resolution')
         verbose_name_plural = _(u'Article resolutions')
+        get_latest_by = 'date_created'
 
     def __unicode__(self):
         return _(u'Resolution for %s') % self.article

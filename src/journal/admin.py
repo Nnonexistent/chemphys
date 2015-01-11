@@ -196,8 +196,8 @@ class ArticleAdmin(JournalAdmin):
         if not obj:
             return u''
         if len(obj.title) > max_length:
-            return obj.title[:max_length-4].rstrip() + '...'
-        return obj.title
+            return unicode(obj)[:max_length-4].rstrip() + '...'
+        return unicode(obj)
     display_title.short_description = _(u'Title')
 
     def display_authors(self, obj=None):
