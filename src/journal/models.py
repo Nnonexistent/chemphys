@@ -276,8 +276,8 @@ class Article(BaseLocalizedObject):
     content = models.FileField(verbose_name=_(u'Content'), upload_to='published', default='', blank=True)
 
     senders = models.ManyToManyField(LocalizedUser, verbose_name=_(u'Senders'), blank=True)
-    issue = models.ForeignKey('Issue', null=True, blank=True)
-    sections = models.ManyToManyField(Section, blank=True)
+    issue = models.ForeignKey('Issue', null=True, blank=True, verbose_name=_(u'Issue'))
+    sections = models.ManyToManyField(Section, blank=True, verbose_name=_(u'Sections'))
 
     class Meta:
         ordering = ['date_in']

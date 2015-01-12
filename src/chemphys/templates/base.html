@@ -66,6 +66,20 @@
         resize: none;
         max-height: 300px;
     }
+    .form-group ul {
+        padding: 0;
+        list-style: none;
+    }
+    div.select2-container .select2-choice {
+        background-image: none;
+        border: 1px solid #ddd;
+        height: 29px;
+    }
+    div.select2-container .select2-choice .select2-arrow {
+        background-image: none;
+        background-color: #fff;
+        border: none;
+    }
     </style>
 {% endblock %}
   </head>
@@ -124,7 +138,7 @@
           {% endfor %}
       {% endblock %}
 
-      {% block title %}<h1 class="h2">{{ title }}</h1>{% endblock %}
+      {% block title %}<h1 class="h2">{{ title }}</h1>{% if subtitle %}<h4>{{ subtitle }}</h4>{% endif %}{% endblock %}
       {% block content %}{{ content }}{% endblock %}
     </div>
 

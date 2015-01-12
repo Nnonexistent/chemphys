@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponseForbidden, JsonResponse
 from django.contrib import messages
+from django.utils.safestring import mark_safe
 
 from journal.models import Issue, Article, Organization, LocalizedUser, ARTICLE_ADDING_STATUSES
 from journal.forms import AuthorEditForm, LocalizedNameFormSet, PIOFormSet, ARTICLE_ADDING_FORMS
@@ -105,16 +106,32 @@ def edit_author(request):
 def search_organizations(request):
     query = request.POST.get('q') or request.GET.get('q') or ''
     query = query.strip()
-    if query:
+    if len(query) > 3:
         qobjs = []
-        for arg in ('organizationlocalizedcontent__name', 'alt_names', 'previous__organizationlocalizedcontent__name', 'previous__alt_names'):
+        for arg in ('organizationlocalizedcontent__name', 'alt_names',
+                    'previous__organizationlocalizedcontent__name', 'previous__alt_names'):
             qobjs.append(Q(**{'%s__icontains' % arg: query}))
         qobj = reduce(lambda x, y: x | y, qobjs)
-        orgs = Organization.objects.filter(moderation_status=2).filter(qobj).distinct()[:50]
-        out = [{'id': org.id, 'text': unicode(org)} for org in orgs]
+        qs = Organization.objects.filter(moderation_status=2).filter(qobj).distinct()[:50]
+        items = [{'id': item.id, 'text': unicode(item)} for item in qs]
     else:
-        out = []
-    return JsonResponse({'items': out})
+        items = []
+    return JsonResponse({'items': items})
+
+
+def search_authors(request):
+    query = request.POST.get('q') or request.GET.get('q') or ''
+    query = query.strip()
+    if len(query) > 3:
+        qobjs = []
+        for arg in ('localizedname__first_name', 'localizedname__last_name', 'email'):
+            qobjs.append(Q(**{'%s__icontains' % arg: query}))
+        qobj = reduce(lambda x, y: x | y, qobjs)
+        qs = LocalizedUser.objects.filter(author__moderation_status=2).filter(qobj).distinct()[:50]
+        items = [{'id': item.id, 'text': unicode(item)} for item in qs]
+    else:
+        items = []
+    return JsonResponse({'items': items})
 
 
 def add_article(request):
@@ -168,6 +185,7 @@ def adding_article(request, article_id, step):
 
     return render(request, 'journal/adding_article.html', {
         'title': u'%s: %s' % (_(u'Add article'), ARTICLE_ADDING_TITLES[step]),
+        'subtitle': unicode(article),
         'ARTICLE_ADDING_TITLES': ARTICLE_ADDING_TITLES,
         'step': step,
         'article': article,

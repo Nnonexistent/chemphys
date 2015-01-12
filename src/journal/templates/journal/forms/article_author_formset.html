@@ -1,27 +1,36 @@
-{% extends "base.html" %}
-{% load i18n static %}
+{% load i18n %}
 
-{% block head %}{{ block.super }}
-<link href="{% static "css/select2.css" %}" rel="stylesheet"/>
-<link href="{% static "css/select2-bootstrap.css" %}" rel="stylesheet"/>
-<script src="{% static "js/select2.min.js" %}"></script>
+{{ formset.management_form }}
+<div>
+{% for form in formset %}
+    {{ form }}
+{% endfor %}
+</div>
+<a id="add_author" class="btn btn-sm btn-info">{% trans "Add Author" %}</a>
+
+<br />
+<br />
+<br />
+
 <script type="text/javascript">
-    var form_count = {{ org_formset.total_form_count }};
+    var form_count = {{ formset.total_form_count }};
     $(function () {
-        $('#add_org').click(function() {
-            var max_num = parseInt($('#id_org-MAX_NUM_FORMS').val())
+        $('#add_author').click(function() {
+            var max_num = parseInt($('#id_articleauthor_set-MAX_NUM_FORMS').val())
             if (form_count < max_num) {
                 form_count++;
-                var form = '{% filter escapejs %}{% include "journal/forms/position.html" with form=org_formset.empty_form %}{% endfilter %}';
+                var form = '{{ formset.empty_form|escapejs }}';
                 $(this).prev().append(form.replace(/__prefix__/g, form_count - 1));
-                $('#id_org-TOTAL_FORMS').val(form_count);
+                $('#id_articleauthor_set-TOTAL_FORMS').val(form_count);
                 org_select(true);
+                author_select(true);
                 if (form_count == max_num) {
                     $(this).addClass('disabled');
                 }
             }
         });
         org_select(false);
+        author_select(false);
 
         function show_new_org(el) {
             el.parents('div.row').find('div.form-group:has([id$=-org_site]),.subform').show();
@@ -31,7 +40,7 @@
         }
 
         function org_select(adding) {
-            $('select[id^=id_org-][id$=-organization]').each(function() {
+            $('select[id^=id_articleauthor_set-][id$=-organization]').each(function() {
                 var input = $('<input>');
                 if (adding) {
                     var text = '{% trans "Enter organization name" %}';
@@ -83,35 +92,3 @@
         }
     });
 </script>
-{% endblock %}
-
-
-{% block content %}
-<form role="form" method="post">
-{% csrf_token %}
-
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-body">
-            {{ form }}
-            </div>
-        </div>
-    </div>
-</div>
-
-{{ name_formset }}
-
-<h4>{% trans "Organizations" %}</h4>
-{{ org_formset.management_form }}
-<div>
-{% for form in org_formset %}
-    {% include "journal/forms/position.html" %}
-{% endfor %}
-</div>
-<a id="add_org" class="btn btn-sm btn-info">{% trans "Add Organization" %}</a>
-
-<hr />
-<input class="btn btn-primary" type="submit" value="{% trans "Save changes" %}" />
-</form>
-{% endblock %}

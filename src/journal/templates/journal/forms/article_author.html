@@ -1,0 +1,51 @@
+{% load i18n %}
+
+<div class="panel panel-default">
+    <div class="panel-body row">
+        <div class="col-md-12">
+        <div class="pull-right">{{ common_mainform }}</div>
+        {{ user_mainform }}
+        </div>
+        {% for subform in user_subforms %}
+        {% language subform.lang %}
+        <div class="col-md-{{ subform.col_md }} subform">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                    {% for lang_code, lang_name in LANGUAGES %}
+                        {% if lang_code == subform.lang %}{{ lang_name }}{% endif %}
+                    {% endfor %}
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    {{ subform.render }}
+                </div>
+            </div>
+        </div>
+        {% endlanguage %}
+        {% endfor %}
+
+        <div class="col-md-12">
+        {{ org_mainform }}
+        </div>
+        {% for subform in org_subforms %}
+        {% language subform.lang %}
+        <div class="col-md-{{ subform.col_md }} subform">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                    {% for lang_code, lang_name in LANGUAGES %}
+                        {% if lang_code == subform.lang %}{{ lang_name }}{% endif %}
+                    {% endfor %}
+                    </h4>
+                </div>
+                <div class="panel-body">
+                    {{ subform.render }}
+                </div>
+            </div>
+        </div>
+        {% endlanguage %}
+        {% endfor %}
+
+    </div>
+</div>

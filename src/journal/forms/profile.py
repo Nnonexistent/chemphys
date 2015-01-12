@@ -77,7 +77,7 @@ class PIOForm(BootstrapForm):
                 kwargs = {'org': org, 'lang': lang_code}
                 for key, field in self.iter_loc_fields(lang_code=lang_code):
                     kwargs[field.name] = self.cleaned_data[key]
-                content = OrganizationLocalizedContent.objects.create(**kwargs)
+                OrganizationLocalizedContent.objects.create(**kwargs)
 
         pio = super(PIOForm, self).save(commit=False)
         pio.organization = org
