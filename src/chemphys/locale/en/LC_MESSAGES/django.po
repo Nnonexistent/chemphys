@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-08 12:28+0300\n"
+"POT-Creation-Date: 2015-01-12 02:20+0300\n"
 "PO-Revision-Date: 2015-01-09 00:54+0300\n"
 "Last-Translator: Elena Sergievska <skubird@gmail.com>\n"
 "Language-Team: Chemphys <skubird@gmail.com>\n"
@@ -17,19 +17,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.7.1\n"
 
-#: settings.py:73
+#: settings.py:74
 msgid "Russian"
 msgstr "Russian"
 
-#: settings.py:74
+#: settings.py:75
 msgid "English"
 msgstr "English"
 
-#: templates/admin/base_site.html:5
-msgid "Django site admin"
-msgstr "Django site admin"
-
-#: templates/admin/base_site.html:9
+#: templates/admin/base_site.html:5 templates/admin/base_site.html.py:9
 msgid "Journal administration"
 msgstr "Journal administration"
 
@@ -82,7 +78,8 @@ msgstr "Institute of Mechanics of Moscow State University, Russia"
 
 #: templates/base.html:137
 msgid "Свидетельство СМИ: Эл № 77-6360 от 10 июля 2002 г."
-msgstr "Certificate of Mass Media Registration: digital № 77-6360, Jun. 10, 2002."
+msgstr ""
+"Certificate of Mass Media Registration: digital № 77-6360, Jun. 10, 2002."
 
 #: templates/base.html:138
 msgid "Журнал издается с 2003 года"
@@ -120,3 +117,6 @@ msgstr "Administration"
 #: templates/index.html:30
 msgid "Login as author"
 msgstr "Login as author"
+
+#~ msgid "Django site admin"
+#~ msgstr "Django site admin"

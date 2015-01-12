@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-08 12:28+0300\n"
+"POT-Creation-Date: 2015-01-12 02:20+0300\n"
 "PO-Revision-Date: 2015-01-09 00:54+0300\n"
 "Last-Translator: Elena Sergievska <skubird@gmail.com>\n"
 "Language-Team: \n"
@@ -19,19 +19,15 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 1.7.1\n"
 
-#: settings.py:73
+#: settings.py:74
 msgid "Russian"
 msgstr "Русский"
 
-#: settings.py:74
+#: settings.py:75
 msgid "English"
 msgstr "Английский"
 
-#: templates/admin/base_site.html:5
-msgid "Django site admin"
-msgstr ""
-
-#: templates/admin/base_site.html:9
+#: templates/admin/base_site.html:5 templates/admin/base_site.html.py:9
 msgid "Journal administration"
 msgstr "Администрирование журнала"
 
