@@ -134,6 +134,22 @@ def search_authors(request):
     return JsonResponse({'items': items})
 
 
+def search_articles(request):
+    # TODO: switch to haystack or similar
+    query = request.POST.get('q') or request.GET.get('q') or ''
+    query = query.strip()
+    if len(query) >= 3:
+        qobjs = []
+        for arg in ('localizedarticlecontent__title', 'localizedarticlecontent__abstract', 'localizedarticlecontent__keywords',
+                    'articleauthor__author__localizedname__last_name'):
+            qobjs.append(Q(**{'%s__icontains' % arg: query}))
+        qobj = reduce(lambda x, y: x | y, qobjs)
+        items = Article.objects.filter(status=10).filter(qobj).distinct()[:50]
+    else:
+        items = []
+    return render(request, 'journal/articles.html', {'articles': items})
+
+
 def add_article(request):
     if not request.user.is_authenticated() or not request.user.is_active:
         return HttpResponseForbidden()
@@ -193,3 +209,5 @@ def adding_article(request, article_id, step):
         'formset': formset,
         'final': final,
     })
+
+

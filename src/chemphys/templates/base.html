@@ -135,9 +135,9 @@
           {% pages_menu %}
         </ul>
 
-        <form class="navbar-form navbar-left">
-            <div class="small adv-search"><a href="">{% trans "Advanced Search" %}</a></div>
-            <input type="text" class="form-control col-lg-8" placeholder="{% trans "Search" %}">
+        <form class="navbar-form navbar-left" action="{% url "search_articles" %}">
+            <div class="small adv-search"><a href="{% url "search_articles" %}">{% trans "Advanced Search" %}</a></div>
+            <input type="text" class="form-control col-lg-8" name="q" value="{{ request.GET.q }}" placeholder="{% trans "Search" %}">
         </form>
 
       </div>
