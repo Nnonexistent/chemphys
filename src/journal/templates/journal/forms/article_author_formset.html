@@ -1,5 +1,6 @@
 {% load i18n %}
 
+{% get_current_language as LANGUAGE_CODE %}
 {{ formset.management_form }}
 <div id="authors">
 {% for form in formset %}
@@ -90,6 +91,7 @@
                     },
                     createSearchChoicePosition: 'bottom',
                     createSearchChoice: function (term) {
+                        this.container.parents('.row').find('[id$=-author_{{ LANGUAGE_CODE }}_last_name]').val(term);
                         return {id: '', text: '{% trans "Add new author" %}'}
                     }
                 });
@@ -142,6 +144,7 @@
                     },
                     createSearchChoicePosition: 'bottom',
                     createSearchChoice: function (term) {
+                        this.container.parents('.row').find('[id$=-org_{{ LANGUAGE_CODE }}_name]').val(term);
                         return {id: '', text: '{% trans "Add new organization" %}'}
                     }
                 });

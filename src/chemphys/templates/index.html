@@ -3,14 +3,27 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        <p>{% blocktrans %}You are logged in as {{ user }}{% endblocktrans %}. <a href="{% url 'logout' %}">{% trans "Logout" %}</a></p>
-        <p><a href="{% url 'edit_author' %}">{% trans "Edit profile" %}</a></p>
-        <p><a href="{% url 'add_article' %}">{% trans "Add article" %}</a></p>
+    <div class="panel panel-default">
+        <div class="panel-body row">
+            <div class="col-md-4">
+                <p>{% blocktrans with user=loc_user %}You are logged in as {{ user }}{% endblocktrans %}. <a class="btn btn-default btn-xs" href="{% url 'logout' %}">{% trans "Logout" %}</a></p>
+                <p><a class="btn btn-info" href="{% url 'edit_author' %}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> {% trans "Edit profile" %}</a></p>
+                <p><a class="btn btn-info" href="{% url 'add_article' %}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {% trans "Add article" %}</a></p>
+            </div>
         {% if loc_user.unpublished_articles %}
-        <h5>{% trans "Unpublished articles" %}</h5>
-        <table class="table">
-            {% for article in loc_user.unpublished_articles %}
-            <tr>
+            <div class="col-md-8">
+                <h5>{% trans "Unpublished articles" %}</h5>
+                <table class="table">
+                <thead>
+                <tr>
+                    <th>{% trans "Title" %}</th>
+                    <th>{% trans "Status" %}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for article in loc_user.unpublished_articles %}
+                <tr>
                 <td>
                     {% if article.adding %}
                     <a href="{% url "adding_article" article.id article.status %}">{{ article }}</a>
@@ -18,15 +31,18 @@
                     {{ article }}
                     {% endif %}
                 </td>
+                {# TODO: display author-frinedly status descriptions. Such as "Pending moderation" instead of "New" #}
                 <td>{{ article.get_status_display }}</td>
-            </tr>
-            {% endfor %}
-        </table>
+                <td>{% if article.adding %}<a class="btn btn-primary btn-xs" href="{% url "adding_article" article.id article.status %}">{% trans "Continue filling form" %}</a>{% endif %}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+            </div>
         {% endif %}
-        {% if user.is_staff %}
-        <p><a href="{% url 'admin:index' %}">{% trans "Administration" %}</a></p>
-        {% endif %}
+        </div>
+    </div>
     {% else %}
-        <p><a href="{% url 'mailauth_form' %}">{% trans "Login as author" %}</a></p>
+        <p><a class="btn btn-info" href="{% url 'mailauth_form' %}">{% trans "Login as author" %}</a></p>
     {% endif %}
 {% endblock %}

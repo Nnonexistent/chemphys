@@ -63,6 +63,7 @@
                     },
                     createSearchChoicePosition: 'bottom',
                     createSearchChoice: function (term) {
+                        this.container.parents('.row').find('[id$=-{{ LANGUAGE_CODE }}_name]').val(term);
                         return {id: '', text: '{% trans "Add new organization" %}'}
                     }
                 });

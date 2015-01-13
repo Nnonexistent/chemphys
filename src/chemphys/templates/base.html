@@ -163,7 +163,9 @@
     <hr />
 
     <footer class="container text-muted">
-        <p class="pull-right">Copyright© 2003&mdash;{% now 'Y' %} {% trans "Институт Механики МГУ" %}</p>
+        <p class="pull-right">Copyright© 2003&mdash;{% now 'Y' %} {% trans "Институт Механики МГУ" %}
+        {% if user.is_staff %}<br /><a href="{% url 'admin:index' %}">{% trans "Administration" %}</a>{% endif %}
+        </p>
         <p>
         ISSN 1991-6396<br/>
         {% trans "Свидетельство СМИ: Эл № 77-6360 от 10 июля 2002 г." %}<br/>
