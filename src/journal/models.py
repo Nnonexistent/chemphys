@@ -442,6 +442,45 @@ class ReviewField(OrderedEntry):
     def __unicode__(self):
         return self.name
 
+    def formfield(self):
+        from django import forms
+        from django.utils.html import escape
+
+        class HeaderField(forms.Field):
+            def __init__(self, *args, **kwargs):
+                label = kwargs.get('label')
+                kwargs['label'] = ''
+
+                class HeaderWidget(forms.Widget):
+                    def render(self, name, value, attrs=None):
+                        return '<h4>%s</h4>' % escape(label)
+                kwargs['widget'] = HeaderWidget
+
+                super(HeaderField, self).__init__(*args, **kwargs)
+
+        kwargs = {'label': self.name,
+                  'help_text': self.description,
+                  'required': False}
+
+        if self.field_type == 0:  # Header
+            return HeaderField(**kwargs)
+
+        elif self.field_type == 1:  # Choice field
+            choices = filter(None, self.choices.strip().splitlines())
+            choices = map(unicode.strip, choices)
+            kwargs['choices'] = zip(choices, choices)
+            return forms.ChoiceField(**kwargs)
+
+        elif self.field_type == 2:  # Text string
+            return forms.CharField(**kwargs)
+
+        elif self.field_type == 3:  # Text field
+            kwargs['widget'] = forms.Textarea
+            return forms.CharField(**kwargs)
+
+        elif self.field_type == 4:  # Checkbox
+            return forms.BooleanField(**kwargs)
+
 
 class Review(models.Model):
     key = models.CharField(max_length=32, verbose_name=_(u'Key'), unique=True, default=default_key, editable=False)

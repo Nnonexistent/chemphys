@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<form role="form" method="post">
+{% csrf_token %}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+            {{ form }}
+            </div>
+        </div>
+    </div>
+</div>
+
+{{ formset }}
+
+<hr class="separator" />
+<input class="btn btn-primary" type="submit" value="{% trans "Complete review" %}" />
+</form>
+{% endblock %}
+
