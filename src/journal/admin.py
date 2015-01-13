@@ -180,8 +180,8 @@ class LocalizedArticleContentInline(admin.StackedInline):
 
 class ArticleAdmin(JournalAdmin):
     search_fields = ('title', 'abstract', 'references')
-    list_filter = ('status', 'issue', 'sections')
-    list_display = ('display_title', 'issue', 'display_authors', 'display_reviews')
+    list_filter = ('status', 'type', 'issue', 'sections')
+    list_display = ('display_title', 'type', 'issue', 'display_authors', 'display_reviews')
     inlines = (LocalizedArticleContentInline, ArticleAuthorInline, ArticleSourceInline, ArticleAttachInline, ArticleResolutionInline)
     filter_horizontal = ['senders']  # TODO: raw_id_field
 

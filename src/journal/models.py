@@ -25,6 +25,12 @@ ARTICLE_STATUSES = (
     (10, _(u'Published')),
 )
 ARTICLE_ADDING_STATUSES = (0, 1, 2, 3)
+ARTICLE_TYPES = (
+    (1, _(u'Article')),
+    (2, _(u'Short message')),
+    (3, _(u'Presentation')),
+    (4, _(u'Data')),
+)
 REVIEW_STATUSES = (
     (0, _(u'Pending')),
     (1, _(u'Unfinished')),
@@ -275,6 +281,7 @@ class Article(BaseLocalizedObject):
                                           help_text=_(u'to link consistency with old articles'))
 
     image = models.ImageField(verbose_name=_(u'Image'), upload_to=article_upload_to, blank=True, default='')
+    type = models.PositiveSmallIntegerField(verbose_name=_(u'Article type'), choices=ARTICLE_TYPES, default=1)
     content = models.FileField(verbose_name=_(u'Content'), upload_to='published', default='', blank=True)
 
     senders = models.ManyToManyField(LocalizedUser, verbose_name=_(u'Senders'), blank=True)

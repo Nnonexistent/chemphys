@@ -16,10 +16,11 @@ from journal.models import Article, LocalizedArticleContent, ArticleSource, Arti
 class OverviewArticleForm(BootstrapForm):
     class Meta:
         model = Article
-        fields = ('sections', 'image')
+        fields = ('type', 'sections', 'image')
 
     def __init__(self, *args, **kwargs):
         super(OverviewArticleForm, self).__init__(*args, **kwargs)
+        self.fields['type'].widget = forms.RadioSelect(choices=self.fields['type'].choices)
         self.fields['sections'].help_text = ''
         self.fields['sections'].widget = forms.CheckboxSelectMultiple(choices=self.fields['sections'].widget.choices)
         try:

@@ -27,7 +27,7 @@ class BootstrapForm(forms.ModelForm):
     def as_div(self):
         # FIXME: find a better way
         for field in self.fields.itervalues():
-            if isinstance(field.widget, (forms.CheckboxInput, forms.CheckboxSelectMultiple)):
+            if isinstance(field.widget, (forms.CheckboxInput, forms.CheckboxSelectMultiple, forms.RadioSelect)):
                 continue
             attrs = field.widget.attrs
             css_classes = attrs.get('class', '').split()
