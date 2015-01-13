@@ -477,9 +477,11 @@ class Issue(OrderedEntry):
     volume = models.PositiveIntegerField(verbose_name=_(u'Volume'))
     year = models.PositiveIntegerField(verbose_name=_(u'Year'))
 
+    description = models.TextField(verbose_name=_(u'Description'), default=u'', blank=True)
+
     class Meta:
         verbose_name = _(u'Issue')
-        verbose_name_plural = _(u'Issue')
+        verbose_name_plural = _(u'Issues')
         ordering = ['order']
 
     def __unicode__(self):

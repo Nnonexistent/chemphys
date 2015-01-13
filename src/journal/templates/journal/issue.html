@@ -2,6 +2,8 @@
 
 
 {% block content %}
+    {{ issue.description|linebreaks }}
+
     <table class="table">
     {% for article in articles %}
         <tr>
