@@ -32,11 +32,69 @@
         org_select(false);
         author_select(false);
 
+        function show_new_author(el) {
+            el.parents('div.row').find('div.form-group:has([id$=-author_email]),.author-subform').show();
+        }
+        function hide_new_author(el) {
+            el.parents('div.row').find('div.form-group:has([id$=-author_email]),.author-subform').hide();
+        }
         function show_new_org(el) {
-            el.parents('div.row').find('div.form-group:has([id$=-org_site]),.subform').show();
+            el.parents('div.row').find('div.form-group:has([id$=-org_site]),.org-subform').show();
         }
         function hide_new_org(el) {
-            el.parents('div.row').find('div.form-group:has([id$=-org_site]),.subform').hide();
+            el.parents('div.row').find('div.form-group:has([id$=-org_site]),.org-subform').hide();
+        }
+
+        function author_select(adding) {
+            $('select[id^=id_articleauthor_set-][id$=-author]').each(function() {
+                var input = $('<input>');
+                if (adding) {
+                    var text = '{% trans "Enter author name" %}';
+                } else {
+                    var text = $(this).find(':selected').text();
+                }
+
+                input.attr({
+                    id: $(this).attr('id'),
+                    name: $(this).attr('name'),
+                    class: $(this).attr('class'),
+                    value: $(this).val()
+                });
+                $(this).after(input);
+                $(this).remove();
+                input.select2({
+                    minimumInputLength: 3,
+                    ajax: {
+                        url: "{% url 'search_authors' %}",
+                        dataType: 'json',
+                        quietMillis: 250,
+                        data: function (term, page) {
+                            return {q: term};
+                        },
+                        results: function (data, page, query) {
+                            return {results: data.items};
+                        },
+                        cache: true
+                    },
+                    createSearchChoicePosition: 'bottom',
+                    createSearchChoice: function (term) {
+                        return {id: '', text: '{% trans "Add new author" %}'}
+                    }
+                });
+                input.select2('data', {id: input.val(), text: text});
+                input.on('select2-selecting', function(e) {
+                    if (e.val) {
+                        hide_new_author(input);
+                    } else {
+                        show_new_author(input);
+                    }
+                });
+                if (adding) {
+                    hide_new_author(input);
+                } else {
+                    input.trigger($.Event('select2-selecting', {val: input.val()}));
+                }
+            });
         }
 
         function org_select(adding) {
@@ -90,5 +148,6 @@
                 }
             });
         }
+
     });
 </script>

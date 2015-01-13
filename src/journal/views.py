@@ -106,7 +106,7 @@ def edit_author(request):
 def search_organizations(request):
     query = request.POST.get('q') or request.GET.get('q') or ''
     query = query.strip()
-    if len(query) > 3:
+    if len(query) >= 3:
         qobjs = []
         for arg in ('organizationlocalizedcontent__name', 'alt_names',
                     'previous__organizationlocalizedcontent__name', 'previous__alt_names'):
@@ -122,7 +122,7 @@ def search_organizations(request):
 def search_authors(request):
     query = request.POST.get('q') or request.GET.get('q') or ''
     query = query.strip()
-    if len(query) > 3:
+    if len(query) >= 3:
         qobjs = []
         for arg in ('localizedname__first_name', 'localizedname__last_name', 'email'):
             qobjs.append(Q(**{'%s__icontains' % arg: query}))

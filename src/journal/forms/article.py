@@ -10,7 +10,7 @@ from django.template.loader import render_to_string
 
 from utils.forms import BootstrapForm, NullForm
 from utils.localized import BaseLocalizedForm, BaseLocalizedFormSet
-from journal.models import Article, LocalizedArticleContent, ArticleSource, ArticleAuthor, LocalizedUser, LocalizedName, Organization, OrganizationLocalizedContent
+from journal.models import Article, LocalizedArticleContent, ArticleSource, ArticleAuthor, LocalizedUser, LocalizedName, Organization, OrganizationLocalizedContent, Author
 
 
 class OverviewArticleForm(BootstrapForm):
@@ -52,15 +52,19 @@ class AuthorForm(BootstrapForm):
     _user_fields = ('email', )
     _user_loc_fields = ('first_name', 'last_name')
 
+    author = ArticleAuthor._meta.get_field('author').formfield(required=False, widget=forms.Select)
+    organization = ArticleAuthor._meta.get_field('organization').formfield(required=False, widget=forms.Select)
+
     def __init__(self, *args, **kwargs):
         super(AuthorForm, self).__init__(*args, **kwargs)
 
         # user
         user = None
         if self.instance.id:
-            user = self.instance.user
+            user = self.instance.author
+            self.fields['author'].initial = user
         else:
-            key = u'%s-author' % self.prefix
+            key = self.add_prefix(u'author')
             if self.data.get(key):
                 try:
                     user = LocalizedUser.objects.get(id=int(self.data[key]))
@@ -71,8 +75,6 @@ class AuthorForm(BootstrapForm):
         else:
             choices = [('', _(u'Add new author'))]
 
-        self.fields['author'] = ArticleAuthor._meta.get_field('author').formfield(
-            required=False, widget=forms.Select, initial=user)
         self.fields['author'].widget.choices = choices
 
         for key, field in chain(self.iter_user_fields(), self.iter_user_loc_fields()):
@@ -82,20 +84,20 @@ class AuthorForm(BootstrapForm):
         org = None
         if self.instance.id:
             org = self.instance.organization
+            self.fields['organization'].initial = org
         else:
-            key = u'%s-organization' % self.prefix
+            key = self.add_prefix(u'organization')
             if self.data.get(key):
                 try:
                     org = Organization.objects.get(id=int(self.data[key]))
                 except ValueError:
                     pass
+
         if org:
             choices = [(org.id, unicode(org))]
         else:
             choices = [('', _(u'Add new organization'))]
 
-        self.fields['organization'] = ArticleAuthor._meta.get_field('organization').formfield(
-            required=False, widget=forms.Select, initial=org)
         self.fields['organization'].widget.choices = choices
 
         for key, field in chain(self.iter_org_fields(), self.iter_org_loc_fields()):
@@ -237,7 +239,7 @@ class BaseAuthorsFormSet(BaseInlineFormSet):
         form.fields['ORDER'].widget = forms.HiddenInput()
 
 
-AuthorsFormSet = inlineformset_factory(Article, ArticleAuthor, fields=(),
+AuthorsFormSet = inlineformset_factory(Article, ArticleAuthor, exclude=('author', 'organization'),
     extra=0, can_delete=True, can_order=True, form=AuthorForm, formset=BaseAuthorsFormSet)
 
 

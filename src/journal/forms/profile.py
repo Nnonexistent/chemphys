@@ -28,6 +28,8 @@ class PIOForm(BootstrapForm):
     _org_loc_fields = ('name', 'country', 'city', 'address')
     _org_fields = ('site', )
 
+    organization = PositionInOrganization._meta.get_field('organization').formfield(required=False, widget=forms.Select)
+
     def __init__(self, *args, **kwargs):
         super(PIOForm, self).__init__(*args, **kwargs)
         choices = [('', _(u'Add new organization'))]
@@ -35,6 +37,7 @@ class PIOForm(BootstrapForm):
         org = None
         if self.instance.id:
             org = self.instance.organization
+            self.fields['organization'].initial = org
         else:
             key = u'%s-organization' % self.prefix
             if self.data.get(key):
@@ -46,8 +49,6 @@ class PIOForm(BootstrapForm):
         if org:
             choices = [(org.id, unicode(org))]
 
-        self.fields['organization'] = PositionInOrganization._meta.get_field('organization').formfield(
-            required=False, widget=forms.Select, initial=org)
         self.fields['organization'].widget.choices = choices
 
         for key, field in chain(self.iter_org_fields(), self.iter_loc_fields()):
@@ -115,6 +116,7 @@ class PIOForm(BootstrapForm):
         return out
 
     def as_div_lang(self):
+        # FIXME: simplify, see article authors formset form
         def factory(lang_code):
             def inner():
                 self.fields = OrderedDict((k, v) for k, v in self.fields.items() if k in dict(self.iter_loc_fields(lang_code=lang_code)))
