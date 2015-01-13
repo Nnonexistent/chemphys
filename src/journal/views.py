@@ -9,8 +9,8 @@ from django.http import HttpResponseRedirect, HttpResponseForbidden, JsonRespons
 from django.contrib import messages
 from django.utils.safestring import mark_safe
 
-from journal.models import Issue, Article, Organization, LocalizedUser, ARTICLE_ADDING_STATUSES
-from journal.forms import AuthorEditForm, LocalizedNameFormSet, PIOFormSet, ARTICLE_ADDING_FORMS
+from journal.models import Issue, Article, Organization, LocalizedUser, ARTICLE_ADDING_STATUSES, Review
+from journal.forms import AuthorEditForm, LocalizedNameFormSet, PIOFormSet, ARTICLE_ADDING_FORMS, ReviewForm, ReviewFileFormSet
 
 
 def index(request):
@@ -211,3 +211,39 @@ def adding_article(request, article_id, step):
     })
 
 
+def edit_review_login(request, key):
+    return edit_review(request, key, do_login=True)
+
+
+def edit_review(request, key, do_login=False):
+    from django.contrib.auth import authenticate, login
+    from django.contrib.auth import get_user_model
+
+    review = get_object_or_404(Review, status__in=(0, 1), key=key)
+    reviewer_user = get_user_model().objects.get(id=review.reviewer_id) # FIXME: don't call DB for proxy model
+
+    if do_login and request.user.is_anonymous():
+        reviewer_user.backend = 'django.contrib.auth.backends.ModelBackend'
+        login(request, reviewer_user)
+
+    if request.user != reviewer_user:
+        raise Http404
+
+    if request.method == 'POST':
+        form = ReviewForm(request.POST, instance=review)
+        formset = ReviewFileFormSet(request.POST, request.FILES, instance=review)
+        if form.is_valid() and formset.is_valid():
+            form.save()
+            formset.save()
+            return HttpResponseRedirect(reverse('index'))
+    else:
+        form = ReviewForm(instance=review)
+        formset = ReviewFileFormSet(instance=review)
+
+    return render(request, 'journal/review.html', {
+        'title': _(u'Review for article'),
+        'subtitle': unicode(review.article),
+        'form': form,
+        'formset': formset,
+        'review': review,
+    })

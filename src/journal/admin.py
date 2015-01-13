@@ -178,11 +178,16 @@ class LocalizedArticleContentInline(admin.StackedInline):
     max_num = len(settings.LANGUAGES)
 
 
+class ReviewInline(admin.StackedInline):
+    model = app_models.Review
+    extra = 0
+
+
 class ArticleAdmin(JournalAdmin):
     search_fields = ('title', 'abstract', 'references')
     list_filter = ('status', 'type', 'issue', 'sections')
-    list_display = ('display_title', 'type', 'issue', 'display_authors', 'display_reviews')
-    inlines = (LocalizedArticleContentInline, ArticleAuthorInline, ArticleSourceInline, ArticleAttachInline, ArticleResolutionInline)
+    list_display = ('display_title', 'status', 'type', 'issue', 'display_authors', 'display_reviews')
+    inlines = (LocalizedArticleContentInline, ArticleAuthorInline, ArticleSourceInline, ArticleAttachInline, ReviewInline, ArticleResolutionInline)
     filter_horizontal = ['senders']  # TODO: raw_id_field
 
     # TODO: search by author names
@@ -191,6 +196,19 @@ class ArticleAdmin(JournalAdmin):
         if db_field.name == "sections":
             kwargs['widget'] = forms.CheckboxSelectMultiple
         return super(ArticleAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
+
+    def save_formset(self, request, form, formset, change):
+        if formset.form._meta.model == app_models.Review:
+            new_forms = []
+            for form in formset:
+                if not form.instance.id:
+                    new_forms.append(form)
+            formset.save()
+
+            for form in new_forms:
+                form.instance.send(request.build_absolute_uri)
+        else:
+            formset.save()
 
     def display_title(self, obj=None, max_length=64):
         if not obj:
@@ -215,15 +233,14 @@ class ArticleAdmin(JournalAdmin):
             return u''
         out = []
         for review in obj.review_set.all():
-            out.append(u'<a href="%s" target="_blank">%s: %s</a>' % (
-                reverse('admin:journal_review_change', args=[review.id]),
+            out.append(u'%s: %s' % (
                 review.reviewer.get_full_name() or review.reviewer.username,
                 u'%s - %s' % (review.get_status_display(),
                               review.get_resolution_display()) if review.resolution else review.get_status_display()))
         return mark_safe(u'<br />'.join(out))
     display_reviews.short_description = _(u'Reviews')
 
-    # TODO:display review links in article edit page
+    # TODO: display review links in article edit page
 
 
 class ReviewFieldAdmin(JournalAdmin):
@@ -233,12 +250,6 @@ class ReviewFieldAdmin(JournalAdmin):
 class ReviewFileInline(admin.TabularInline):
     model = app_models.ReviewFile
     extra = 0
-
-
-class ReviewAdmin(JournalAdmin):
-    inlines = [ReviewFileInline]
-    list_display = ('__unicode__', 'reviewer', 'status', 'resolution', 'date_created')
-    list_filter = ('status', 'resolution')
 
 
 class IssueAdmin(JournalAdmin):
@@ -257,5 +268,4 @@ admin.site.register(app_models.StaffMember, StaffMemberAdmin)
 admin.site.register(app_models.Author, AuthorAdmin)
 admin.site.register(app_models.Article, ArticleAdmin)
 admin.site.register(app_models.ReviewField, ReviewFieldAdmin)
-admin.site.register(app_models.Review, ReviewAdmin)
 admin.site.register(app_models.Issue, IssueAdmin)

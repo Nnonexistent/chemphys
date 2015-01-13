@@ -7,7 +7,9 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 from django.conf import settings
 from django.core.urlresolvers import reverse
+from django.core.mail import send_mail
 from django.contrib.staticfiles.storage import staticfiles_storage
+from django.template.loader import render_to_string
 
 from utils.localized import BaseLocalizedObject, BaseLocalizedContent
 
@@ -59,6 +61,10 @@ ATTACH_TYPES = (
     (1, _(u'Image')),
     (2, _(u'Video')),
 )
+
+
+def default_key():
+    return uuid.uuid4().hex
 
 
 class ModeratedObject(models.Model):
@@ -438,6 +444,7 @@ class ReviewField(OrderedEntry):
 
 
 class Review(models.Model):
+    key = models.CharField(max_length=32, verbose_name=_(u'Key'), unique=True, default=default_key, editable=False)
     article = models.ForeignKey(Article, verbose_name=Article._meta.verbose_name)
     reviewer = models.ForeignKey(LocalizedUser, verbose_name=_(u'Reviewer'))
     status = models.PositiveSmallIntegerField(choices=REVIEW_STATUSES, default=0, verbose_name=_(u'Status'))
@@ -456,6 +463,17 @@ class Review(models.Model):
 
     def __unicode__(self):
         return _(u'Review for %s') % self.article
+
+    def send(self, uri_builder):
+        msg = render_to_string('journal/mail/review.txt', {
+            'link': uri_builder(reverse('edit_review_login', args=[self.key])),
+            'review': self,
+        })
+        send_mail(_('Review request'), msg, settings.DEFAULT_FROM_EMAIL, [self.reviewer.email], fail_silently=False)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return 'edit_review', [self.key]
 
 
 class ReviewFile(models.Model):

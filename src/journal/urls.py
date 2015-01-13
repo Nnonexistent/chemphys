@@ -17,4 +17,7 @@ urlpatterns = patterns(
     url(r'^articles/add/$', 'journal.views.add_article', name='add_article'),
     url(r'^articles/(\d+)/adding/(\d)/$', 'journal.views.adding_article', name='adding_article'),
     url(r'^articles/search/$', 'journal.views.search_articles', name='search_articles'),
+
+    url(r'^reviews/([0-9a-f]{32})$', 'journal.views.edit_review', name='edit_review'),
+    url(r'^reviews/([0-9a-f]{32})/login$', 'journal.views.edit_review_login', name='edit_review_login'),
 )
