@@ -1,7 +1,7 @@
 {% load i18n %}
 
 {{ formset.management_form }}
-<div>
+<div id="authors">
 {% for form in formset %}
     {{ form }}
 {% endfor %}
@@ -14,7 +14,19 @@
 
 <script type="text/javascript">
     var form_count = {{ formset.total_form_count }};
+
     $(function () {
+        $('#authors').sortable({
+            axis: 'y',
+            cursor: 'move',
+            tolerance: 'pointer',
+            update: function(event, ui) {
+                $('#authors>div:not(.ui-sortable-placeholder)').each(function(i) {
+                    $(this).find('input[type=hidden][id$=-ORDER]').val(i + 1);
+                });
+            }
+        });
+
         $('#add_author').click(function() {
             var max_num = parseInt($('#id_articleauthor_set-MAX_NUM_FORMS').val())
             if (form_count < max_num) {

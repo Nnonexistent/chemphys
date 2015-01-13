@@ -80,6 +80,23 @@
         background-color: #fff;
         border: none;
     }
+    .ui-sortable-helper {
+        outline: 3px solid #fc0;
+    }
+    .ui-sortable-placeholder {
+        outline: 3px solid #fc0;
+    }
+    .btn-highlight {
+        background-color: #fc0 !important;
+        background-image: none !important;
+    }
+    hr.separator {
+        visibility: hidden;
+        height: 0;
+        padding: 0;
+        margin: 0;
+        clear: both;
+    }
     </style>
 {% endblock %}
   </head>
@@ -139,6 +156,7 @@
       {% endblock %}
 
       {% block title %}<h1 class="h2">{{ title }}</h1>{% if subtitle %}<h4>{{ subtitle }}</h4>{% endif %}{% endblock %}
+      <hr class="separator" />
       {% block content %}{{ content }}{% endblock %}
     </div>
 

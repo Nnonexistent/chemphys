@@ -185,7 +185,7 @@ def adding_article(request, article_id, step):
 
     return render(request, 'journal/adding_article.html', {
         'title': u'%s: %s' % (_(u'Add article'), ARTICLE_ADDING_TITLES[step]),
-        'subtitle': unicode(article),
+        'subtitle': mark_safe(u'%s%s' % (u'<img src="%s" width="100" class="pull-left" />' % article.image.url if article.image else '', article)),
         'ARTICLE_ADDING_TITLES': ARTICLE_ADDING_TITLES,
         'step': step,
         'article': article,

@@ -174,7 +174,8 @@ class AuthorForm(BootstrapForm):
             for key, field in self.iter_user_fields():
                 kwargs[field.name] = self.cleaned_data[key]
             # TODO: re-check e-mail duplication
-            author = LocalizedUser.objects.create(**kwargs)
+            # TODO: improve username (len(User.username) <= 30 and len(User.email) <= 75)
+            author = LocalizedUser.objects.create(username=kwargs['email'], **kwargs)
             Author.objects.create(user=author)
 
             for lang_code, lang_name in settings.LANGUAGES:
@@ -201,6 +202,13 @@ class AuthorForm(BootstrapForm):
         aa = super(AuthorForm, self).save(commit=False)
         aa.organization = org
         aa.author = author
+        try:
+            order = int(self.cleaned_data.get('ORDER') or '')
+        except ValueError:
+            pass
+        else:
+            if order > 0:
+                aa.order = order
         aa.save()
         return aa
 
@@ -222,7 +230,7 @@ class AuthorForm(BootstrapForm):
         return render_to_string(u'journal/forms/article_author.html', {
             'form': self,
             'LANGUAGES': settings.LANGUAGES,
-            'common_mainform': subform(('DELETE', ''), ('ORDER', ''), ('id', ''), ('article', ''), ),
+            'common_mainform': subform(('DELETE', ''), ('ORDER', ''), ('id', ''), ('article', '')),
             'user_mainform': subform(('author', '')) + subform(*self.iter_user_fields()),
             'org_mainform': subform(('organization', '')) + subform(*self.iter_org_fields()),
             'user_subforms': user_subforms,
@@ -239,7 +247,7 @@ class BaseAuthorsFormSet(BaseInlineFormSet):
         form.fields['ORDER'].widget = forms.HiddenInput()
 
 
-AuthorsFormSet = inlineformset_factory(Article, ArticleAuthor, exclude=('author', 'organization'),
+AuthorsFormSet = inlineformset_factory(Article, ArticleAuthor, exclude=('author', 'organization', 'order'),
     extra=0, can_delete=True, can_order=True, form=AuthorForm, formset=BaseAuthorsFormSet)
 
 
