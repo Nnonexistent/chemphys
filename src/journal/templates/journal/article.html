@@ -35,12 +35,12 @@
 
     {% for entry in article.localizedarticlecontent_set.all %}
     <div role="tabpanel" class="tab-pane{% if forloop.first %} active{% endif %}" id="{{ entry.lang }}_overview">
-        {% if LANGUAGE_CODE != entry.lang %}<h1 class="h5">{{ entry.title }}</h1>{% endif %}
+        {% if LANGUAGE_CODE != entry.lang %}<h1 class="h5">{{ entry.title }}</h1>{% else %}<br />{% endif %}
 
         <div class="row">
             {% if article.image %}
             <div class="col-lg-3">
-                <img src="{{ article.image.url }}" alt="" width="270" />
+                <img src="{{ article.image.url }}" alt="" class="img-thumbnail" />
             </div>
             {% endif %}
             <div class="col-lg-{% if article.image %}6{% else %}9{% endif %} text-justify">
@@ -50,7 +50,7 @@
                 <p>
                 {% blocktrans count count=article.articleauthor_set.all.count %}Author{% plural %}Authors{% endblocktrans %}:
                 {% for aa in article.articleauthor_set.all %}
-                    <a href="{{ aa.position.user.author.get_absolute_url }}" title="{{ aa.position.organization }}">{{ aa.position.user }}</a>{% if not forloop.last %}, {% endif %}
+                    <a href="{{ aa.author.author.get_absolute_url }}" title="{{ aa.organization }}">{{ aa.author }}</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
                 </p>
                 <p>{% trans "Issue" %}: <a href="{{ article.issue.get_absolute_url }}">{{ article.issue }}</a></p>
@@ -62,16 +62,30 @@
 
     {% if article.articleattach_set.all.exists %}
     <div role="tabpanel" class="tab-pane" id="media">
-        <ul>
+        <br />
+        <div class="row">
         {% for entry in article.articleattach_set.all %}
-            <li><a href="{{ entry.file.url }}">{{ entry.comment }}</a></li>
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                {% if entry.type == 1 %}
+                    <img src="{{ entry.file.url }}" alt="" />
+                {% else %}
+                    <img src="{{ entry.icon_url }}" alt="" />
+                {% endif %}
+                    <div class="caption">
+                        {{ entry.comment|linebreaks }}
+                        <p><a href="{{ entry.file.url }}" class="btn btn-sm btn-info" target="_blank">{% trans "View" %}<br><small>{{ entry.file.size|filesizeformat }}</small></a></p>
+                    </div>
+                </div>
+            </div>
         {% endfor %}
-        </ul>
+        </div>
     </div>
     {% endif %}
 
     {% if article.references %}
     <div role="tabpanel" class="tab-pane" id="refs">
+        <br />
         {{ article.references|linebreaksbr }}
     </div>
     {% endif %}

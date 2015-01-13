@@ -10,7 +10,7 @@ from django.template.loader import render_to_string
 
 from utils.forms import BootstrapForm, NullForm
 from utils.localized import BaseLocalizedForm, BaseLocalizedFormSet
-from journal.models import Article, LocalizedArticleContent, ArticleSource, ArticleAuthor, LocalizedUser, LocalizedName, Organization, OrganizationLocalizedContent, Author
+from journal.models import Article, LocalizedArticleContent, ArticleSource, ArticleAuthor, LocalizedUser, LocalizedName, Organization, OrganizationLocalizedContent, Author, ArticleAttach
 
 
 class OverviewArticleForm(BootstrapForm):
@@ -251,9 +251,36 @@ AuthorsFormSet = inlineformset_factory(Article, ArticleAuthor, exclude=('author'
     extra=0, can_delete=True, can_order=True, form=AuthorForm, formset=BaseAuthorsFormSet)
 
 
+class AttachForm(BootstrapForm):
+    def __unicode__(self):
+        def subform(fields=None, exclude=None):
+            self._all_fields = self.fields
+            self.fields = OrderedDict((k, v) for k, v in self.fields.items() if (True if fields is None else k in fields)
+                                                                                 and (True if exclude is None else k not in exclude))
+            out = self.as_div()
+            self.fields = self._all_fields
+            return out
+        return render_to_string(u'journal/forms/article_attach.html', {
+            'mainform': subform(exclude=['DELETE']),
+            'subform': subform(('DELETE', 'ORDER')),
+        })
+
+
+class BaseAttachFormSet(BaseInlineFormSet):
+    def __unicode__(self):
+        return render_to_string(u'journal/forms/article_attach_formset.html', {'formset': self})
+
+    def add_fields(self, form, index):
+        super(BaseAttachFormSet, self).add_fields(form, index)
+        form.fields['ORDER'].widget = forms.HiddenInput()
+
+
+AttachFormSet = inlineformset_factory(Article, ArticleAttach, fields=('type', 'file', 'comment'),
+    extra=0, can_delete=True, can_order=True, form=AttachForm, formset=BaseAttachFormSet)
+
 ARTICLE_ADDING_FORMS = {
     0: (OverviewArticleForm, LocalizedArticleTitleFormSet),
     1: (NullForm, LocalizedArticleAbstractFormSet),
     2: (NullForm, AuthorsFormSet),
-    3: (NullForm, NullForm),
+    3: (NullForm, AttachFormSet),
 }

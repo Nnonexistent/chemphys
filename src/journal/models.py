@@ -1,4 +1,5 @@
 import uuid
+import mimetypes
 
 from django.db import models
 from django.utils import timezone
@@ -6,6 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext
 from django.conf import settings
 from django.core.urlresolvers import reverse
+from django.contrib.staticfiles.storage import staticfiles_storage
 
 from utils.localized import BaseLocalizedObject, BaseLocalizedContent
 
@@ -374,6 +376,9 @@ class ArticleAttach(OrderedEntry):
     def __unicode__(self):
         return _(u'Attach for %s') % self.article
 
+    def icon_url(self):
+        mt = mimetypes.guess_type(self.file.path)[0]
+        return staticfiles_storage.url(u'img/mimetypes/%s.png' % mt.replace('/', '-'))
 
 class ArticleSource(models.Model):
     article = models.ForeignKey(Article, verbose_name=Article._meta.verbose_name)
@@ -479,3 +484,6 @@ class Issue(OrderedEntry):
     @models.permalink
     def get_absolute_url(self):
         return 'show_issue', [self.id]
+
+
+# TODO: article and profile user input escaping

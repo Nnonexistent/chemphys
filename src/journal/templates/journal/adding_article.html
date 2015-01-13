@@ -21,7 +21,7 @@
 <br />
 <br />
 
-<form method="post"{% if form.is_multipart %} enctype="multipart/form-data" {% endif %}>
+<form method="post"{% if form.is_multipart or formset.is_multipart %} enctype="multipart/form-data" {% endif %}>
     {% csrf_token %}
 
     {{ formset }}

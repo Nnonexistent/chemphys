@@ -1,0 +1,43 @@
+{% load i18n %}
+
+{{ formset.management_form }}
+<div id="attaches">
+{% for form in formset %}
+    {{ form }}
+{% endfor %}
+</div>
+<a id="add_attach" class="btn btn-sm btn-info">{% trans "Add file" %}</a>
+
+<br />
+<br />
+<br />
+
+<script type="text/javascript">
+    var form_count = {{ formset.total_form_count }};
+
+    $(function () {
+        $('#attaches').sortable({
+            axis: 'y',
+            cursor: 'move',
+            tolerance: 'pointer',
+            update: function(event, ui) {
+                $('#attaches>div:not(.ui-sortable-placeholder)').each(function(i) {
+                    $(this).find('input[type=hidden][id$=-ORDER]').val(i + 1);
+                });
+            }
+        });
+
+        $('#add_attach').click(function() {
+            var max_num = parseInt($('#id_articleattach_set-MAX_NUM_FORMS').val())
+            if (form_count < max_num) {
+                form_count++;
+                var form = '{{ formset.empty_form|escapejs }}';
+                $(this).prev().append(form.replace(/__prefix__/g, form_count - 1));
+                $('#id_articleattach_set-TOTAL_FORMS').val(form_count);
+                if (form_count == max_num) {
+                    $(this).addClass('disabled');
+                }
+            }
+        });
+    });
+</script>
