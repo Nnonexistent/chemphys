@@ -1,3 +1,4 @@
+import json
 import uuid
 import mimetypes
 
@@ -128,6 +129,9 @@ class LocalizedUser(_get_user_model(), BaseLocalizedObject):
 
     def unpublished_articles(self):
         return Article.objects.exclude(status=10).filter(models.Q(articleauthor__author=self) | models.Q(senders=self)).distinct()
+
+    def pending_reviews(self):
+        return self.review_set.filter(status__in=(0, 1)).distinct()
 
 
 class Section(OrderedEntry):
@@ -468,7 +472,9 @@ class ReviewField(OrderedEntry):
         elif self.field_type == 1:  # Choice field
             choices = filter(None, self.choices.strip().splitlines())
             choices = map(unicode.strip, choices)
-            kwargs['choices'] = zip(choices, choices)
+            choices = zip(choices, choices)
+            choices.insert(0, ('', '-' * 8))
+            kwargs['choices'] = choices
             return forms.ChoiceField(**kwargs)
 
         elif self.field_type == 2:  # Text string
@@ -513,6 +519,12 @@ class Review(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return 'edit_review', [self.key]
+
+    def render(self):
+        from django.utils.html import strip_spaces_between_tags
+
+        return strip_spaces_between_tags(render_to_string('journal/review_result.html', {'data': json.loads(self.field_values)}))
+    render.short_description = _(u'Data')
 
 
 class ReviewFile(models.Model):

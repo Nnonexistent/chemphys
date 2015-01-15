@@ -261,6 +261,7 @@ class AttachForm(BootstrapForm):
             out = self.as_div()
             self.fields = self._all_fields
             return out
+
         return render_to_string(u'journal/forms/article_attach.html', {
             'mainform': subform(exclude=['DELETE']),
             'subform': subform(('DELETE', 'ORDER')),

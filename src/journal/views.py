@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponseForbidden, JsonResponse
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.utils.safestring import mark_safe
 
 from journal.models import Issue, Article, Organization, LocalizedUser, ARTICLE_ADDING_STATUSES, Review
@@ -217,7 +218,6 @@ def edit_review_login(request, key):
 
 def edit_review(request, key, do_login=False):
     from django.contrib.auth import authenticate, login
-    from django.contrib.auth import get_user_model
 
     review = get_object_or_404(Review, status__in=(0, 1), key=key)
     reviewer_user = get_user_model().objects.get(id=review.reviewer_id) # FIXME: don't call DB for proxy model
@@ -242,6 +242,7 @@ def edit_review(request, key, do_login=False):
 
     return render(request, 'journal/review.html', {
         'title': _(u'Review for article'),
+        'article': review.article,
         'subtitle': unicode(review.article),
         'form': form,
         'formset': formset,

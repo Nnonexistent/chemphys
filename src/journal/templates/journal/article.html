@@ -78,6 +78,8 @@
                     </div>
                 </div>
             </div>
+        {% if forloop.counter|divisibleby:3 %}<hr class="visible-lg-block visible-md-block separator" />{% endif %}
+        {% if forloop.counter|divisibleby:2 %}<hr class="visible-sm-block separator" />{% endif %}
         {% endfor %}
         </div>
     </div>

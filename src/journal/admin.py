@@ -181,6 +181,8 @@ class LocalizedArticleContentInline(admin.StackedInline):
 class ReviewInline(admin.StackedInline):
     model = app_models.Review
     extra = 0
+    fields = ('reviewer', 'status', 'date_created', 'comment_for_authors', 'comment_for_editors', 'resolution', 'render')
+    readonly_fields = ('render', 'date_created')
 
 
 class ArticleAdmin(JournalAdmin):

@@ -31,9 +31,30 @@
                     {{ article }}
                     {% endif %}
                 </td>
-                {# TODO: display author-frinedly status descriptions. Such as "Pending moderation" instead of "New" #}
+                {# TODO: display author-friendly status descriptions. Such as "Pending moderation" instead of "New" #}
                 <td>{{ article.get_status_display }}</td>
                 <td>{% if article.adding %}<a class="btn btn-primary btn-xs" href="{% url "adding_article" article.id article.status %}">{% trans "Continue filling form" %}</a>{% endif %}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+        {% endif %}
+        {% if loc_user.pending_reviews %}
+                <h5>{% trans "Pending reviews" %}</h5>
+                <table class="table">
+                <thead>
+                <tr>
+                    <th>{% trans "Article" %}</th>
+                    <th>{% trans "Status" %}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for review in loc_user.pending_reviews %}
+                <tr>
+                <td><a href="{{ review.get_absolute_url }}">{{ review.article }}</a></td>
+                <td>{{ review.get_status_display }}</td>
+                <td><a class="btn btn-primary btn-xs" href="{{ review.get_absolute_url }}">{% trans "Proceed to review form" %}</a></td>
                 </tr>
                 {% endfor %}
                 </tbody>

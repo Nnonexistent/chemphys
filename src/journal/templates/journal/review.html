@@ -1,24 +1,50 @@
 {% extends "base.html" %}
 {% load i18n %}
 
+
+{% block head %}{{ block.super }}
+<script type="text/javascript">
+    $(function () {
+        $('#id_resolution').change(function() {
+            if (parseInt($(this).val())) {
+                $('#review_submit').attr({value: '{% trans "Complete review" %}'});
+            } else {
+                $('#review_submit').attr({value: '{% trans "Save review for completing afterwards" %}'});
+            }
+        }).change();
+    });
+</script>
+{% endblock %}
+
+
 {% block content %}
+<div class="panel panel-default">
+    <div class="panel-body row">
+        <div class="col-md-6">
+            <a target="_blank" href="{{ article.articlesource_set.latest.file.url }}" class="btn btn-primary">View article <br /><small class="text-muted">{{ article.articlesource_set.latest.file.size|filesizeformat }}</small></a>
+        </div>
+        <div class="col-md-6">
+        {% blocktrans count count=article.articleauthor_set.all.count %}Author{% plural %}Authors{% endblocktrans %}:
+        {% for aa in article.articleauthor_set.all %}
+            <a href="{{ aa.author.author.get_absolute_url }}" target="_blank" title="{{ aa.organization }}">{{ aa.author }}</a>{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+        </div>
+    </div>
+</div>
+
 <form role="form" method="post">
 {% csrf_token %}
 
 <div class="row">
     <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-body">
-            {{ form }}
-            </div>
-        </div>
+        {{ form }}
     </div>
 </div>
 
 {{ formset }}
 
 <hr class="separator" />
-<input class="btn btn-primary" type="submit" value="{% trans "Complete review" %}" />
+<input id="review_submit" class="btn btn-primary" type="submit" value="{% trans "Complete review" %}" />
 </form>
 {% endblock %}
 

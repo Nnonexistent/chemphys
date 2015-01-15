@@ -1,0 +1,8 @@
+<table class="table">
+{% for field_id, name, type, value in data %}
+    <tr>
+        <th>{{ name }}</th>
+        <td>{{ value }}</td>
+    </tr>
+{% endfor %}
+</table>
