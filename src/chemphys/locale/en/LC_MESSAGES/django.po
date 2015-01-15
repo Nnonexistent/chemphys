@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-12 02:20+0300\n"
+"POT-Creation-Date: 2015-01-15 09:29+0300\n"
 "PO-Revision-Date: 2015-01-09 00:54+0300\n"
 "Last-Translator: Elena Sergievska <skubird@gmail.com>\n"
 "Language-Team: Chemphys <skubird@gmail.com>\n"
@@ -52,69 +52,95 @@ msgstr "Delete?"
 msgid "Физико-химическая кинетика в газовой динамике"
 msgstr "Physical-Chemical Kinetics in Gas Dynamics"
 
-#: templates/base.html:78
+#: templates/base.html:109
 msgid "Физико-химическая<br />кинетика"
 msgstr "Physical-Chemical<br />Kinetics"
 
-#: templates/base.html:80
+#: templates/base.html:111
 msgid "в газовой<br />динамике"
 msgstr "in Gas<br />Dynamics"
 
-#: templates/base.html:99
+#: templates/base.html:130
 msgid "Contents"
 msgstr "Contents"
 
-#: templates/base.html:108
+#: templates/base.html:139
 msgid "Advanced Search"
 msgstr "Advanced Search"
 
-#: templates/base.html:109
+#: templates/base.html:140
 msgid "Search"
 msgstr "Search"
 
-#: templates/base.html:134
+#: templates/base.html:166
 msgid "Институт Механики МГУ"
 msgstr "Institute of Mechanics of Moscow State University, Russia"
 
-#: templates/base.html:137
+#: templates/base.html:167
+msgid "Administration"
+msgstr "Administration"
+
+#: templates/base.html:171
 msgid "Свидетельство СМИ: Эл № 77-6360 от 10 июля 2002 г."
 msgstr ""
 "Certificate of Mass Media Registration: digital № 77-6360, Jun. 10, 2002."
 
-#: templates/base.html:138
+#: templates/base.html:172
 msgid "Журнал издается с 2003 года"
 msgstr "Published since 2003"
 
-#: templates/base.html:139
+#: templates/base.html:173
 msgid "Периодичность: 4 выпуска в год"
 msgstr "4 issues per year"
 
-#: templates/index.html:6
+#: templates/index.html:9
 #, python-format
 msgid "You are logged in as %(user)s"
 msgstr "You are logged in as %(user)s"
 
-#: templates/index.html:6
+#: templates/index.html:9
 msgid "Logout"
 msgstr "Logout"
 
-#: templates/index.html:7
+#: templates/index.html:10
 msgid "Edit profile"
 msgstr "Edit profile"
 
-#: templates/index.html:8
+#: templates/index.html:11
 msgid "Add article"
 msgstr "Add article"
 
-#: templates/index.html:10
+#: templates/index.html:15
 msgid "Unpublished articles"
 msgstr "Unpublished articles"
 
-#: templates/index.html:27
-msgid "Administration"
-msgstr "Administration"
+#: templates/index.html:19
+msgid "Title"
+msgstr ""
 
-#: templates/index.html:30
+#: templates/index.html:20 templates/index.html.py:48
+msgid "Status"
+msgstr ""
+
+#: templates/index.html:36
+msgid "Continue filling form"
+msgstr ""
+
+#: templates/index.html:43
+msgid "Pending reviews"
+msgstr ""
+
+#: templates/index.html:47
+#, fuzzy
+#| msgid "Add article"
+msgid "Article"
+msgstr "Add article"
+
+#: templates/index.html:57
+msgid "Proceed to review form"
+msgstr ""
+
+#: templates/index.html:67
 msgid "Login as author"
 msgstr "Login as author"
 
