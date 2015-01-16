@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-15 09:29+0300\n"
+"POT-Creation-Date: 2015-01-15 20:35+0300\n"
 "PO-Revision-Date: 2015-01-09 12:14+0300\n"
 "Last-Translator: Nik Sergievskiy <nnonexistent@gmail.com>\n"
 "Language-Team: Chemphys <skubird@gmail.com>\n"
@@ -134,7 +134,7 @@ msgstr "Короткое сообщение"
 msgid "Presentation"
 msgstr "Презентация"
 
-#: models.py:35 models.py:527
+#: models.py:35 models.py:529
 msgid "Data"
 msgstr "Данные"
 
@@ -348,7 +348,7 @@ msgstr "Содержимое"
 msgid "Senders"
 msgstr "Отправители"
 
-#: models.py:298 models.py:552 templates/journal/article.html:56
+#: models.py:298 models.py:554 templates/journal/article.html:56
 msgid "Issue"
 msgstr "Выпуск"
 
@@ -394,11 +394,11 @@ msgstr "Авторы статьи"
 msgid "Attach type"
 msgstr "Тип приложения"
 
-#: models.py:381 models.py:404 models.py:532
+#: models.py:381 models.py:404 models.py:534
 msgid "File"
 msgstr "Файл"
 
-#: models.py:382 models.py:533
+#: models.py:382 models.py:535
 msgid "Comment"
 msgstr "Комментарий"
 
@@ -457,7 +457,7 @@ msgstr "Решение по %s"
 msgid "Field type"
 msgstr "Тип поля"
 
-#: models.py:438 models.py:549
+#: models.py:438 models.py:551
 msgid "Description"
 msgstr "Описание"
 
@@ -506,45 +506,45 @@ msgstr "Рецензия"
 msgid "Review for %s"
 msgstr "Рецензия для %s"
 
-#: models.py:517
+#: models.py:519
 msgid "Review request"
 msgstr "Запрос на рецензию"
 
-#: models.py:537
+#: models.py:539
 msgid "Review file"
 msgstr "Файл рецензии"
 
-#: models.py:538
+#: models.py:540
 msgid "Review files"
 msgstr "Файлы рецензии"
 
-#: models.py:541
+#: models.py:543
 #, python-format
 msgid "File for review for %s"
 msgstr "Файл рецензии %s"
 
-#: models.py:545
+#: models.py:547
 msgid "Number"
 msgstr "Номер"
 
-#: models.py:546
+#: models.py:548
 msgid "Volume"
 msgstr "Том"
 
-#: models.py:547
+#: models.py:549
 msgid "Year"
 msgstr "Год"
 
-#: models.py:553
+#: models.py:555
 msgid "Issues"
 msgstr "Выпуски"
 
-#: models.py:558
+#: models.py:560
 #, python-format
 msgid "Volume %(volume)s, issue %(number)s, %(year)s year"
 msgstr "Том %(volume)s, выпуск %(number)s, %(year)s год"
 
-#: models.py:560
+#: models.py:562
 #, python-format
 msgid "Volume %(volume)s, %(year)s year"
 msgstr "Том %(volume)s, %(year)s год"
@@ -625,20 +625,20 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"Hello %(review.reviewer)s,\n"
+"Hello %(reviewer)s,\n"
 "\n"
-"New article \"%(review.article)s\" was uploaded in journal and your review "
-"was requested.\n"
+"New article \"%(article)s\" was uploaded in journal and your review was "
+"requested.\n"
 "Please follow the link to fill the review form: %(link)s\n"
 "\n"
 "Thanks.\n"
 "\n"
 msgstr ""
 "\n"
-"Здравствуйте %(review.reviewer)s,\n"
+"Здравствуйте %(reviewer)s,\n"
 "\n"
-"Новая статья \"%(review.article)s\" была загружена и требует вашей рецензии."
-"\n"
+"Новая статья \"%(article)s\" была загружена и требует вашей "
+"рецензии.\n"
 "Перейдите по ссылке, чтобы заполнить форму рецензии: %(link)s\n"
 "\n"
 "Спасибо.\n"
