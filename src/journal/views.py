@@ -19,14 +19,22 @@ def index(request):
 
 
 def show_issues(request):
+    if request.user.is_authenticated() and request.user.is_staff:
+        qs = Issue.objects.all()
+    else:
+        qs = Issue.objects.filter(is_active=True)
+
     return render(request, 'journal/issues.html', {
         'title': _('Index'),
-        'issues': Issue.objects.all(),
+        'issues': qs,
     })
 
 
 def show_issue(request, id):
-    issue = get_object_or_404(Issue, id=id)
+    kwargs = {'id': id}
+    if not (request.user.is_authenticated() and request.user.is_staff):
+        kwargs['is_active'] = True
+    issue = get_object_or_404(Issue, **kwargs)
     return render(request, 'journal/issue.html', {
         'title': unicode(issue),
         'issue': issue,
@@ -35,10 +43,12 @@ def show_issue(request, id):
 
 
 def show_article(request, iss_year, iss_volume, iss_number, id):
-    article = get_object_or_404(Article, status=10, id=id,
-                                issue__year=iss_year,
-                                issue__volume=iss_volume,
-                                issue__number=iss_number)
+    kwargs = {'id': id, 'status':10, 'issue__year':iss_year,
+              'issue__volume': iss_volume, 'issue__number': iss_number}
+    if not (request.user.is_authenticated() and request.user.is_staff):
+        kwargs['issue__is_active'] = True
+
+    article = get_object_or_404(Article, **kwargs)
     return render(request, 'journal/article.html', {
         'title': unicode(article),
         'article': article,
@@ -50,7 +60,7 @@ def show_article(request, iss_year, iss_volume, iss_number, id):
 def show_organization(request, id):
     org = get_object_or_404(Organization, id=id, moderation_status=2)
     authors = LocalizedUser.objects.filter(author__moderation_status=2, positioninorganization__organization=org).distinct()
-    articles = Article.objects.filter(articleauthor__organization=org, status=10).distinct()
+    articles = Article.objects.filter(articleauthor__organization=org, status=10, issue__is_active=True).distinct()
 
     return render(request, 'journal/org.html', {
         'title': unicode(org),
@@ -64,7 +74,7 @@ def show_organization(request, id):
 def show_author(request, id):
     author = get_object_or_404(LocalizedUser, id=id, author__moderation_status=2)
     orgs = Organization.objects.filter(moderation_status=2, positioninorganization__user=author).distinct()
-    articles = Article.objects.filter(articleauthor__author=author, status=10).distinct()
+    articles = Article.objects.filter(articleauthor__author=author, status=10, issue__is_active=True).distinct()
 
     return render(request, 'journal/author.html', {
         'title': unicode(author),

@@ -255,7 +255,7 @@ class ReviewFileInline(admin.TabularInline):
 
 
 class IssueAdmin(JournalAdmin):
-    list_display = ('__unicode__', 'articles_count')
+    list_display = ('__unicode__', 'is_active', 'articles_count')
 
     def articles_count(self, obj=None):
         if obj:

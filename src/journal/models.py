@@ -513,6 +513,8 @@ class Review(models.Model):
         msg = render_to_string('journal/mail/review.txt', {
             'link': uri_builder(reverse('edit_review_login', args=[self.key])),
             'review': self,
+            'reviewer': self.reviewer,
+            'article': self.article,
         })
         send_mail(_('Review request'), msg, settings.DEFAULT_FROM_EMAIL, [self.reviewer.email], fail_silently=False)
 
@@ -542,6 +544,8 @@ class ReviewFile(models.Model):
 
 
 class Issue(OrderedEntry):
+    is_active = models.BooleanField(verbose_name=_(u'Active'), default=False, blank=True)
+
     number = models.CharField(max_length=100, verbose_name=_(u'Number'), blank=True, null=True)
     volume = models.PositiveIntegerField(verbose_name=_(u'Volume'))
     year = models.PositiveIntegerField(verbose_name=_(u'Year'))

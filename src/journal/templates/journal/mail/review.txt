@@ -1,8 +1,8 @@
 {% load i18n %}
 {% blocktrans %}
-Hello {{ review.reviewer }},
+Hello {{ reviewer }},
 
-New article "{{ review.article }}" was uploaded in journal and your review was requested.
+New article "{{ article }}" was uploaded in journal and your review was requested.
 Please follow the link to fill the review form: {{ link }}
 
 Thanks.
