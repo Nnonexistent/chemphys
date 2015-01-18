@@ -37,6 +37,7 @@ def show_issue(request, id):
     issue = get_object_or_404(Issue, **kwargs)
     return render(request, 'journal/issue.html', {
         'title': unicode(issue),
+        'subtitle': u'' if issue.is_active else _(u'(Inactive)'),
         'issue': issue,
         'articles': issue.article_set.filter(status=10),
     })
@@ -118,12 +119,20 @@ def search_organizations(request):
     query = request.POST.get('q') or request.GET.get('q') or ''
     query = query.strip()
     if len(query) >= 3:
-        qobjs = []
-        for arg in ('organizationlocalizedcontent__name', 'alt_names',
-                    'previous__organizationlocalizedcontent__name', 'previous__alt_names'):
-            qobjs.append(Q(**{'%s__icontains' % arg: query}))
-        qobj = reduce(lambda x, y: x | y, qobjs)
-        qs = Organization.objects.filter(moderation_status=2).filter(qobj).distinct()[:50]
+        query_qobjs = []
+        for q in query.split():
+            for arg in ('organizationlocalizedcontent__name', 'alt_names',
+                        'previous__organizationlocalizedcontent__name', 'previous__alt_names'):
+                query_qobjs.append(Q(**{'%s__icontains' % arg: q}))
+        query_qobj = reduce(lambda x, y: x | y, query_qobjs)
+
+        qs_qobj = Q(moderation_status=2)
+        if request.user.is_authenticated():
+            qs_qobj = (qs_qobj
+                      | Q(moderation_status=0, positioninorganization__user__id=request.user.id)
+                      | Q(moderation_status=0, articleauthor__article__senders__id=request.user.id))
+        qs = Organization.objects.filter(qs_qobj & query_qobj).distinct()[:50]
+
         items = [{'id': item.id, 'text': unicode(item)} for item in qs]
     else:
         items = []
@@ -134,11 +143,17 @@ def search_authors(request):
     query = request.POST.get('q') or request.GET.get('q') or ''
     query = query.strip()
     if len(query) >= 3:
-        qobjs = []
-        for arg in ('localizedname__first_name', 'localizedname__last_name', 'email'):
-            qobjs.append(Q(**{'%s__icontains' % arg: query}))
-        qobj = reduce(lambda x, y: x | y, qobjs)
-        qs = LocalizedUser.objects.filter(author__moderation_status=2).filter(qobj).distinct()[:50]
+        query_qobjs = []
+        for q in query.split():
+            for arg in ('localizedname__first_name', 'localizedname__last_name', 'email'):
+                query_qobjs.append(Q(**{'%s__icontains' % arg: q}))
+        query_qobj = reduce(lambda x, y: x | y, query_qobjs)
+
+        qs_qobj = Q(author__moderation_status=2)
+        if request.user.is_authenticated():
+            qs_qobj = qs_qobj | Q(author__moderation_status=0, articleauthor__article__senders__id=request.user.id)
+        qs = LocalizedUser.objects.filter(qs_qobj & query_qobj).distinct()[:50]
+
         items = [{'id': item.id, 'text': unicode(item)} for item in qs]
     else:
         items = []
