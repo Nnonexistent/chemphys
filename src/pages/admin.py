@@ -13,6 +13,11 @@ class LocalizedPageContentInline(admin.StackedInline):
 
 
 class PageAdmin(admin.ModelAdmin):
+    class Media:
+        js = ('admin/js/jquery.init-global.js',
+              'js/jquery.autosize.min.js',
+              'admin/js/misc.js')
+
     list_display = ('__unicode__', 'in_menu', 'display_link')
     inlines = [LocalizedPageContentInline]
 

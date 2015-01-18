@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.utils.translation import ugettext as _
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponseForbidden, JsonResponse
+from django.http import HttpResponseRedirect, HttpResponseForbidden, JsonResponse, Http404
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.utils.safestring import mark_safe
@@ -237,7 +237,11 @@ def edit_review(request, key, do_login=False):
         login(request, reviewer_user)
 
     if request.user != reviewer_user:
-        raise Http404
+        if do_login:
+            messages.warning(request, _(u'You cannot view view this review because you already logged in as different user. Log out and try again.'))
+            return HttpResponseRedirect(reverse('index'))
+        else:
+            raise Http404
 
     if request.method == 'POST':
         form = ReviewForm(request.POST, instance=review)
