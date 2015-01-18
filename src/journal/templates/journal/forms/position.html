@@ -1,27 +1,31 @@
 {% load i18n %}
 
-<div class="panel panel-default">
+<div class="panel panel-default entry">
     <div class="panel-body row">
         <div class="col-md-12">
         {{ form.as_div_common }}
-        </div>
-        {% for subform in form.as_div_lang %}
-        {% language subform.lang %}
-        <div class="col-md-{{ subform.col_md }} subform">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                    {% for lang_code, lang_name in LANGUAGES %}
-                        {% if lang_code == subform.lang %}{{ lang_name }}{% endif %}
+
+        <div class="popover bottom popover-static subform">
+            <div class="arrow"></div>
+                <div class="popover-content row">
+                    <div class="col-md-12">
+                    {{ form.as_div_org }}
+                    </div>
+
+                    {% for subform in form.as_div_lang %}
+                    {% language subform.lang %}
+                    <div class="col-md-{{ subform.col_md }}">
+                        <h5>
+                        {% for lang_code, lang_name in LANGUAGES %}
+                            {% if lang_code == subform.lang %}{{ lang_name }}{% endif %}
+                        {% endfor %}
+                        </h5>
+                        {{ subform.render }}
+                    </div>
+                    {% endlanguage %}
                     {% endfor %}
-                    </h4>
-                </div>
-                <div class="panel-body">
-                    {{ subform.render }}
                 </div>
             </div>
         </div>
-        {% endlanguage %}
-        {% endfor %}
     </div>
 </div>

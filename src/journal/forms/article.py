@@ -61,20 +61,20 @@ class AuthorForm(BootstrapForm):
 
         # user
         user = None
+        choices = [('', _(u'Add new author'))]
         if self.instance.id:
             user = self.instance.author
             self.fields['author'].initial = user
-        else:
-            key = self.add_prefix(u'author')
-            if self.data.get(key):
-                try:
-                    user = LocalizedUser.objects.get(id=int(self.data[key]))
-                except ValueError:
-                    pass
-        if user:
-            choices = [(user.id, unicode(user))]
-        else:
-            choices = [('', _(u'Add new author'))]
+            choices.append((user.id, unicode(user)))
+
+        key = self.add_prefix(u'author')
+        if self.data.get(key):
+            try:
+                user = LocalizedUser.objects.get(id=int(self.data[key]))
+            except ValueError:
+                pass
+            else:
+                choices.append((user.id, unicode(user)))
 
         self.fields['author'].widget.choices = choices
 
@@ -83,21 +83,20 @@ class AuthorForm(BootstrapForm):
 
         # organization
         org = None
+        choices = [('', _(u'Add new organization'))]
         if self.instance.id:
             org = self.instance.organization
             self.fields['organization'].initial = org
-        else:
-            key = self.add_prefix(u'organization')
-            if self.data.get(key):
-                try:
-                    org = Organization.objects.get(id=int(self.data[key]))
-                except ValueError:
-                    pass
+            choices.append((org.id, unicode(org)))
 
-        if org:
-            choices = [(org.id, unicode(org))]
-        else:
-            choices = [('', _(u'Add new organization'))]
+        key = self.add_prefix(u'organization')
+        if self.data.get(key):
+            try:
+                org = Organization.objects.get(id=int(self.data[key]))
+            except ValueError:
+                pass
+            else:
+                choices.append((org.id, unicode(org)))
 
         self.fields['organization'].widget.choices = choices
 
@@ -232,8 +231,10 @@ class AuthorForm(BootstrapForm):
             'form': self,
             'LANGUAGES': settings.LANGUAGES,
             'common_mainform': subform(('DELETE', ''), ('ORDER', ''), ('id', ''), ('article', '')),
-            'user_mainform': subform(('author', '')) + subform(*self.iter_user_fields()),
-            'org_mainform': subform(('organization', '')) + subform(*self.iter_org_fields()),
+            'user_mainform': subform(('author', '')),
+            'user_subform': subform(*self.iter_user_fields()),
+            'org_mainform': subform(('organization', '')),
+            'org_subform': subform(*self.iter_org_fields()),
             'user_subforms': user_subforms,
             'org_subforms': org_subforms,
         })

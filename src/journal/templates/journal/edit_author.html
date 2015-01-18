@@ -24,10 +24,10 @@
         org_select(false);
 
         function show_new_org(el) {
-            el.parents('div.row').find('div.form-group:has([id$=-org_site]),.subform').show();
+            el.parents('div.entry').find('div.form-group:has([id$=-org_site]),.subform').show();
         }
         function hide_new_org(el) {
-            el.parents('div.row').find('div.form-group:has([id$=-org_site]),.subform').hide();
+            el.parents('div.entry').find('div.form-group:has([id$=-org_site]),.subform').hide();
         }
 
         function org_select(adding) {
@@ -63,7 +63,7 @@
                     },
                     createSearchChoicePosition: 'bottom',
                     createSearchChoice: function (term) {
-                        this.container.parents('.row').find('[id$=-{{ LANGUAGE_CODE }}_name]').val(term);
+                        this.container.parents('.entry').find('[id$=-{{ LANGUAGE_CODE }}_name]').val(term);
                         return {id: '', text: '{% trans "Add new organization" %}'}
                     }
                 });
@@ -96,14 +96,14 @@
         <div class="panel panel-default">
             <div class="panel-body">
             {{ form }}
+            {{ name_formset }}
             </div>
         </div>
     </div>
 </div>
 
-{{ name_formset }}
 
-<h4>{% trans "Organizations" %}</h4>
+<h3>{% trans "Organizations" %}</h3>
 {{ org_formset.management_form }}
 <div>
 {% for form in org_formset %}

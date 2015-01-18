@@ -38,16 +38,16 @@ class PIOForm(BootstrapForm):
         if self.instance.id:
             org = self.instance.organization
             self.fields['organization'].initial = org
-        else:
-            key = u'%s-organization' % self.prefix
-            if self.data.get(key):
-                try:
-                    org = Organization.objects.get(id=int(self.data[key]))
-                except ValueError:
-                    pass
+            choices.append((org.id, unicode(org)))
 
-        if org:
-            choices = [(org.id, unicode(org))]
+        key = u'%s-organization' % self.prefix
+        if self.data.get(key):
+            try:
+                org = Organization.objects.get(id=int(self.data[key]))
+            except ValueError:
+                pass
+            else:
+                choices.append((org.id, unicode(org)))
 
         self.fields['organization'].widget.choices = choices
 
@@ -104,13 +104,19 @@ class PIOForm(BootstrapForm):
                     yield key, field
 
     def as_div_common(self):
-        self.fields = OrderedDict((k, v) for k, v in self.fields.items() if k not in dict(self.iter_loc_fields()))
+        self.fields = OrderedDict((k, v) for k, v in self.fields.items() if k not in dict(chain(self.iter_loc_fields(), self.iter_org_fields())))
 
         # make delete field first
         n = len(self._org_fields) + len(set(self._meta.fields))
         self.fields = OrderedDict(self.fields.items()[n:] + self.fields.items()[:n])
         self.fields['DELETE'].extra_classes = ['pull-right']
 
+        out = self.as_div()
+        self.fields = self._all_fields
+        return out
+
+    def as_div_org(self):
+        self.fields = OrderedDict((k, v) for k, v in self.fields.items() if k in dict(self.iter_org_fields()))
         out = self.as_div()
         self.fields = self._all_fields
         return out
@@ -137,8 +143,8 @@ class BasePIOFormSet(BaseInlineFormSet):
             return
         orgs = []
         for form in self.forms:
-            org = form.cleaned_data['organization']
-            if org in orgs:
+            org = form.cleaned_data.get('organization')
+            if org is not None and org in orgs:
                 form._errors.setdefault('organization', []).append(_(u'This organization is already used.'))
             orgs.append(org)
 
