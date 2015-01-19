@@ -239,6 +239,7 @@ def send_article(request, article_id):
     article = get_object_or_404(Article, id=article_id, senders=request.user, status=3)
     if request.method == 'POST':
         article.status = 11
+        article.save()
         messages.success(request, _(u'Thank you for submission. Your article will be reviewed by our staff. We will notify you soon about progress.'))
         return HttpResponseRedirect(reverse('index'))
 

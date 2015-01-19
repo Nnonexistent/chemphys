@@ -221,6 +221,8 @@ class OrganizationLocalizedContent(BaseLocalizedContent):
 class Author(ModeratedObject):
     user = models.OneToOneField(LocalizedUser, verbose_name=_(u'User'))
 
+    degree = models.CharField(max_length=200, verbose_name=_(u'Degree'), blank=True, default='')
+
     class Meta:
         ordering = ('user__last_name', 'user__first_name')
         verbose_name = _(u'Author')
