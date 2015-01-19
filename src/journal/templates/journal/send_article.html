@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+
+{% block content %}
+
+{% for s, t in ARTICLE_ADDING_TITLES.items %}
+    <a href="{% url 'adding_article' article.id s %}" class="btn btn-lg btn-success">
+        <span class="badge"><b>{{ forloop.counter }}</b></span>&nbsp; {{ t }}
+    </a>
+    <span style="font-size: 28px; vertical-align: middle;" class="glyphicon glyphicon-chevron-right text-success" aria-hidden="true"></span>
+{% endfor %}
+    <a href="{% url 'send_article' article.id %}" class="btn btn-lg btn-default btn-highlight disabled">
+        <span class="badge"><b>{{ ARTICLE_ADDING_TITLES|length|add:1 }}</b></span>&nbsp; {% trans "Send article" %}
+    </a>
+
+<br />
+<br />
+
+<h4>{{ ARTICLE_ADDING_TITLES.0 }}</h4>
+<div class="row">
+    {% for c in article.localizedarticlecontent_set.all %}
+    <div class="col-md-6">
+        <h5>
+        {% for lang_code, lang_name in LANGUAGES %}
+            {% if lang_code == c.lang %}{{ lang_name }}{% endif %}
+        {% endfor %}
+        </h5>
+        <label>{% trans "Title" %}</label>
+        <p>{{ c.title }}</p>
+    </div>
+    {% endfor %}
+    <div class="col-md-12">
+        <label>{% trans "Article type" %}</label>
+        <p>{{ article.get_type_display }}</p>
+        <label>{% trans "Sections" %}</label>
+        <p>{{ article.sections.all|join:'<br />' }}</p>
+    </div>
+</div>
+
+<h4>{{ ARTICLE_ADDING_TITLES.1 }}</h4>
+<div class="row">
+    {% for c in article.localizedarticlecontent_set.all %}
+    <div class="col-md-6">
+        <h5>
+        {% for lang_code, lang_name in LANGUAGES %}
+            {% if lang_code == c.lang %}{{ lang_name }}{% endif %}
+        {% endfor %}
+        </h5>
+        <label>{% trans "Abstract" %}</label>
+        <p>{{ c.abstract }}</p>
+        <label>{% trans "Keywords" %}</label>
+        <p>{{ c.keywords }}</p>
+        <label>{% trans "References" %}</label>
+        <p>{{ c.references }}</p>
+    </div>
+    {% endfor %}
+</div>
+
+<h4>{{ ARTICLE_ADDING_TITLES.2 }}</h4>
+<p>{{ article.articleauthor_set.all|join:"<br />" }}</p>
+
+<h4>{{ ARTICLE_ADDING_TITLES.3 }}</h4>
+{% for entry in article.articleattach_set.all %}
+    <p>
+    {% if entry.type == 1 %}
+        <img src="{{ entry.file.url }}" alt="" class="img-thumbnail pull-left" width="64" style="margin-right:.5em;" />
+    {% else %}
+        <img src="{{ entry.icon_url }}" alt="" class="img-thumbnail pull-left" width="64" style="margin-right:.5em;" />
+    {% endif %}
+        {{ entry.comment|linebreaksbr }}
+        <hr class="separator"/>
+    </p>
+{% endfor %}
+
+
+<form method="post">
+    {% csrf_token %}
+    <button class="btn btn-primary" type="submit" />
+        {% trans "Send article to journal" %}
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    </button>
+</form>
+{% endblock %}

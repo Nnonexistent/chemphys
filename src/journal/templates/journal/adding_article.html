@@ -15,8 +15,11 @@
     <a href="{% url 'adding_article' article.id s %}" class="btn btn-lg {% if s > step %}btn-default disabled{% elif s == step %}disabled btn-default btn-highlight{% else %}btn-success{% endif%}">
         <span class="badge"><b>{{ forloop.counter }}</b></span>&nbsp; {{ t }}
     </a>
-    {% if not forloop.last %}<span style="font-size: 28px; vertical-align: middle;" class="glyphicon glyphicon-chevron-right text-{% if s > step %}muted{% elif s == step %}muted{% else %}success{% endif %}" aria-hidden="true"></span>{% endif %}
+    <span style="font-size: 28px; vertical-align: middle;" class="glyphicon glyphicon-chevron-right text-{% if s > step %}muted{% elif s == step %}muted{% else %}success{% endif %}" aria-hidden="true"></span>
 {% endfor %}
+    <a href="{% url 'send_article' article.id %}" class="btn btn-lg btn-default disabled">
+        <span class="badge"><b>{{ ARTICLE_ADDING_TITLES|length|add:1 }}</b></span>&nbsp; {% trans "Send article" %}
+    </a>
 
 <br />
 <br />

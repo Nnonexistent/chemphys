@@ -210,13 +210,11 @@ def adding_article(request, article_id, step):
         if form.is_valid() and formset.is_valid():
             formset.save()
             article = form.save(commit=False)
+            messages.info(request, _(u'Article draft was updated.'))
             if final:
-                article.status = 11
-                messages.success(request, _(u'Thank you for submission. Your article will be reviewed by our staff. We will notify you soon about progress.'))
-                continue_url = reverse('index')
+                continue_url = reverse('send_article', args=[article_id])
             else:
                 article.status = step + 1
-                messages.info(request, _(u'Article draft was updated.'))
                 continue_url = reverse('adding_article', args=(article_id, article.status))
             form.save_m2m()
             article.save()
@@ -234,6 +232,21 @@ def adding_article(request, article_id, step):
         'form': form,
         'formset': formset,
         'final': final,
+    })
+
+
+def send_article(request, article_id):
+    article = get_object_or_404(Article, id=article_id, senders=request.user, status=3)
+    if request.method == 'POST':
+        article.status = 11
+        messages.success(request, _(u'Thank you for submission. Your article will be reviewed by our staff. We will notify you soon about progress.'))
+        return HttpResponseRedirect(reverse('index'))
+
+    return render(request, 'journal/send_article.html', {
+        'title': _(u'Send article'),
+        'subtitle': mark_safe(u'%s%s' % (u'<img src="%s" width="100" class="pull-left" />' % article.image.url if article.image else '', article.title)),
+        'ARTICLE_ADDING_TITLES': ARTICLE_ADDING_TITLES,
+        'article': article,
     })
 
 
