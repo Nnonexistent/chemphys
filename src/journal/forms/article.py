@@ -150,18 +150,54 @@ class AuthorForm(BootstrapForm):
     # TODO: check users uniqueness
 
     def clean(self):
-        # TODO: only one of all lang fields is required, not all
-        if not self.cleaned_data.get('author') and not self._errors.get('author'):
-            for key, field in chain(self.iter_user_fields(), self.iter_user_loc_fields()):
+        if not self.cleaned_data.get('author') and not self._errors.get('author'):  # new author
+            for key, field in self.iter_user_fields():
                 # email is explicitly required because LocalizedUser is just a proxy model
                 # but user e-mail required for authentication in our project
                 if (not field.blank or field.name == 'email') and not self.cleaned_data.get(key):
                     self._errors.setdefault(key, []).append(_(u'This field is required if new author specified.'))
 
-        if not self.cleaned_data.get('organization') and not self._errors.get('organization'):
-            for key, field in chain(self.iter_org_fields(), self.iter_org_loc_fields()):
+            all_empty = True
+            for lang_code, lang_name in settings.LANGUAGES:
+                empty = True
+                errors = []
+                for key, field in self.iter_user_loc_fields(lang_code=lang_code):
+                    value = self.cleaned_data.get(key)
+                    if value:
+                        empty = False
+                    elif not field.blank:
+                        errors.append((key, _(u'This field is required if new author specified.')))
+
+                if not empty:
+                    for key, error in errors:
+                        self._errors.setdefault(key, []).append(error)
+                    all_empty = False
+            if all_empty:
+                self._errors.setdefault('author', []).append(_(u'Author data must be filled at least for one language'))
+
+        if not self.cleaned_data.get('organization') and not self._errors.get('organization'):  # new organization
+            for key, field in self.iter_org_fields():
                 if not field.blank and not self.cleaned_data.get(key):
                     self._errors.setdefault(key, []).append(_(u'This field is required if new organization specified.'))
+
+            all_empty = True
+            for lang_code, lang_name in settings.LANGUAGES:
+                empty = True
+                errors = []
+                for key, field in self.iter_org_loc_fields(lang_code=lang_code):
+                    value = self.cleaned_data.get(key)
+                    if value:
+                        empty = False
+                    elif not field.blank:
+                        errors.append((key, _(u'This field is required if new organization specified.')))
+
+                if not empty:
+                    for key, error in errors:
+                        self._errors.setdefault(key, []).append(error)
+                    all_empty = False
+            if all_empty:
+                self._errors.setdefault('organization', []).append(_(u'Organization data must be filled at least for one language'))
+
         return self.cleaned_data
 
     @transaction.atomic
@@ -179,10 +215,11 @@ class AuthorForm(BootstrapForm):
             Author.objects.create(user=author)
 
             for lang_code, lang_name in settings.LANGUAGES:
-                kwargs = {'user': author, 'lang': lang_code}
+                kwargs = {}
                 for key, field in self.iter_user_loc_fields(lang_code=lang_code):
                     kwargs[field.name] = self.cleaned_data[key]
-                LocalizedName.objects.create(**kwargs)
+                if any(kwargs.values()):  # dont't save empty localized data
+                    LocalizedName.objects.create(user=author, lang=lang_code, **kwargs)
 
         # organization
         if self.cleaned_data.get('organization'):
@@ -194,10 +231,11 @@ class AuthorForm(BootstrapForm):
             org = Organization.objects.create(**kwargs)
 
             for lang_code, lang_name in settings.LANGUAGES:
-                kwargs = {'org': org, 'lang': lang_code}
+                kwargs = {}
                 for key, field in self.iter_org_loc_fields(lang_code=lang_code):
                     kwargs[field.name] = self.cleaned_data[key]
-                OrganizationLocalizedContent.objects.create(**kwargs)
+                if any(kwargs.values()):  # don't save empty localized data
+                    OrganizationLocalizedContent.objects.create(org=org, lang=lang_code, **kwargs)
 
         aa = super(AuthorForm, self).save(commit=False)
         aa.organization = org

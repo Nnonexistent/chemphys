@@ -57,11 +57,29 @@ class PIOForm(BootstrapForm):
         self._all_fields = self.fields
 
     def clean(self):
-        if not self.cleaned_data.get('organization') and not self._errors.get('organization'):
-            for key, field in chain(self.iter_org_fields(), self.iter_loc_fields()):
+        if not self.cleaned_data.get('organization') and not self._errors.get('organization'):  # new organization
+            for key, field in self.iter_org_fields():
                 if not field.blank and not self.cleaned_data.get(key):
-                    # TODO: only one of all lang fields is required, not all
                     self._errors.setdefault(key, []).append(_(u'This field is required if new organization specified.'))
+
+            all_empty = True
+            for lang_code, lang_name in settings.LANGUAGES:
+                empty = True
+                errors = []
+                for key, field in self.iter_loc_fields(lang_code=lang_code):
+                    value = self.cleaned_data.get(key)
+                    if value:
+                        empty = False
+                    elif not field.blank:
+                        errors.append((key, _(u'This field is required if new organization specified.')))
+
+                if not empty:
+                    for key, error in errors:
+                        self._errors.setdefault(key, []).append(error)
+                    all_empty = False
+            if all_empty:
+                self._errors.setdefault('organization', []).append(_(u'Organization data must be filled at least for one language'))
+
         return self.cleaned_data
 
     @transaction.atomic
@@ -75,10 +93,11 @@ class PIOForm(BootstrapForm):
             org = Organization.objects.create(**kwargs)
 
             for lang_code, lang_name in settings.LANGUAGES:
-                kwargs = {'org': org, 'lang': lang_code}
+                kwargs = {}
                 for key, field in self.iter_loc_fields(lang_code=lang_code):
                     kwargs[field.name] = self.cleaned_data[key]
-                OrganizationLocalizedContent.objects.create(**kwargs)
+                if any(kwargs.values()):  # don't save empty localized data
+                    OrganizationLocalizedContent.objects.create(org=org, lang=lang_code, **kwargs)
 
         pio = super(PIOForm, self).save(commit=False)
         pio.organization = org
