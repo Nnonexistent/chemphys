@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-15 20:35+0300\n"
+"POT-Creation-Date: 2015-01-19 16:25+0300\n"
 "PO-Revision-Date: 2015-01-09 00:54+0300\n"
 "Last-Translator: Elena Sergievska <skubird@gmail.com>\n"
 "Language-Team: Chemphys <skubird@gmail.com>\n"
@@ -52,44 +52,44 @@ msgstr "Delete?"
 msgid "Физико-химическая кинетика в газовой динамике"
 msgstr "Physical-Chemical Kinetics in Gas Dynamics"
 
-#: templates/base.html:109
+#: templates/base.html:125
 msgid "Физико-химическая<br />кинетика"
 msgstr "Physical-Chemical<br />Kinetics"
 
-#: templates/base.html:111
+#: templates/base.html:127
 msgid "в газовой<br />динамике"
 msgstr "in Gas<br />Dynamics"
 
-#: templates/base.html:130
+#: templates/base.html:146
 msgid "Contents"
 msgstr "Contents"
 
-#: templates/base.html:139
+#: templates/base.html:155
 msgid "Advanced Search"
 msgstr "Advanced Search"
 
-#: templates/base.html:140
+#: templates/base.html:156
 msgid "Search"
 msgstr "Search"
 
-#: templates/base.html:166
+#: templates/base.html:182
 msgid "Институт Механики МГУ"
 msgstr "Institute of Mechanics of Moscow State University, Russia"
 
-#: templates/base.html:167
+#: templates/base.html:183
 msgid "Administration"
 msgstr "Administration"
 
-#: templates/base.html:171
+#: templates/base.html:187
 msgid "Свидетельство СМИ: Эл № 77-6360 от 10 июля 2002 г."
 msgstr ""
 "Certificate of Mass Media Registration: digital № 77-6360, Jun. 10, 2002."
 
-#: templates/base.html:172
+#: templates/base.html:188
 msgid "Журнал издается с 2003 года"
 msgstr "Published since 2003"
 
-#: templates/base.html:173
+#: templates/base.html:189
 msgid "Периодичность: 4 выпуска в год"
 msgstr "4 issues per year"
 
