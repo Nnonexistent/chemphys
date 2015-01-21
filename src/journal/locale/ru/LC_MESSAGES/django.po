@@ -138,7 +138,7 @@ msgstr "Статья"
 
 #: models.py:33
 msgid "Short message"
-msgstr "Короткое сообщение"
+msgstr "Краткое сообщение"
 
 #: models.py:34
 msgid "Presentation"
@@ -386,7 +386,7 @@ msgstr "Ключевые слова"
 #: models.py:351 templates/journal/article.html:29
 #: templates/journal/send_article.html:54
 msgid "References"
-msgstr "Ссылки"
+msgstr "Литература"
 
 #: models.py:355 models.py:356
 msgid "Localized article content"
