@@ -1,11 +1,13 @@
-$(function(){
+$(window).on('load', function(){
     $('[data-toggle="popover"]')
         .popover({
+            container: 'body',
             template: '<div class="popover" role="tooltip"><div class="arrow"></div><span class="close pull-right">&times;</span><div class="popover-content"></div></div>'
         })
         .on('shown.bs.popover', function(e){
             var popover = $(this);
-            popover.parent().find('div.popover .close').on('click', function(e){
+            var id = popover.attr('aria-describedby');
+            $('#' + id + ' .close').on('click', function(e){
                 popover.popover('hide');
             });
         })

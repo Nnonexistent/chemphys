@@ -12,8 +12,8 @@
     <script src="//yastatic.net/jquery/2.1.3/jquery.min.js"></script>
     <script src="//yastatic.net/bootstrap/3.3.1/js/bootstrap.min.js"></script>
     <script src="{% static "js/jquery.autosize.min.js" %}"></script>
-    <script src="{% url "ctxhelp_js" %}"></script>
     <script src="{% static "js/main.js" %}"></script>
+    <script src="{% url "ctxhelp_js" %}"></script>
     <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet" media="screen">
     <!--[if lt IE 9]>
       <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -67,7 +67,8 @@
         resize: none;
         max-height: 400px;
     }
-    body .form-group.pull-right {
+    body .pull-right.form-group,
+    body .pull-right .form-group {
         margin-bottom: 0;
     }
     .form-group ul {
@@ -118,7 +119,7 @@
         font-size: 20px;
         font-weight: bold;
         border-radius: 20px;
-        padding: 2px 8px 2px 6px;
+        padding: 2px 8px 2px 7px;
         line-height: 20px;
         box-shadow: none;
     }

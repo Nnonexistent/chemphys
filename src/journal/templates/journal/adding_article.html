@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n static %}
+{% load i18n static ctxhelp %}
 
 {% block head %}{{ block.super }}
 <link href="{% static "css/select2.css" %}" rel="stylesheet"/>
@@ -23,6 +23,10 @@
 
 <br />
 <br />
+
+<p>
+    {% if step == 2 %}{% ctxhelp _('You can drag authors to change their order') "auto left" %}{% endif %}
+</p>
 
 <form method="post"{% if form.is_multipart or formset.is_multipart %} enctype="multipart/form-data" {% endif %}>
     {% csrf_token %}

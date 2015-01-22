@@ -1,11 +1,12 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n ctxhelp %}
 
 {% block content %}
     {% if user.is_authenticated %}
     <div class="panel panel-default">
         <div class="panel-body row">
             <div class="col-md-4">
+                <span class="pull-right">{% ctxhelp _("This is context help. You can invoke it by pressing on this symbol on any page. To&nbsp;close it press the symbol again.") %}</span>
                 <p>{% blocktrans with user=loc_user %}You are logged in as {{ user }}{% endblocktrans %}. <a class="btn btn-default btn-xs" href="{% url 'logout' %}">{% trans "Logout" %}</a></p>
                 <p><a class="btn btn-info" href="{% url 'edit_author' %}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> {% trans "Edit profile" %}</a></p>
                 <p><a class="btn btn-info" href="{% url 'add_article' %}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {% trans "Add article" %}</a></p>

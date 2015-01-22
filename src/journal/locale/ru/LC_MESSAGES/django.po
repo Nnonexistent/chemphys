@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-22 08:32+0300\n"
+"POT-Creation-Date: 2015-01-22 09:25+0300\n"
 "PO-Revision-Date: 2015-01-09 12:14+0300\n"
 "Last-Translator: Nik Sergievskiy <nnonexistent@gmail.com>\n"
 "Language-Team: Chemphys <skubird@gmail.com>\n"
@@ -578,7 +578,11 @@ msgstr "Продолжить"
 msgid "Send article"
 msgstr "Отправить статью"
 
-#: templates/journal/adding_article.html:33
+#: templates/journal/adding_article.html:28
+msgid "You can drag authors to change their order"
+msgstr "Вы можете перетаскивать авторов, чтобы менять их порядок"
+
+#: templates/journal/adding_article.html:37
 msgid "Save and proceed to next step"
 msgstr "Сохранить и продолжить"
 
@@ -618,10 +622,6 @@ msgstr "К сожалению, ни одной статьи не найдено.
 #: templates/journal/forms/article_author_formset.html:118
 msgid "Enter organization name"
 msgstr "Введите название организации"
-
-#: templates/journal/edit_author.html:105
-msgid "is for cookies"
-msgstr ""
 
 #: templates/journal/edit_author.html:112
 msgid "Add Organization"

@@ -1,1 +1,1 @@
-<a class="btn btn-info ctxhelp{% if show %} popover-show{% endif %}" data-toggle="popover" data-placement="auto right" data-content="{{ text }}"{% if hash %} data-showurl="{% url 'ctxhelp_show' hash %}" data-hideurl="{% url 'ctxhelp_hide' hash %}"{% endif %}>?</a>
+<a class="btn btn-info ctxhelp{% if show %} popover-show{% endif %}" data-toggle="popover" data-placement="{{ placement }}" data-content="{{ text }}"{% if hash %} data-showurl="{% url 'ctxhelp_show' hash %}" data-hideurl="{% url 'ctxhelp_hide' hash %}"{% endif %}>?</a>
