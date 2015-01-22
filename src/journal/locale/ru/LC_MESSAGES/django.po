@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-22 05:49+0300\n"
+"POT-Creation-Date: 2015-01-22 08:32+0300\n"
 "PO-Revision-Date: 2015-01-09 12:14+0300\n"
 "Last-Translator: Nik Sergievskiy <nnonexistent@gmail.com>\n"
 "Language-Team: Chemphys <skubird@gmail.com>\n"
@@ -45,7 +45,8 @@ msgstr "Сайт"
 msgid "Title"
 msgstr "Заголовок"
 
-#: admin.py:231 models.py:229 templates/journal/org.html:9 views.py:196
+#: admin.py:231 models.py:229 templates/journal/article.html:71
+#: templates/journal/org.html:9 views.py:196
 msgid "Authors"
 msgstr "Авторы"
 
@@ -297,7 +298,7 @@ msgstr "Адрес"
 msgid "Degree"
 msgstr "Ученая степень"
 
-#: models.py:228 models.py:365 templates/journal/article.html:51
+#: models.py:228 models.py:365 templates/journal/article.html:71
 #: templates/journal/review.html:27
 msgid "Author"
 msgstr "Автор"
@@ -362,7 +363,7 @@ msgstr "Содержимое"
 msgid "Senders"
 msgstr "Отправители"
 
-#: models.py:300 models.py:558 templates/journal/article.html:56
+#: models.py:300 models.py:558 templates/journal/article.html:98
 msgid "Issue"
 msgstr "Выпуск"
 
@@ -383,7 +384,7 @@ msgstr "Абстракт"
 msgid "Keywords"
 msgstr "Ключевые слова"
 
-#: models.py:351 templates/journal/article.html:29
+#: models.py:351 templates/journal/article.html:49
 #: templates/journal/send_article.html:54
 msgid "References"
 msgstr "Литература"
@@ -581,27 +582,35 @@ msgstr "Отправить статью"
 msgid "Save and proceed to next step"
 msgstr "Сохранить и продолжить"
 
-#: templates/journal/article.html:12
+#: templates/journal/article.html:14 templates/journal/article.html.py:90
+msgid "Show organizations"
+msgstr "Показать организации"
+
+#: templates/journal/article.html:16
+msgid "Hide organizations"
+msgstr "Скрыть огранизации"
+
+#: templates/journal/article.html:32
 msgid "View article"
 msgstr "Просмотр статьи"
 
-#: templates/journal/article.html:23 views.py:194
+#: templates/journal/article.html:43 views.py:194
 msgid "Overview"
 msgstr "Общая информация"
 
-#: templates/journal/article.html:26 views.py:197
+#: templates/journal/article.html:46 views.py:197
 msgid "Media"
 msgstr "Медиа"
 
-#: templates/journal/article.html:57
+#: templates/journal/article.html:100
 msgid "Permanent link to this article"
 msgstr "Постоянная ссылка на статью"
 
-#: templates/journal/article.html:77
+#: templates/journal/article.html:122
 msgid "View"
 msgstr "Просмотр"
 
-#: templates/journal/articles.html:16
+#: templates/journal/articles.html:23
 msgid "Sorry, no articles found."
 msgstr "К сожалению, ни одной статьи не найдено."
 
@@ -609,6 +618,10 @@ msgstr "К сожалению, ни одной статьи не найдено.
 #: templates/journal/forms/article_author_formset.html:118
 msgid "Enter organization name"
 msgstr "Введите название организации"
+
+#: templates/journal/edit_author.html:105
+msgid "is for cookies"
+msgstr ""
 
 #: templates/journal/edit_author.html:112
 msgid "Add Organization"
@@ -706,6 +719,10 @@ msgstr "Профайл был обновлен"
 #: views.py:111
 msgid "Edit profile"
 msgstr "Редактировать профайл"
+
+#: views.py:176
+msgid "Articles found"
+msgstr "Найденные статьи"
 
 #: views.py:189 views.py:227
 msgid "Add article"

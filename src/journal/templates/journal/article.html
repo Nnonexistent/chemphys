@@ -1,6 +1,26 @@
 {% extends "base.html" %}
 {% load i18n %}
 
+{% block head %}{{ block.super }}
+<script type="text/javascript">
+    $(function () {
+        $('.btn-show-orgs').on('click', function () {
+            var btn = $(this);
+            $('#authors').slideToggle({
+                duration: 0,
+                complete: function() {
+                    if ($('#authors').is(':visible')) {
+                        $('#authors').css({display: 'inline'});
+                        btn.text('{% trans "Show organizations" %}');
+                    } else {
+                        btn.text('{% trans "Hide organizations" %}');
+                    }
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
 
 {% block title %}
 <div class="row">
@@ -47,23 +67,34 @@
             {{ entry.abstract|linebreaks }}
             </div>
             <div class="col-lg-3">
-                <p>
-                {% blocktrans count count=article.articleauthor_set.all.count %}Author{% plural %}Authors{% endblocktrans %}:
+                <div>
+                {% if article.articleauthor_set.all.count == 1 %}{% trans "Author" %}{% else %}{% trans "Authors" %}{% endif %}:
+                <span id="authors">
                 {% for aa in article.articleauthor_set.all %}
-                    <a href="{{ aa.author.author.get_absolute_url }}" title="{{ aa.organization }}">{{ aa.author }}</a>{% if forloop.first and forloop.last %} ({{ aa.organization }}){% endif %}{% if not forloop.last %}, {% endif %}
+                    <a href="{{ aa.author.author.get_absolute_url }}" title="{{ aa.organization }}">{{ aa.author }}</a>{% if forloop.first and forloop.last %} (<a href="{{ aa.organization.get_absolute_url }}" class="text-default">{{ aa.organization }}</a>){% endif %}{% if not forloop.last %}, {% endif %}
+
                     {% if forloop.last and not forloop.first %}
-                    <br />
-                    <a class="btn btn-xs btn-info" data-toggle="collapse" href="#orgs" aria-expanded="false" aria-controls="orgs">{% trans "Show organizations" %}</a>
+                <br />
+                </span>
+
                     <div class="collapse" id="orgs">
-                        <ul>
+                        <ul class="list-unstyled authors-orgs">
                     {% for aaa in article.articleauthor_set.all %}
-                        <li>{{ aaa }}</li>
+                        <li>
+                            <a href="{{ aaa.author.author.get_absolute_url }}">{{ aaa.author }}</a><br /><a href="{{ aaa.organization.get_absolute_url }}" class="text-default">{{ aaa.organization }}</a>
+                        </li>
                     {% endfor %}
                         </ul>
                     </div>
+
+                    <a class="btn btn-xs btn-info btn-show-orgs" data-toggle="collapse" data-parent="#authors" data-target="#orgs" aria-expanded="false" aria-controls="orgs authors">{% trans "Show organizations" %}</a>
+
+                    {% elif forloop.last %}
+                </span>
                     {% endif %}
                 {% endfor %}
-                </p>
+                </div>
+                <br />
                 <p>{% trans "Issue" %}: <a href="{{ article.issue.get_absolute_url }}">{{ article.issue }}</a></p>
                 <p>
                     {% trans "Permanent link to this article" %}:<br />

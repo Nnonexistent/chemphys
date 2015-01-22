@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-22 05:49+0300\n"
+"POT-Creation-Date: 2015-01-22 08:32+0300\n"
 "PO-Revision-Date: 2015-01-09 12:16+0300\n"
 "Last-Translator: Nik Sergievskiy <nnonexistent@gmail.com>\n"
 "Language-Team: Chemphyes <skubird@gmail.com>\n"
@@ -44,7 +44,8 @@ msgstr "Site"
 msgid "Title"
 msgstr "Title"
 
-#: admin.py:231 models.py:229 templates/journal/org.html:9 views.py:196
+#: admin.py:231 models.py:229 templates/journal/article.html:71
+#: templates/journal/org.html:9 views.py:196
 msgid "Authors"
 msgstr "Authors"
 
@@ -304,7 +305,7 @@ msgstr "Address"
 msgid "Degree"
 msgstr ""
 
-#: models.py:228 models.py:365 templates/journal/article.html:51
+#: models.py:228 models.py:365 templates/journal/article.html:71
 #: templates/journal/review.html:27
 msgid "Author"
 msgstr "Author"
@@ -371,7 +372,7 @@ msgstr "Content"
 msgid "Senders"
 msgstr "Senders"
 
-#: models.py:300 models.py:558 templates/journal/article.html:56
+#: models.py:300 models.py:558 templates/journal/article.html:98
 msgid "Issue"
 msgstr "Issue"
 
@@ -392,7 +393,7 @@ msgstr "Abstract"
 msgid "Keywords"
 msgstr "Keywords"
 
-#: models.py:351 templates/journal/article.html:29
+#: models.py:351 templates/journal/article.html:49
 #: templates/journal/send_article.html:54
 msgid "References"
 msgstr "References"
@@ -590,29 +591,41 @@ msgstr "Send article"
 msgid "Save and proceed to next step"
 msgstr "Save and proceed to next step"
 
-#: templates/journal/article.html:12
+#: templates/journal/article.html:14 templates/journal/article.html.py:90
+#, fuzzy
+#| msgid "Organizations"
+msgid "Show organizations"
+msgstr "Organizations"
+
+#: templates/journal/article.html:16
+#, fuzzy
+#| msgid "Add new organization"
+msgid "Hide organizations"
+msgstr "Add new organization"
+
+#: templates/journal/article.html:32
 #, fuzzy
 #| msgid "New article"
 msgid "View article"
 msgstr "New article"
 
-#: templates/journal/article.html:23 views.py:194
+#: templates/journal/article.html:43 views.py:194
 msgid "Overview"
 msgstr "Overview"
 
-#: templates/journal/article.html:26 views.py:197
+#: templates/journal/article.html:46 views.py:197
 msgid "Media"
 msgstr "Media"
 
-#: templates/journal/article.html:57
+#: templates/journal/article.html:100
 msgid "Permanent link to this article"
 msgstr "Permanent link to this article"
 
-#: templates/journal/article.html:77
+#: templates/journal/article.html:122
 msgid "View"
 msgstr "View"
 
-#: templates/journal/articles.html:16
+#: templates/journal/articles.html:23
 msgid "Sorry, no articles found."
 msgstr "Sorry, no articles found."
 
@@ -718,6 +731,12 @@ msgstr "Profile was updated"
 #: views.py:111
 msgid "Edit profile"
 msgstr "Edit profile"
+
+#: views.py:176
+#, fuzzy
+#| msgid "Articles"
+msgid "Articles found"
+msgstr "Articles"
 
 #: views.py:189 views.py:227
 msgid "Add article"
