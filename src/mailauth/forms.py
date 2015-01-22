@@ -1,9 +1,10 @@
 from django import forms
 
 from mailauth.models import MailAuthToken
+from utils.forms import BootstrapForm
 
 
-class MailAuthForm(forms.ModelForm):
+class MailAuthForm(BootstrapForm):
     class Meta:
         fields = ['email']
         model = MailAuthToken

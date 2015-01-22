@@ -19,7 +19,7 @@ def auth_form(request):
         form = MailAuthForm(request.POST)
         if form.is_valid():
             form.save(uri_builder=request.build_absolute_uri)
-            messages.info(request, _(u'The authentication link was sent on your e-mail "%s"' % form.cleaned_data['email']))
+            messages.info(request, _(u'The authentication link was sent on your e-mail "%s"') % form.cleaned_data['email'])
             return HttpResponseRedirect('/')
     else:
         form = MailAuthForm()

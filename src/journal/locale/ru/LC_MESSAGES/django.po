@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-19 16:25+0300\n"
+"POT-Creation-Date: 2015-01-22 05:49+0300\n"
 "PO-Revision-Date: 2015-01-09 12:14+0300\n"
 "Last-Translator: Nik Sergievskiy <nnonexistent@gmail.com>\n"
 "Language-Team: Chemphys <skubird@gmail.com>\n"
@@ -277,7 +277,7 @@ msgid "Organization"
 msgstr "Организация"
 
 #: models.py:183 templates/journal/author.html:9
-#: templates/journal/edit_author.html:106
+#: templates/journal/edit_author.html:105
 msgid "Organizations"
 msgstr "Организации"
 
@@ -581,6 +581,10 @@ msgstr "Отправить статью"
 msgid "Save and proceed to next step"
 msgstr "Сохранить и продолжить"
 
+#: templates/journal/article.html:12
+msgid "View article"
+msgstr "Просмотр статьи"
+
 #: templates/journal/article.html:23 views.py:194
 msgid "Overview"
 msgstr "Общая информация"
@@ -606,11 +610,11 @@ msgstr "К сожалению, ни одной статьи не найдено.
 msgid "Enter organization name"
 msgstr "Введите название организации"
 
-#: templates/journal/edit_author.html:113
+#: templates/journal/edit_author.html:112
 msgid "Add Organization"
 msgstr "Добавить организацию"
 
-#: templates/journal/edit_author.html:116
+#: templates/journal/edit_author.html:115
 msgid "Save changes"
 msgstr "Сохранить изменения"
 
@@ -724,8 +728,8 @@ msgid ""
 "You cannot view view this review because you already logged in as different "
 "user. Log out and try again."
 msgstr ""
-"Вы не можете редактировать эту рецензию, потому что уже вошли из-под "
-"другого пользователя. Выйдите из журнала и попробуйте снова."
+"Вы не можете редактировать эту рецензию, потому что уже вошли из-под другого "
+"пользователя. Выйдите из журнала и попробуйте снова."
 
 #: views.py:287
 msgid "Review for article"

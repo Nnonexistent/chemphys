@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-19 16:25+0300\n"
+"POT-Creation-Date: 2015-01-22 05:49+0300\n"
 "PO-Revision-Date: 2015-01-09 00:54+0300\n"
 "Last-Translator: Elena Sergievska <skubird@gmail.com>\n"
 "Language-Team: Chemphys <skubird@gmail.com>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.7.1\n"
 
-#: settings.py:74
+#: settings.py:75
 msgid "Russian"
 msgstr "Russian"
 
-#: settings.py:75
+#: settings.py:76
 msgid "English"
 msgstr "English"
 
@@ -52,44 +52,44 @@ msgstr "Delete?"
 msgid "Физико-химическая кинетика в газовой динамике"
 msgstr "Physical-Chemical Kinetics in Gas Dynamics"
 
-#: templates/base.html:125
+#: templates/base.html:134
 msgid "Физико-химическая<br />кинетика"
 msgstr "Physical-Chemical<br />Kinetics"
 
-#: templates/base.html:127
+#: templates/base.html:136
 msgid "в газовой<br />динамике"
 msgstr "in Gas<br />Dynamics"
 
-#: templates/base.html:146
+#: templates/base.html:155
 msgid "Contents"
 msgstr "Contents"
 
-#: templates/base.html:155
+#: templates/base.html:164
 msgid "Advanced Search"
 msgstr "Advanced Search"
 
-#: templates/base.html:156
+#: templates/base.html:165
 msgid "Search"
 msgstr "Search"
 
-#: templates/base.html:182
+#: templates/base.html:191
 msgid "Институт Механики МГУ"
 msgstr "Institute of Mechanics of Moscow State University, Russia"
 
-#: templates/base.html:183
+#: templates/base.html:192
 msgid "Administration"
 msgstr "Administration"
 
-#: templates/base.html:187
+#: templates/base.html:196
 msgid "Свидетельство СМИ: Эл № 77-6360 от 10 июля 2002 г."
 msgstr ""
 "Certificate of Mass Media Registration: digital № 77-6360, Jun. 10, 2002."
 
-#: templates/base.html:188
+#: templates/base.html:197
 msgid "Журнал издается с 2003 года"
 msgstr "Published since 2003"
 
-#: templates/base.html:189
+#: templates/base.html:198
 msgid "Периодичность: 4 выпуска в год"
 msgstr "4 issues per year"
 

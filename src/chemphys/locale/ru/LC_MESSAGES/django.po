@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-19 16:25+0300\n"
+"POT-Creation-Date: 2015-01-22 05:49+0300\n"
 "PO-Revision-Date: 2015-01-09 00:54+0300\n"
 "Last-Translator: Elena Sergievska <skubird@gmail.com>\n"
 "Language-Team: \n"
@@ -19,11 +19,11 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 1.7.1\n"
 
-#: settings.py:74
+#: settings.py:75
 msgid "Russian"
 msgstr "Русский"
 
-#: settings.py:75
+#: settings.py:76
 msgid "English"
 msgstr "Английский"
 
@@ -54,43 +54,43 @@ msgstr "Удалить?"
 msgid "Физико-химическая кинетика в газовой динамике"
 msgstr "Физико-химическая кинетика в газовой динамике"
 
-#: templates/base.html:125
+#: templates/base.html:134
 msgid "Физико-химическая<br />кинетика"
 msgstr "Физико-химическая<br />кинетика"
 
-#: templates/base.html:127
+#: templates/base.html:136
 msgid "в газовой<br />динамике"
 msgstr "в газовой<br />динамике"
 
-#: templates/base.html:146
+#: templates/base.html:155
 msgid "Contents"
 msgstr "Содержание"
 
-#: templates/base.html:155
+#: templates/base.html:164
 msgid "Advanced Search"
 msgstr "Расширенный поиск"
 
-#: templates/base.html:156
+#: templates/base.html:165
 msgid "Search"
 msgstr "Поиск"
 
-#: templates/base.html:182
+#: templates/base.html:191
 msgid "Институт Механики МГУ"
 msgstr "Институт Механики МГУ"
 
-#: templates/base.html:183
+#: templates/base.html:192
 msgid "Administration"
 msgstr "Администрирование"
 
-#: templates/base.html:187
+#: templates/base.html:196
 msgid "Свидетельство СМИ: Эл № 77-6360 от 10 июля 2002 г."
 msgstr "Свидетельство СМИ: Эл № 77-6360 от 10 июля 2002 г."
 
-#: templates/base.html:188
+#: templates/base.html:197
 msgid "Журнал издается с 2003 года"
 msgstr "Журнал издается с 2003 года"
 
-#: templates/base.html:189
+#: templates/base.html:198
 msgid "Периодичность: 4 выпуска в год"
 msgstr "Периодичность: 4 выпуска в год"
 
