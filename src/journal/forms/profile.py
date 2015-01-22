@@ -24,7 +24,7 @@ class AuthorEditForm(BootstrapForm):
         super(AuthorEditForm, self).__init__(*args, **kwargs)
         try:
             self.fields['degree'].initial = self.instance.author.degree
-        except AuthorDoesNotExist:
+        except Author.DoesNotExist:
             pass
 
     def save(self, commit=True):

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n static %}
+{% load i18n static ctxhelp %}
 
 {% block head %}{{ block.super }}
 <link href="{% static "css/select2.css" %}" rel="stylesheet"/>
@@ -102,8 +102,7 @@
     </div>
 </div>
 
-
-<h3>{% trans "Organizations" %}</h3>
+<h3>{% trans "Organizations" %} {% ctxhelp _("is for cookies") %}</h3>
 {{ org_formset.management_form }}
 <div>
 {% for form in org_formset %}

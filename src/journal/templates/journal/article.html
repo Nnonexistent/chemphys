@@ -9,7 +9,7 @@
     </div>
     <div class="col-lg-2">
         <br />
-        <a href="{{ article.content.url }}" class="btn btn-primary">View article <br /><small class="text-muted">PDF, {{ article.content.size|filesizeformat }}</small></a>
+        <a href="{{ article.content.url }}" class="btn btn-primary pull-right">{% trans "View article" %}<br /><small class="text-muted">PDF, {{ article.content.size|filesizeformat }}</small></a>
     </div>
 </div>
 <br />
@@ -50,11 +50,25 @@
                 <p>
                 {% blocktrans count count=article.articleauthor_set.all.count %}Author{% plural %}Authors{% endblocktrans %}:
                 {% for aa in article.articleauthor_set.all %}
-                    <a href="{{ aa.author.author.get_absolute_url }}" title="{{ aa.organization }}">{{ aa.author }}</a>{% if not forloop.last %}, {% endif %}
+                    <a href="{{ aa.author.author.get_absolute_url }}" title="{{ aa.organization }}">{{ aa.author }}</a>{% if forloop.first and forloop.last %} ({{ aa.organization }}){% endif %}{% if not forloop.last %}, {% endif %}
+                    {% if forloop.last and not forloop.first %}
+                    <br />
+                    <a class="btn btn-xs btn-info" data-toggle="collapse" href="#orgs" aria-expanded="false" aria-controls="orgs">{% trans "Show organizations" %}</a>
+                    <div class="collapse" id="orgs">
+                        <ul>
+                    {% for aaa in article.articleauthor_set.all %}
+                        <li>{{ aaa }}</li>
+                    {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
                 {% endfor %}
                 </p>
                 <p>{% trans "Issue" %}: <a href="{{ article.issue.get_absolute_url }}">{{ article.issue }}</a></p>
-                <p> <a href="{{ link }}" class="text-nowrap">{% trans "Permanent link to this article" %}</a></p>
+                <p>
+                    {% trans "Permanent link to this article" %}:<br />
+                    <input type="text" value="{{ link }}" class="form-control input-sm" readonly="true" />
+                </p>
             </div>
         </div>
     </div>

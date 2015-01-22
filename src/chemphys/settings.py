@@ -26,6 +26,7 @@ INSTALLED_APPS = (
     'journal',
     'pages',
     'mailauth',
+    'ctxhelp',
 )
 
 MIDDLEWARE_CLASSES = (

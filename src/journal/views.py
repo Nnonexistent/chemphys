@@ -173,7 +173,7 @@ def search_articles(request):
         items = Article.objects.filter(status=10).filter(qobj).distinct()[:50]
     else:
         items = []
-    return render(request, 'journal/articles.html', {'articles': items})
+    return render(request, 'journal/articles.html', {'articles': items, 'title': _(u'Articles found')})
 
 
 def add_article(request):
