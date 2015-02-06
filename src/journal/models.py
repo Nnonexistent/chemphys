@@ -134,8 +134,7 @@ class LocalizedUser(_get_user_model(), BaseLocalizedObject):
         return self.review_set.filter(status__in=(0, 1)).distinct()
 
 
-class Section(OrderedEntry):
-    name = models.CharField(max_length=100, verbose_name=_(u'Name'))
+class Section(OrderedEntry, BaseLocalizedObject):
     moderators = models.ManyToManyField(LocalizedUser, verbose_name=_(u'Moderators'), blank=True)
 
     class Meta:
@@ -145,6 +144,21 @@ class Section(OrderedEntry):
 
     def __unicode__(self):
         return self.name
+
+    @property
+    def name(self):
+        return self.get_localized('name') or ''
+
+
+class SectionName(BaseLocalizedContent):
+    section = models.ForeignKey(Section, verbose_name=Section._meta.verbose_name)
+
+    name = models.CharField(max_length=100, verbose_name=_(u'Name'))
+
+    class Meta:
+        verbose_name = _(u'Section name')
+        verbose_name_plural = _(u'Section names')
+        unique_together = [('lang', 'section')]
 
 
 class StaffMember(models.Model):

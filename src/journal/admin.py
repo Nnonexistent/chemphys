@@ -32,10 +32,17 @@ class JournalAdmin(admin.ModelAdmin):
               'admin/js/misc.js')
 
 
+class SectionNameInline(admin.StackedInline):
+    extra = 0
+    model = app_models.SectionName
+    max_num = len(settings.LANGUAGES)
+
+
 class SectionAdmin(JournalAdmin):
     raw_id_fields = ['moderators']
-    list_display = ('name', 'display_moderators', 'articles_count')
-    search_fields = ['name']
+    list_display = ('__unicode__', 'display_moderators', 'articles_count')
+    search_fields = ['sectionname__name']
+    inlines = [SectionNameInline]
 
     def display_moderators(self, obj=None):
         if obj:
