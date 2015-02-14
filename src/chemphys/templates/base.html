@@ -216,8 +216,9 @@
     <hr />
 
     <footer class="container text-muted">
-        <p class="pull-right">Copyright&nbsp;© 2003&mdash;{% now 'Y' %} {% trans "Институт Механики МГУ" %}
-        {% if user.is_staff %}<br /><a href="{% url 'admin:index' %}">{% trans "Administration" %}</a>{% endif %}
+        {% if user.is_staff %}<p class="pull-right"><a class="btn btn-default btn-xs" href="{% url 'admin:index' %}">{% trans "Administration" %}</a></p>{% endif %}
+        <p>{% filter urlize %}{% trans "Журнал рецензируемый, электронный, полные тексты статей находятся в свободном доступе на сайте http://chemphys.edu.ru/" %}{% endfilter %}<br />
+        Copyright&nbsp;© 2003&mdash;{% now 'Y' %} {% trans "Научно-исследовательский институт механики МГУ им. М.В.Ломоносова" %}
         </p>
         <p>
         ISSN 1991-6396<br/>

@@ -94,6 +94,7 @@ class ArticleResolutionInline(admin.TabularInline):
 class ArticleAuthorInline(admin.TabularInline):
     model = app_models.ArticleAuthor
     extra = 0
+    raw_id_fields = ('user', 'organization')
 
 
 class ArticleAttachInline(admin.TabularInline):
@@ -119,7 +120,7 @@ class ArticleAdmin(JournalAdmin):
     list_filter = ('status', 'type', 'issue', 'sections')
     list_display = ('display_title', 'status', 'type', 'issue', 'display_authors', 'display_reviews')
     inlines = (LocalizedArticleContentInline, ArticleAuthorInline, ArticleSourceInline, ArticleAttachInline, ReviewInline, ArticleResolutionInline)
-    filter_horizontal = ['senders']  # TODO: raw_id_field
+    raw_id_fields = ['senders']
 
     # TODO: search by author names
 

@@ -16,7 +16,7 @@ from journal.models import Article, LocalizedArticleContent, ArticleSource, Arti
 class OverviewArticleForm(BootstrapForm):
     class Meta:
         model = Article
-        fields = ('type', 'sections', 'image')
+        fields = ('lang', 'type', 'sections', 'image', 'report')
 
     def __init__(self, *args, **kwargs):
         super(OverviewArticleForm, self).__init__(*args, **kwargs)
@@ -27,7 +27,7 @@ class OverviewArticleForm(BootstrapForm):
             initial_file = self.instance.articlesource_set.latest().file
         except ArticleSource.DoesNotExist:
             initial_file = None
-        self.fields['file'] = forms.FileField(label=_(u'Article file'), required=True, initial=initial_file)
+        self.fields = OrderedDict([('file', forms.FileField(label=_(u'Article file'), required=True, initial=initial_file))] + self.fields.items())
 
     def save(self, commit=True):
         obj = super(OverviewArticleForm, self).save(commit)

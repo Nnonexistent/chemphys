@@ -73,7 +73,9 @@ def show_organization(request, id):
 
 
 def show_author(request, id):
-    author = get_object_or_404(JournalUser, id=id, moderation_status=2)
+    author = get_object_or_404(JournalUser, id=id)
+    if not author.has_journal_profile():
+        raise Http404
     orgs = Organization.objects.filter(moderation_status=2, positioninorganization__user=author).distinct()
     articles = Article.objects.filter(articleauthor__user=author, status=10, issue__is_active=True).distinct()
 

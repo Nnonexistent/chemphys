@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import json
 import uuid
 import mimetypes
@@ -141,7 +143,7 @@ class JournalUser(AbstractBaseUser, PermissionsMixin, ModeratedObject, BaseLocal
         return self.get_localized('last_name') or ''
 
     def published_articles(self):
-        return Article.objects.filter(status=10, articleauthor__user=self.user).distinct()
+        return Article.objects.filter(status=10, articleauthor__user=self).distinct()
 
     def unpublished_articles(self):
         return Article.objects.exclude(status=10).filter(models.Q(articleauthor__user=self) | models.Q(senders=self)).distinct()
@@ -152,6 +154,9 @@ class JournalUser(AbstractBaseUser, PermissionsMixin, ModeratedObject, BaseLocal
     @models.permalink
     def get_absolute_url(self):
         return 'show_author', [self.id]
+
+    def has_journal_profile(self):
+        return bool(self.is_active and self.moderation_status == 2 and self.published_articles())
 
 
 class Section(OrderedEntry, BaseLocalizedObject):
@@ -302,6 +307,8 @@ class Article(BaseLocalizedObject):
 
     image = models.ImageField(verbose_name=_(u'Image'), upload_to=article_upload_to, blank=True, default='')
     type = models.PositiveSmallIntegerField(verbose_name=_(u'Article type'), choices=ARTICLE_TYPES, default=1)
+    lang = models.CharField(max_length=2, choices=settings.LANGUAGES, verbose_name=_(u'Article language'), default=settings.LANGUAGE_CODE)
+    report = models.FileField(verbose_name=_(u'Акт экспертизы'), upload_to='expert_reports', default='', blank=True)
     content = models.FileField(verbose_name=_(u'Content'), upload_to='published', default='', blank=True)
 
     senders = models.ManyToManyField(JournalUser, verbose_name=_(u'Senders'), blank=True)
@@ -500,7 +507,7 @@ class ReviewField(OrderedEntry):
 class Review(models.Model):
     key = models.CharField(max_length=32, verbose_name=_(u'Key'), unique=True, default=default_key, editable=False)
     article = models.ForeignKey(Article, verbose_name=Article._meta.verbose_name)
-    reviewer = models.ForeignKey(JournalUser, verbose_name=_(u'Reviewer'))
+    reviewer = models.ForeignKey(JournalUser, verbose_name=_(u'Reviewer'), limit_choices_to={'staffmember__reviewer': True})
     status = models.PositiveSmallIntegerField(choices=REVIEW_STATUSES, default=0, verbose_name=_(u'Status'))
     date_created = models.DateTimeField(default=timezone.now, verbose_name=_(u'Created'))
 
