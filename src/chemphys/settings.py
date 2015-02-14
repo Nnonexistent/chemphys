@@ -59,7 +59,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.tz",
     "django.core.context_processors.request",
     "django.contrib.auth.context_processors.auth",
-    "journal.context_processors.user",
     "django.contrib.messages.context_processors.messages"
 )
 
@@ -69,6 +68,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'mailauth.backend.MailAuthBackend',
 )
+AUTH_USER_MODEL = 'journal.JournalUser'
 
 LOCALE_PATHS = (os.path.join(BASE_DIR, 'chemphys', 'locale'), )
 LANGUAGES = (

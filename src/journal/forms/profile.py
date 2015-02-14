@@ -10,32 +10,16 @@ from django.db import transaction
 
 from utils.forms import BootstrapForm
 from utils.localized import BaseLocalizedForm, BaseLocalizedFormSet
-from journal.models import Author, LocalizedName, LocalizedUser, PositionInOrganization, Organization, OrganizationLocalizedContent
+from journal.models import LocalizedName, JournalUser, PositionInOrganization, Organization, OrganizationLocalizedContent
 
 
 class AuthorEditForm(BootstrapForm):
-    degree = Author._meta.get_field('degree').formfield()
-
     class Meta:
-        model = LocalizedUser
-        fields = ['email']
-
-    def __init__(self, *args, **kwargs):
-        super(AuthorEditForm, self).__init__(*args, **kwargs)
-        try:
-            self.fields['degree'].initial = self.instance.author.degree
-        except Author.DoesNotExist:
-            pass
-
-    def save(self, commit=True):
-        obj = super(AuthorEditForm, self).save(commit)
-        author, new = Author.objects.get_or_create(user=obj)
-        author.degree = self.cleaned_data.get('degree')
-        author.save()
-        return obj
+        model = JournalUser
+        fields = ['email', 'degree']
 
 
-LocalizedNameFormSet = inlineformset_factory(LocalizedUser, LocalizedName,
+LocalizedNameFormSet = inlineformset_factory(JournalUser, LocalizedName,
     extra=len(settings.LANGUAGES), max_num=len(settings.LANGUAGES), can_delete=False,
     form=BaseLocalizedForm, formset=BaseLocalizedFormSet)
 
@@ -184,7 +168,7 @@ class BasePIOFormSet(BaseInlineFormSet):
             orgs.append(org)
 
 
-PIOFormSet = inlineformset_factory(LocalizedUser, PositionInOrganization, fields=['position'],
+PIOFormSet = inlineformset_factory(JournalUser, PositionInOrganization, fields=['position'],
     extra=0, can_delete=True, form=PIOForm, formset=BasePIOFormSet)
 
 

@@ -16,8 +16,8 @@ class Migration(migrations.Migration):
             name='HiddenHelp',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('key', models.CharField(max_length=32, verbose_name='Key')),
-                ('user', models.ForeignKey(verbose_name='User', to=settings.AUTH_USER_MODEL)),
+                ('hash', models.CharField(max_length=40)),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
             options={
             },
@@ -25,6 +25,6 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterUniqueTogether(
             name='hiddenhelp',
-            unique_together=set([('user', 'key')]),
+            unique_together=set([('user', 'hash')]),
         ),
     ]

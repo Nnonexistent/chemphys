@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.utils.safestring import mark_safe
 
-from journal.models import Issue, Article, Organization, LocalizedUser, ARTICLE_ADDING_STATUSES, Review
+from journal.models import Issue, Article, Organization, ARTICLE_ADDING_STATUSES, Review, JournalUser
 from journal.forms import AuthorEditForm, LocalizedNameFormSet, PIOFormSet, ARTICLE_ADDING_FORMS, ReviewForm, ReviewFileFormSet
 
 
@@ -60,7 +60,7 @@ def show_article(request, iss_year, iss_volume, iss_number, id):
 
 def show_organization(request, id):
     org = get_object_or_404(Organization, id=id, moderation_status=2)
-    authors = LocalizedUser.objects.filter(author__moderation_status=2, positioninorganization__organization=org).distinct()
+    authors = JournalUser.objects.filter(moderation_status=2, positioninorganization__organization=org).distinct()
     articles = Article.objects.filter(articleauthor__organization=org, status=10, issue__is_active=True).distinct()
 
     return render(request, 'journal/org.html', {
@@ -73,9 +73,9 @@ def show_organization(request, id):
 
 
 def show_author(request, id):
-    author = get_object_or_404(LocalizedUser, id=id, author__moderation_status=2)
+    author = get_object_or_404(JournalUser, id=id, moderation_status=2)
     orgs = Organization.objects.filter(moderation_status=2, positioninorganization__user=author).distinct()
-    articles = Article.objects.filter(articleauthor__author=author, status=10, issue__is_active=True).distinct()
+    articles = Article.objects.filter(articleauthor__user=author, status=10, issue__is_active=True).distinct()
 
     return render(request, 'journal/author.html', {
         'title': unicode(author),
@@ -88,7 +88,7 @@ def show_author(request, id):
 
 def edit_author(request):
     if request.user.is_authenticated() and request.user.is_active:
-        user = LocalizedUser.objects.get(id=request.user.id)  # FIXME: excess db call
+        user = JournalUser.objects.get(id=request.user.id)
     else:
         return HttpResponseForbidden()
 
@@ -129,8 +129,8 @@ def search_organizations(request):
         qs_qobj = Q(moderation_status=2)
         if request.user.is_authenticated():
             qs_qobj = (qs_qobj
-                      | Q(moderation_status=0, positioninorganization__user__id=request.user.id)
-                      | Q(moderation_status=0, articleauthor__article__senders__id=request.user.id))
+                      | Q(moderation_status=0, positioninorganization__user=request.user)
+                      | Q(moderation_status=0, articleauthor__article__senders=request.user))
         qs = Organization.objects.filter(qs_qobj & query_qobj).distinct()[:50]
 
         items = [{'id': item.id, 'text': unicode(item)} for item in qs]
@@ -149,10 +149,10 @@ def search_authors(request):
                 query_qobjs.append(Q(**{'%s__icontains' % arg: q}))
         query_qobj = reduce(lambda x, y: x | y, query_qobjs)
 
-        qs_qobj = Q(author__moderation_status=2)
+        qs_qobj = Q(moderation_status=2)
         if request.user.is_authenticated():
-            qs_qobj = qs_qobj | Q(author__moderation_status=0, articleauthor__article__senders__id=request.user.id)
-        qs = LocalizedUser.objects.filter(qs_qobj & query_qobj).distinct()[:50]
+            qs_qobj = qs_qobj | Q(moderation_status=0, articleauthor__article__senders=request.user)
+        qs = JournalUser.objects.filter(qs_qobj & query_qobj).distinct()[:50]
 
         items = [{'id': item.id, 'text': unicode(item)} for item in qs]
     else:
@@ -167,7 +167,7 @@ def search_articles(request):
     if len(query) >= 3:
         qobjs = []
         for arg in ('localizedarticlecontent__title', 'localizedarticlecontent__abstract', 'localizedarticlecontent__keywords',
-                    'articleauthor__author__localizedname__last_name'):
+                    'articleauthor__user__localizedname__last_name'):
             qobjs.append(Q(**{'%s__icontains' % arg: query}))
         qobj = reduce(lambda x, y: x | y, qobjs)
         items = Article.objects.filter(status=10).filter(qobj).distinct()[:50]
@@ -182,7 +182,7 @@ def add_article(request):
 
     if request.method == 'POST':
         article = Article.objects.create()
-        article.senders = LocalizedUser.objects.filter(id=request.user.id)
+        article.senders = JournalUser.objects.filter(id=request.user.id)
         return HttpResponseRedirect(reverse('adding_article', args=(article.id, article.status)))
 
     return render(request, 'journal/add_article.html', {

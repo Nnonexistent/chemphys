@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 
 {% block content %}
@@ -12,11 +13,11 @@
                 <a href="{{ article.get_absolute_url }}">{{ article }}</a><br />
                 <span class="text-muted">
                 {% for aa in article.articleauthor_set.all %}
-                    <a href="{{ aa.author.author.get_absolute_url }}" class="text-muted" title="{{ aa.organization }}">{{ aa.author }}</a>{% if not forloop.last %}, {% endif %}
+                    <a href="{{ aa.user.get_absolute_url }}" class="text-muted" title="{{ aa.organization }}">{{ aa.user }}</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
                 </span>
             </td>
-            <td><a href="{{ article.content.url }}" class="btn btn-primary">View article <br /><small class="text-muted">PDF, {{ article.content.size|filesizeformat }}</small></a></td>
+            <td><a href="{{ article.content.url }}" class="btn btn-primary">{% trans "View article" %} <br /><small class="text-muted">PDF, {{ article.content.size|filesizeformat }}</small></a></td>
         </tr>
     {% endfor %}
     </table>

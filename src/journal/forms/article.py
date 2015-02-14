@@ -10,7 +10,7 @@ from django.template.loader import render_to_string
 
 from utils.forms import BootstrapForm, NullForm
 from utils.localized import BaseLocalizedForm, BaseLocalizedFormSet
-from journal.models import Article, LocalizedArticleContent, ArticleSource, ArticleAuthor, LocalizedUser, LocalizedName, Organization, OrganizationLocalizedContent, Author, ArticleAttach
+from journal.models import Article, LocalizedArticleContent, ArticleSource, ArticleAuthor, JournalUser, LocalizedName, Organization, OrganizationLocalizedContent, ArticleAttach
 
 
 class OverviewArticleForm(BootstrapForm):
@@ -53,7 +53,7 @@ class AuthorForm(BootstrapForm):
     _user_fields = ('email', )
     _user_loc_fields = ('first_name', 'last_name')
 
-    author = ArticleAuthor._meta.get_field('author').formfield(required=False, widget=forms.Select)
+    author = ArticleAuthor._meta.get_field('user').formfield(required=False, widget=forms.Select)
     organization = ArticleAuthor._meta.get_field('organization').formfield(required=False, widget=forms.Select)
 
     def __init__(self, *args, **kwargs):
@@ -63,14 +63,14 @@ class AuthorForm(BootstrapForm):
         user = None
         choices = [('', _(u'Add new author'))]
         if self.instance.id:
-            user = self.instance.author
+            user = self.instance.user
             self.fields['author'].initial = user
             choices.append((user.id, unicode(user)))
 
         key = self.add_prefix(u'author')
         if self.data.get(key):
             try:
-                user = LocalizedUser.objects.get(id=int(self.data[key]))
+                user = JournalUser.objects.get(id=int(self.data[key]))
             except ValueError:
                 pass
             else:
@@ -124,7 +124,7 @@ class AuthorForm(BootstrapForm):
                     yield key, field
 
     def iter_user_fields(self):
-        for field in LocalizedUser._meta.fields:
+        for field in JournalUser._meta.fields:
             if field.name in self._user_fields:
                 key = u'author_%s' % field.name
                 yield key, field
@@ -142,19 +142,14 @@ class AuthorForm(BootstrapForm):
                     yield key, field
 
     # TODO: e-mail duplication check
-
     # TODO: restrict self deletion
-
     # TODO: fetch organization initial choices from user's profile
-
     # TODO: check users uniqueness
 
     def clean(self):
         if not self.cleaned_data.get('author') and not self._errors.get('author'):  # new author
             for key, field in self.iter_user_fields():
-                # email is explicitly required because LocalizedUser is just a proxy model
-                # but user e-mail required for authentication in our project
-                if (not field.blank or field.name == 'email') and not self.cleaned_data.get(key):
+                if not field.blank and not self.cleaned_data.get(key):
                     self._errors.setdefault(key, []).append(_(u'This field is required if new author specified.'))
 
             all_empty = True
@@ -209,10 +204,7 @@ class AuthorForm(BootstrapForm):
             kwargs = {}
             for key, field in self.iter_user_fields():
                 kwargs[field.name] = self.cleaned_data[key]
-            # TODO: re-check e-mail duplication
-            # TODO: improve username (len(User.username) <= 30 and len(User.email) <= 75)
-            author = LocalizedUser.objects.create(username=kwargs['email'], **kwargs)
-            Author.objects.create(user=author)
+            author = JournalUser.objects.create(email=kwargs['email'], **kwargs)
 
             for lang_code, lang_name in settings.LANGUAGES:
                 kwargs = {}
@@ -239,7 +231,7 @@ class AuthorForm(BootstrapForm):
 
         aa = super(AuthorForm, self).save(commit=False)
         aa.organization = org
-        aa.author = author
+        aa.user = author
         try:
             order = int(self.cleaned_data.get('ORDER') or '')
         except ValueError:
@@ -287,7 +279,7 @@ class BaseAuthorsFormSet(BaseInlineFormSet):
         form.fields['ORDER'].widget = forms.HiddenInput()
 
 
-AuthorsFormSet = inlineformset_factory(Article, ArticleAuthor, exclude=('author', 'organization', 'order'),
+AuthorsFormSet = inlineformset_factory(Article, ArticleAuthor, exclude=('user', 'organization', 'order'),
     extra=0, can_delete=True, can_order=True, form=AuthorForm, formset=BaseAuthorsFormSet)
 
 

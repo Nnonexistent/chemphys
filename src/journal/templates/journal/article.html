@@ -71,7 +71,7 @@
                 {% if article.articleauthor_set.all.count == 1 %}{% trans "Author" %}{% else %}{% trans "Authors" %}{% endif %}:
                 <span id="authors">
                 {% for aa in article.articleauthor_set.all %}
-                    <a href="{{ aa.author.author.get_absolute_url }}" title="{{ aa.organization }}">{{ aa.author }}</a>{% if forloop.first and forloop.last %} (<a href="{{ aa.organization.get_absolute_url }}" class="text-default">{{ aa.organization }}</a>){% endif %}{% if not forloop.last %}, {% endif %}
+                    <a href="{{ aa.user.get_absolute_url }}" title="{{ aa.organization }}">{{ aa.user }}</a>{% if forloop.first and forloop.last %} (<a href="{{ aa.organization.get_absolute_url }}" class="text-default">{{ aa.organization }}</a>){% endif %}{% if not forloop.last %}, {% endif %}
 
                     {% if forloop.last and not forloop.first %}
                 <br />
@@ -81,7 +81,7 @@
                         <ul class="list-unstyled authors-orgs">
                     {% for aaa in article.articleauthor_set.all %}
                         <li>
-                            <a href="{{ aaa.author.author.get_absolute_url }}">{{ aaa.author }}</a><br /><a href="{{ aaa.organization.get_absolute_url }}" class="text-default">{{ aaa.organization }}</a>
+                            <a href="{{ aaa.user.get_absolute_url }}">{{ aaa.user }}</a><br /><a href="{{ aaa.organization.get_absolute_url }}" class="text-default">{{ aaa.organization }}</a>
                         </li>
                     {% endfor %}
                         </ul>

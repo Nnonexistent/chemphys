@@ -7,4 +7,5 @@ class HiddenHelp(models.Model):
     hash = models.CharField(max_length=40)
 
     class Meta:
+        pass
         unique_together = ('user', 'hash')

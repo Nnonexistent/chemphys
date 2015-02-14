@@ -10,7 +10,9 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.core.mail import send_mail
 from django.contrib.staticfiles.storage import staticfiles_storage
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.template.loader import render_to_string
+from django.contrib.auth.models import BaseUserManager
 
 from utils.localized import BaseLocalizedObject, BaseLocalizedContent
 
@@ -96,46 +98,65 @@ class OrderedEntry(models.Model):
         super(OrderedEntry, self).save(*args, **kwargs)
 
 
-# Due to changes in django 1.7 `django.contrib.auth.get_user_model` no longer works in model definition time
-# TODO: fire bug
-def _get_user_model():
-    app_name, model_name = settings.AUTH_USER_MODEL.rsplit('.', 1)
-    app = models.get_app(app_name)
-    return getattr(app, model_name)
+class JournalUserManager(BaseUserManager):
+    pass
 
 
-class LocalizedUser(_get_user_model(), BaseLocalizedObject):
+class JournalUser(AbstractBaseUser, PermissionsMixin, ModeratedObject, BaseLocalizedObject):  # Moderation only applied to author role
+    email = models.EmailField(_('email address'), unique=True)
+    is_staff = models.BooleanField(_('staff status'), default=False,
+                                   help_text=_('Designates whether the user can log into this admin site.'))
+    is_active = models.BooleanField(_('active'), default=True,
+                                    help_text=_('Designates whether this user should be treated as active. Unselect this instead of deleting accounts.'))
+    date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
+
+    degree = models.CharField(max_length=200, verbose_name=_(u'Degree'), blank=True, default='')
+
+    objects = JournalUserManager()
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
     class Meta:
-        proxy = True
+        verbose_name = _('user')
+        verbose_name_plural = _('users')
 
     def __unicode__(self):
-        return self.get_full_name() or self.username
+        return self.get_full_name() or self.email
 
     def get_full_name(self):
-        full_name = '%s %s' % (self.localized_first_name, self.localized_last_name)
-        return full_name.strip()
+        return (u'%s %s' % (self.first_name, self.last_name)).strip()
 
     def get_short_name(self):
-        return self.localized_first_name
+        return self.first_name
 
-    # We can't use `first_name` as property name because it will clash with field name
+    def email_user(self, subject, message, from_email=None, **kwargs):
+        send_mail(subject, message, from_email, [self.email], **kwargs)
+
     @property
-    def localized_first_name(self):
+    def first_name(self):
         return self.get_localized('first_name') or ''
 
     @property
-    def localized_last_name(self):
+    def last_name(self):
         return self.get_localized('last_name') or ''
 
+    def published_articles(self):
+        return Article.objects.filter(status=10, articleauthor__user=self.user).distinct()
+
     def unpublished_articles(self):
-        return Article.objects.exclude(status=10).filter(models.Q(articleauthor__author=self) | models.Q(senders=self)).distinct()
+        return Article.objects.exclude(status=10).filter(models.Q(articleauthor__user=self) | models.Q(senders=self)).distinct()
 
     def pending_reviews(self):
         return self.review_set.filter(status__in=(0, 1)).distinct()
 
+    @models.permalink
+    def get_absolute_url(self):
+        return 'show_author', [self.id]
+
 
 class Section(OrderedEntry, BaseLocalizedObject):
-    moderators = models.ManyToManyField(LocalizedUser, verbose_name=_(u'Moderators'), blank=True)
+    moderators = models.ManyToManyField(JournalUser, verbose_name=_(u'Moderators'), blank=True)
 
     class Meta:
         ordering = OrderedEntry.Meta.ordering
@@ -162,14 +183,14 @@ class SectionName(BaseLocalizedContent):
 
 
 class StaffMember(models.Model):
-    user = models.OneToOneField(LocalizedUser, verbose_name=_(u'User'))
+    user = models.OneToOneField(JournalUser, verbose_name=_(u'User'))
 
     chief_editor = models.BooleanField(default=False, verbose_name=_(u'Chief editor'))
     editor = models.BooleanField(default=False, verbose_name=_(u'Editor'))
     reviewer = models.BooleanField(default=False, verbose_name=_(u'Reviewer'))
 
     class Meta:
-        ordering = ('chief_editor', 'editor', 'reviewer', 'user__last_name')
+        ordering = ('chief_editor', 'editor', 'reviewer', 'user__localizedname__last_name')
         verbose_name = _(u'Staff member')
         verbose_name_plural = _(u'Staff members')
 
@@ -179,7 +200,7 @@ class StaffMember(models.Model):
         super(StaffMember, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        return self.user.get_full_name() or self.user.username
+        return self.user.get_full_name() or self.user.email
 
 
 class Organization(ModeratedObject, BaseLocalizedObject):
@@ -232,32 +253,8 @@ class OrganizationLocalizedContent(BaseLocalizedContent):
         unique_together = [('lang', 'org')]
 
 
-class Author(ModeratedObject):
-    user = models.OneToOneField(LocalizedUser, verbose_name=_(u'User'))
-
-    degree = models.CharField(max_length=200, verbose_name=_(u'Degree'), blank=True, default='')
-
-    class Meta:
-        ordering = ('user__last_name', 'user__first_name')
-        verbose_name = _(u'Author')
-        verbose_name_plural = _(u'Authors')
-
-    def __unicode__(self):
-        return self.user.get_full_name() or self.user.username
-
-    def published_articles(self):
-        return Article.objects.filter(status=10, articleauthor__author=self.user).distinct()
-
-    def unpublished_articles(self):
-        return Article.objects.exclude(status=10).filter(models.Q(articleauthor__author=self.user) | models.Q(senders=self.user)).distinct()
-
-    @models.permalink
-    def get_absolute_url(self):
-        return 'show_author', [self.user_id]
-
-
 class LocalizedName(BaseLocalizedContent):
-    user = models.ForeignKey(LocalizedUser, verbose_name=_(u'User'))
+    user = models.ForeignKey(JournalUser, verbose_name=_(u'User'))
 
     first_name = models.CharField(_('First name'), max_length=60, blank=True)
     last_name = models.CharField(_('Last name'), max_length=60, blank=True)
@@ -271,16 +268,9 @@ class LocalizedName(BaseLocalizedContent):
     def __unicode__(self):
         return (u'%s %s' % (self.last_name, self.first_name)) or self.user.username
 
-    def save(self, *args, **kwargs):
-        super(LocalizedName, self).save(*args, **kwargs)
-        if self.lang == settings.LANGUAGE_CODE:
-            self.user.last_name = self.last_name
-            self.user.first_name = self.first_name
-            self.user.save(update_fields=('last_name', 'first_name'))
-
 
 class PositionInOrganization(models.Model):
-    user = models.ForeignKey(LocalizedUser, verbose_name=_(u'User'))
+    user = models.ForeignKey(JournalUser, verbose_name=_(u'User'))
     organization = models.ForeignKey(Organization, verbose_name=_(u'Organization'))
     position = models.CharField(max_length=200, verbose_name=_(u'Position'), default='', blank=True)
 
@@ -310,7 +300,7 @@ class Article(BaseLocalizedObject):
     type = models.PositiveSmallIntegerField(verbose_name=_(u'Article type'), choices=ARTICLE_TYPES, default=1)
     content = models.FileField(verbose_name=_(u'Content'), upload_to='published', default='', blank=True)
 
-    senders = models.ManyToManyField(LocalizedUser, verbose_name=_(u'Senders'), blank=True)
+    senders = models.ManyToManyField(JournalUser, verbose_name=_(u'Senders'), blank=True)
     issue = models.ForeignKey('Issue', null=True, blank=True, verbose_name=_(u'Issue'))
     sections = models.ManyToManyField(Section, blank=True, verbose_name=_(u'Sections'))
 
@@ -331,9 +321,8 @@ class Article(BaseLocalizedObject):
     def get_authors(self):
         authors = []
         for aa in self.articleauthor_set.all():
-            user = aa.author
-            if user not in authors:
-                authors.append(user)
+            if aa.user not in authors:
+                authors.append(aa.user)
         return authors
 
     @property
@@ -376,7 +365,7 @@ class LocalizedArticleContent(BaseLocalizedContent):
 
 class ArticleAuthor(OrderedEntry):
     article = models.ForeignKey(Article, verbose_name=Article._meta.verbose_name)
-    author = models.ForeignKey(LocalizedUser, verbose_name=_(u'Author'))
+    user = models.ForeignKey(JournalUser, verbose_name=_(u'User'))
     organization = models.ForeignKey(Organization, verbose_name=_(u'Organization'))
 
     _order_lookup_field = 'article'
@@ -385,17 +374,17 @@ class ArticleAuthor(OrderedEntry):
         verbose_name = _(u'Article author')
         verbose_name_plural = _(u'Article authors')
         ordering = OrderedEntry.Meta.ordering
-        unique_together = [('article', 'author', 'organization')]
+        unique_together = [('article', 'user', 'organization')]
 
     def __unicode__(self):
-        return u'%s (%s)' % (self.author, self.organization)
+        return u'%s (%s)' % (self.user, self.organization)
 
 
 class ArticleAttach(OrderedEntry):
     article = models.ForeignKey(Article, verbose_name=Article._meta.verbose_name)
     type = models.PositiveSmallIntegerField(choices=ATTACH_TYPES, verbose_name=_(u'Attach type'), default=0)
     file = models.FileField(upload_to='attaches', verbose_name=_(u'File'))
-    comment = models.TextField(default='', blank=True, verbose_name=_(u'Comment'))
+    comment = models.TextField(default='', blank=True, verbose_name=_(u'Comment to file'))
     date_created = models.DateTimeField(default=timezone.now, verbose_name=_(u'Date created'))
 
     _order_lookup_field = 'article'
@@ -507,7 +496,7 @@ class ReviewField(OrderedEntry):
 class Review(models.Model):
     key = models.CharField(max_length=32, verbose_name=_(u'Key'), unique=True, default=default_key, editable=False)
     article = models.ForeignKey(Article, verbose_name=Article._meta.verbose_name)
-    reviewer = models.ForeignKey(LocalizedUser, verbose_name=_(u'Reviewer'))
+    reviewer = models.ForeignKey(JournalUser, verbose_name=_(u'Reviewer'))
     status = models.PositiveSmallIntegerField(choices=REVIEW_STATUSES, default=0, verbose_name=_(u'Status'))
     date_created = models.DateTimeField(default=timezone.now, verbose_name=_(u'Created'))
 

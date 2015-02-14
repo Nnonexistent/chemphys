@@ -99,7 +99,7 @@ msgstr "Добавить статью / Общая информация"
 
 #: models.py:20
 msgid "Adding / Abstract"
-msgstr "Добавить статью / Абстракт"
+msgstr "Добавить статью / Аннотация"
 
 #: models.py:21
 msgid "Adding / Authors"
@@ -378,7 +378,7 @@ msgstr "Новая статья"
 
 #: models.py:349 templates/journal/send_article.html:50 views.py:195
 msgid "Abstract"
-msgstr "Абстракт"
+msgstr "Аннотация"
 
 #: models.py:350 templates/journal/send_article.html:52
 msgid "Keywords"

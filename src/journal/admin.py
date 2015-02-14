@@ -10,6 +10,12 @@ from django.contrib.auth import get_user_model
 
 from journal import models as app_models
 
+# User admin:
+# TODO: organization list in list_display
+# TODO: article count (published, new etc)
+
+# TODO: make user field read-only for editing
+# TODO: display users names instead of usernames in select widget
 
 def override_formset_factory(get_real_instance):
     # We need to rewrite "instance" and "queryset" because they passed as args to FormSet in ModelAdmin._create_formsets
@@ -39,7 +45,7 @@ class SectionNameInline(admin.StackedInline):
 
 
 class SectionAdmin(JournalAdmin):
-    raw_id_fields = ['moderators']
+#    raw_id_fields = ['moderators']
     list_display = ('__unicode__', 'display_moderators', 'articles_count')
     search_fields = ['sectionname__name']
     inlines = [SectionNameInline]
@@ -62,9 +68,9 @@ class SectionAdmin(JournalAdmin):
 
 
 class StaffMemberAdmin(JournalAdmin):
-    list_display = ('display_user', 'chief_editor', 'editor', 'reviewer', 'moderated_sections')
+    list_display = ('user', 'chief_editor', 'editor', 'reviewer', 'moderated_sections')
     list_filter = ('editor', 'reviewer')
-    search_fields = ('user__username', 'user__last_name')
+    search_fields = ('user__email', 'user__localizedname__last_name')
 
     def moderated_sections(self, obj=None):
         if obj:
@@ -78,10 +84,10 @@ class StaffMemberAdmin(JournalAdmin):
 
     def display_user(self, obj=None):
         if obj:
-            return obj.user.get_full_name() or obj.user.username
+            return unicode(obj.user)
         return u''
     display_user.short_description = _(u'Name')
-    display_user.admin_order_field = 'user__last_name'
+    display_user.admin_order_field = 'user__localizedname__last_name'
 
     # TODO: make user field read-only for editing
     # TODO: display users names instead of usernames in select widget
@@ -123,39 +129,6 @@ class LocalizedNameInline(admin.TabularInline):
     max_num = len(settings.LANGUAGES)
 
 
-class AuthorAdmin(JournalAdmin):
-    list_display = ('display_user', 'moderation_status')
-    list_filter = ['moderation_status']
-    search_fields = ('user__username', 'user__last_name', 'user__localizedname__last_name')
-
-    def display_user(self, obj=None):
-        if obj:
-            return obj.user.get_full_name() or obj.user.username
-        return u''
-    display_user.short_description = _(u'Name')
-    display_user.admin_order_field = 'user__last_name'
-
-    def get_formsets_with_inlines(self, request, obj=None):
-        formset_class = override_formset_factory(lambda x: x.user if x.user_id else None)
-
-        formset = inlineformset_factory(
-            app_models.LocalizedUser, app_models.LocalizedName,
-            extra=LocalizedNameInline.extra, formset=formset_class, max_num=LocalizedNameInline.max_num)
-        yield formset, LocalizedNameInline(app_models.LocalizedUser, admin.site)
-
-        formset = inlineformset_factory(
-            app_models.LocalizedUser, app_models.PositionInOrganization,
-            extra=PositionInOrganizationInline.extra, formset=formset_class)
-        yield formset, PositionInOrganizationInline(app_models.LocalizedUser, admin.site)
-
-        for formset, inline in super(AuthorAdmin, self).get_formsets_with_inlines(request, obj):
-            yield formset, inline
-
-    # TODO: organization list in list_display
-    # TODO: article count (published, new etc)
-
-    # TODO: make user field read-only for editing
-    # TODO: display users names instead of usernames in select widget
 
 
 class ArticleSourceInline(admin.TabularInline):
@@ -197,7 +170,7 @@ class ArticleAdmin(JournalAdmin):
     list_filter = ('status', 'type', 'issue', 'sections')
     list_display = ('display_title', 'status', 'type', 'issue', 'display_authors', 'display_reviews')
     inlines = (LocalizedArticleContentInline, ArticleAuthorInline, ArticleSourceInline, ArticleAttachInline, ReviewInline, ArticleResolutionInline)
-    filter_horizontal = ['senders']  # TODO: raw_id_field
+#    filter_horizontal = ['senders']  # TODO: raw_id_field
 
     # TODO: search by author names
 
@@ -233,7 +206,7 @@ class ArticleAdmin(JournalAdmin):
         out = []
         for user in obj.get_authors():
             out.append(u'<a href="%s" target="_blank">%s</a>' % (
-                reverse('admin:journal_author_change', args=[user.author.id]), user.get_full_name() or user.username))
+                reverse('admin:journal_journaluser_change', args=[user.id]), user))
         return mark_safe(u', '.join(out))
     display_authors.short_description = _(u'Authors')
 
@@ -274,7 +247,7 @@ class IssueAdmin(JournalAdmin):
 admin.site.register(app_models.Organization, OrganizationAdmin)
 admin.site.register(app_models.Section, SectionAdmin)
 admin.site.register(app_models.StaffMember, StaffMemberAdmin)
-admin.site.register(app_models.Author, AuthorAdmin)
 admin.site.register(app_models.Article, ArticleAdmin)
 admin.site.register(app_models.ReviewField, ReviewFieldAdmin)
 admin.site.register(app_models.Issue, IssueAdmin)
+admin.site.register(app_models.JournalUser)

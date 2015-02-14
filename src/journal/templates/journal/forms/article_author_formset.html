@@ -7,7 +7,7 @@
     {{ form }}
 {% endfor %}
 </div>
-<a id="add_author" class="btn btn-sm btn-info">{% trans "Add Author" %}</a>
+<a id="add_author" class="btn btn-sm btn-info">{% trans "Add author to article" %}</a>
 
 <br />
 <br />
@@ -62,7 +62,7 @@
             $('select[id^=id_articleauthor_set-][id$=-author]').each(function() {
                 var input = $('<input>');
                 if (adding) {
-                    var text = '{% trans "Enter author name" %}';
+                    var text = '{% trans "Enter author last name" %}';
                 } else {
                     var text = $(this).find(':selected').text();
                 }
@@ -92,7 +92,7 @@
                     createSearchChoicePosition: 'bottom',
                     createSearchChoice: function (term) {
                         this.container.parents('.entry').find('[id$=-author_{{ LANGUAGE_CODE }}_last_name]').val(term);
-                        return {id: '', text: '{% trans "Add new author" %}'}
+                        return {id: '', text: '{% trans "Add new author to Journal" %}'}
                     }
                 });
                 input.select2('data', {id: input.val(), text: text});
@@ -145,7 +145,7 @@
                     createSearchChoicePosition: 'bottom',
                     createSearchChoice: function (term) {
                         this.container.parents('.entry').find('[id$=-org_{{ LANGUAGE_CODE }}_name]').val(term);
-                        return {id: '', text: '{% trans "Add new organization" %}'}
+                        return {id: '', text: '{% trans "Add new organization to Journal" %}'}
                     }
                 });
                 input.select2('data', {id: input.val(), text: text});
