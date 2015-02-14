@@ -61,7 +61,7 @@ class AuthorForm(BootstrapForm):
 
         # user
         user = None
-        choices = [('', _(u'Add new author'))]
+        choices = [('', _(u'Add new author to Journal'))]
         if self.instance.id:
             user = self.instance.user
             self.fields['author'].initial = user
@@ -83,7 +83,7 @@ class AuthorForm(BootstrapForm):
 
         # organization
         org = None
-        choices = [('', _(u'Add new organization'))]
+        choices = [('', _(u'Add new organization to Journal'))]
         if self.instance.id:
             org = self.instance.organization
             self.fields['organization'].initial = org
@@ -141,10 +141,14 @@ class AuthorForm(BootstrapForm):
                     key = u'author_%s_%s' % (lang_code, field.name)
                     yield key, field
 
-    # TODO: e-mail duplication check
     # TODO: restrict self deletion
     # TODO: fetch organization initial choices from user's profile
-    # TODO: check users uniqueness
+
+    def clean_author_email(self):
+        email = self.cleaned_data.get('author_email')
+        if email and JournalUser.objects.filter(email=email).exists():
+            raise forms.ValidationError(_(u'User with this e-mail is already registered in Journal. Find him by typing his last name in selection field above.'))
+        return email
 
     def clean(self):
         if not self.cleaned_data.get('author') and not self._errors.get('author'):  # new author
@@ -204,7 +208,7 @@ class AuthorForm(BootstrapForm):
             kwargs = {}
             for key, field in self.iter_user_fields():
                 kwargs[field.name] = self.cleaned_data[key]
-            author = JournalUser.objects.create(email=kwargs['email'], **kwargs)
+            author = JournalUser.objects.create(**kwargs)
 
             for lang_code, lang_name in settings.LANGUAGES:
                 kwargs = {}
@@ -277,6 +281,15 @@ class BaseAuthorsFormSet(BaseInlineFormSet):
     def add_fields(self, form, index):
         super(BaseAuthorsFormSet, self).add_fields(form, index)
         form.fields['ORDER'].widget = forms.HiddenInput()
+
+    def clean(self):
+        emails = []
+        for form in self.forms:
+            email = form.cleaned_data.get('author_email')
+            if email:
+                if email in emails:
+                    form._errors.setdefault('author_email', []).append(_(u'Duplicate e-mails. Each author must have unique e-mail.'))
+                emails.append(email)
 
 
 AuthorsFormSet = inlineformset_factory(Article, ArticleAuthor, exclude=('user', 'organization', 'order'),

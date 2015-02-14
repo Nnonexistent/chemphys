@@ -60,9 +60,9 @@ REVIEW_FIELD_TYPES = (
     (4, _(u'Checkbox')),
 )
 ATTACH_TYPES = (
-    (0, _(u'Generic')),
     (1, _(u'Image')),
     (2, _(u'Video')),
+    (0, _(u'Generic')),
 )
 
 
@@ -386,7 +386,7 @@ class ArticleAuthor(OrderedEntry):
 
 class ArticleAttach(OrderedEntry):
     article = models.ForeignKey(Article, verbose_name=Article._meta.verbose_name)
-    type = models.PositiveSmallIntegerField(choices=ATTACH_TYPES, verbose_name=_(u'Attach type'), default=0)
+    type = models.PositiveSmallIntegerField(choices=ATTACH_TYPES, verbose_name=_(u'Attach type'), default=1)
     file = models.FileField(upload_to='attaches', verbose_name=_(u'File'))
     comment = models.TextField(default='', blank=True, verbose_name=_(u'Comment to file'))
     date_created = models.DateTimeField(default=timezone.now, verbose_name=_(u'Date created'))
