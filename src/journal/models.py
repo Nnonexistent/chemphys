@@ -98,9 +98,7 @@ class OrderedEntry(models.Model):
         super(OrderedEntry, self).save(*args, **kwargs)
 
 
-class JournalUserManager(BaseUserManager):
-    pass
-
+# TODO: multiple emails for user
 
 class JournalUser(AbstractBaseUser, PermissionsMixin, ModeratedObject, BaseLocalizedObject):  # Moderation only applied to author role
     email = models.EmailField(_('email address'), unique=True)
@@ -112,7 +110,7 @@ class JournalUser(AbstractBaseUser, PermissionsMixin, ModeratedObject, BaseLocal
 
     degree = models.CharField(max_length=200, verbose_name=_(u'Degree'), blank=True, default='')
 
-    objects = JournalUserManager()
+    objects = BaseUserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -126,6 +124,7 @@ class JournalUser(AbstractBaseUser, PermissionsMixin, ModeratedObject, BaseLocal
 
     def get_full_name(self):
         return (u'%s %s' % (self.first_name, self.last_name)).strip()
+    get_full_name.short_description = _(u'Full name')
 
     def get_short_name(self):
         return self.first_name
@@ -210,7 +209,7 @@ class Organization(ModeratedObject, BaseLocalizedObject):
     site = models.URLField(blank=True, default='', verbose_name=_(u'Site URL'))
 
     obsolete = models.BooleanField(default=False, verbose_name=_(u'Obsolete'))
-    previous = models.ManyToManyField('self', verbose_name=_(u'Previous versions'), blank=True)
+    previous = models.ManyToManyField('self', verbose_name=_(u'Previous versions'), blank=True, limit_choices_to={'obsolete': True})
 
     class Meta:
         ordering = ['short_name']
@@ -251,6 +250,11 @@ class OrganizationLocalizedContent(BaseLocalizedContent):
 
     class Meta:
         unique_together = [('lang', 'org')]
+        verbose_name = _(u'Organization localized content')
+        verbose_name_plural = _(u'Organization localized content')
+
+    def __unicode__(self):
+        return self.name
 
 
 class LocalizedName(BaseLocalizedContent):

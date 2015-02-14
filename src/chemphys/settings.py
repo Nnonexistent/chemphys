@@ -27,6 +27,7 @@ INSTALLED_APPS = (
     'pages',
     'mailauth',
     'ctxhelp',
+    'utils',
 )
 
 MIDDLEWARE_CLASSES = (

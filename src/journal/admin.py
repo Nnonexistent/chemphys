@@ -7,28 +7,20 @@ from django import forms
 from django.forms.models import inlineformset_factory, BaseInlineFormSet
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 from journal import models as app_models
 
 # User admin:
 # TODO: organization list in list_display
 # TODO: article count (published, new etc)
-
 # TODO: make user field read-only for editing
 # TODO: display users names instead of usernames in select widget
 
-def override_formset_factory(get_real_instance):
-    # We need to rewrite "instance" and "queryset" because they passed as args to FormSet in ModelAdmin._create_formsets
-    # and we cannot override it at ModelAdmin.get_formsets_with_inlines
-
-    class OverrideInlineFormSet(BaseInlineFormSet):
-        def __init__(self, *args, **kwargs):
-            super(OverrideInlineFormSet, self).__init__(*args, **kwargs)
-            self.instance = get_real_instance(self.instance)
-            queryset = kwargs.pop('queryset', self.model._default_manager)
-            self.queryset = queryset.filter(**{self.fk.name: self.instance})
-
-    return OverrideInlineFormSet
+if Group in admin.site._registry:
+    admin.site.unregister(Group)
 
 
 class JournalAdmin(admin.ModelAdmin):
@@ -45,7 +37,7 @@ class SectionNameInline(admin.StackedInline):
 
 
 class SectionAdmin(JournalAdmin):
-#    raw_id_fields = ['moderators']
+    raw_id_fields = ['moderators']
     list_display = ('__unicode__', 'display_moderators', 'articles_count')
     search_fields = ['sectionname__name']
     inlines = [SectionNameInline]
@@ -67,44 +59,17 @@ class SectionAdmin(JournalAdmin):
     # TODO: pending reviews
 
 
-class StaffMemberAdmin(JournalAdmin):
-    list_display = ('user', 'chief_editor', 'editor', 'reviewer', 'moderated_sections')
-    list_filter = ('editor', 'reviewer')
-    search_fields = ('user__email', 'user__localizedname__last_name')
-
-    def moderated_sections(self, obj=None):
-        if obj:
-            sections = app_models.Section.objects.filter(moderators=obj.user)
-            return mark_safe(
-                u'<br />'.join(u'<a href="%s">%s</a>' % (
-                    reverse('admin:journal_section_change', args=[s.id]), escape(s)) for s in sections)
-            )
-        return u''
-    moderated_sections.short_description = _(u'Moderated sections')
-
-    def display_user(self, obj=None):
-        if obj:
-            return unicode(obj.user)
-        return u''
-    display_user.short_description = _(u'Name')
-    display_user.admin_order_field = 'user__localizedname__last_name'
-
-    # TODO: make user field read-only for editing
-    # TODO: display users names instead of usernames in select widget
-    # TODO: pending reviews
-
-
 class OrganizationLocalizedContentInline(admin.StackedInline):
-    extra = 0
     model = app_models.OrganizationLocalizedContent
+    extra = len(settings.LANGUAGES)
     max_num = len(settings.LANGUAGES)
 
 
 class OrganizationAdmin(JournalAdmin):
     inlines = [OrganizationLocalizedContentInline]
-    list_display = ('__unicode__', 'moderation_status', 'obsolete', 'display_site')
+    list_display = ('__unicode__', 'short_name', 'moderation_status', 'obsolete', 'display_site')
     list_filter = ('moderation_status', 'obsolete')
-    search_fields = ('organizationlocalizedcontent__name', 'alt_names',
+    search_fields = ('organizationlocalizedcontent__name', 'alt_names', 'short_name',
                      'previous__organizationlocalizedcontent__name', 'previous__alt_names')
     raw_id_fields = ['previous']
 
@@ -121,14 +86,6 @@ class OrganizationAdmin(JournalAdmin):
 class PositionInOrganizationInline(admin.TabularInline):
     extra = 0
     model = app_models.PositionInOrganization
-
-
-class LocalizedNameInline(admin.TabularInline):
-    extra = 0
-    model = app_models.LocalizedName
-    max_num = len(settings.LANGUAGES)
-
-
 
 
 class ArticleSourceInline(admin.TabularInline):
@@ -170,7 +127,7 @@ class ArticleAdmin(JournalAdmin):
     list_filter = ('status', 'type', 'issue', 'sections')
     list_display = ('display_title', 'status', 'type', 'issue', 'display_authors', 'display_reviews')
     inlines = (LocalizedArticleContentInline, ArticleAuthorInline, ArticleSourceInline, ArticleAttachInline, ReviewInline, ArticleResolutionInline)
-#    filter_horizontal = ['senders']  # TODO: raw_id_field
+    filter_horizontal = ['senders']  # TODO: raw_id_field
 
     # TODO: search by author names
 
@@ -244,10 +201,70 @@ class IssueAdmin(JournalAdmin):
     articles_count.short_description = _(u'Articles')
 
 
+class LocalizedNameInline(admin.TabularInline):
+    model = app_models.LocalizedName
+    extra = len(settings.LANGUAGES)
+    max_num = len(settings.LANGUAGES)
+
+
+class StaffMemberInline(admin.StackedInline):
+    extra = 0
+    model = app_models.StaffMember
+    max_num = 1
+
+
+
+class JournalUserChangeForm(forms.ModelForm):
+    password = ReadOnlyPasswordHashField(label=_("Password"),
+        help_text=_("Raw passwords are not stored, so there is no way to see "
+                    "this user's password, but you can change the password "
+                    "using <a href=\"password/\">this form</a>."))
+
+    class Meta:
+        model = app_models.JournalUser
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(JournalUserChangeForm, self).__init__(*args, **kwargs)
+        f = self.fields.get('user_permissions', None)
+        if f is not None:
+            f.queryset = f.queryset.select_related('content_type')
+
+    def clean_password(self):
+        return self.initial["password"]
+
+
+class JournalUserAdmin(UserAdmin):
+    form = JournalUserChangeForm
+    add_form = forms.ModelForm
+    inlines = (LocalizedNameInline, StaffMemberInline)
+    fieldsets = (
+        (None, {'fields': ('email', 'password')}),
+        (_('Permissions'), {'fields': ('moderation_status', 'is_active', 'is_staff', 'is_superuser')}),
+        (_('Profile'), {'fields': ('degree', )}),
+        (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
+    )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide', ),
+            'fields': ('email',),
+        }),
+    )
+    readonly_fields = ('last_login', 'date_joined')
+    list_display = ('email', 'get_full_name', 'is_active', 'moderation_status', 'is_staff')
+    list_filter = ('is_staff', 'is_active', 'moderation_status')
+    search_fields = ('localizedname__first_name', 'localizedname__last_name', 'email')
+    ordering = ('email', )
+
+    def get_formsets_with_inlines(self, request, obj=None):
+        if obj is None:
+            return ()
+        return super(JournalUserAdmin, self).get_formsets_with_inlines(request, obj)
+
+
 admin.site.register(app_models.Organization, OrganizationAdmin)
 admin.site.register(app_models.Section, SectionAdmin)
-admin.site.register(app_models.StaffMember, StaffMemberAdmin)
 admin.site.register(app_models.Article, ArticleAdmin)
 admin.site.register(app_models.ReviewField, ReviewFieldAdmin)
 admin.site.register(app_models.Issue, IssueAdmin)
-admin.site.register(app_models.JournalUser)
+admin.site.register(app_models.JournalUser, JournalUserAdmin)
