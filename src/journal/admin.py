@@ -16,8 +16,7 @@ from journal import models as app_models
 # User admin:
 # TODO: organization list in list_display
 # TODO: article count (published, new etc)
-# TODO: make user field read-only for editing
-# TODO: display users names instead of usernames in select widget
+
 
 if Group in admin.site._registry:
     admin.site.unregister(Group)
@@ -79,8 +78,6 @@ class OrganizationAdmin(JournalAdmin):
         return u''
     display_site.short_description = _(u'Site')
     display_site.admin_order_field = 'site'
-
-    # TODO: filter previous orgs by obsolete flag
 
 
 class ArticleSourceInline(admin.TabularInline):
@@ -254,7 +251,7 @@ class JournalUserAdmin(UserAdmin):
         }),
     )
     readonly_fields = ('last_login', 'date_joined')
-    list_display = ('email', 'get_full_name', 'is_active', 'moderation_status', 'is_staff')
+    list_display = ('__unicode__', 'email', 'is_active', 'moderation_status', 'is_staff')
     list_filter = ('is_staff', 'is_active', 'moderation_status')
     search_fields = ('localizedname__first_name', 'localizedname__last_name', 'email')
     ordering = ('email', )

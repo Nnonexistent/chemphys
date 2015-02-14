@@ -3,6 +3,8 @@ from django.contrib.auth import get_user_model
 from mailauth.models import MailAuthToken
 
 
+# TODO: define abstract User model with unique email to use with mailauth app
+
 class MailAuthBackend(object):
     def authenticate(self, mail_key=None):
         try:
@@ -10,17 +12,8 @@ class MailAuthBackend(object):
         except MailAuthToken.DoesNotExist:
             return
         else:
-            try:
-                user = get_user_model().objects.filter(email=token.email).order_by('id')[0]
-            except IndexError:
-                username = token.email[:30]
-                count = 1
-                while get_user_model().objects.filter(username=username).exists():
-                    count += 1
-                    username = '%s_%s' % (username[:30-1-len(str(count))], count)
-                user = get_user_model().objects.create(username=username, email=token.email)
-
-                token.delete()
+            user, new = get_user_model().objects.get_or_create(email=token.email)
+            token.delete()
             return user
 
     def get_user(self, user_id):
