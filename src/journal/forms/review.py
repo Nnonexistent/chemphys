@@ -6,7 +6,7 @@ from django.forms.models import inlineformset_factory, BaseInlineFormSet
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext as _
 
-from journal.models import Review, ReviewFile, ReviewField
+from journal.models import Review, ReviewField
 from utils.forms import BootstrapForm
 
 
@@ -52,7 +52,3 @@ class ReviewForm(BootstrapForm):
 
         if commit:
             obj.save()
-
-
-ReviewFileFormSet = inlineformset_factory(Review, ReviewFile, fields=('file', 'comment'),
-    form=BootstrapForm, extra=0, can_delete=True)

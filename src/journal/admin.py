@@ -30,9 +30,9 @@ class JournalAdmin(admin.ModelAdmin):
               'admin/js/misc.js')
 
 
-class SectionNameInline(admin.StackedInline):
-    extra = 0
+class SectionNameInline(admin.TabularInline):
     model = app_models.SectionName
+    extra = len(settings.LANGUAGES)
     max_num = len(settings.LANGUAGES)
 
 
@@ -83,11 +83,6 @@ class OrganizationAdmin(JournalAdmin):
     # TODO: filter previous orgs by obsolete flag
 
 
-class PositionInOrganizationInline(admin.TabularInline):
-    extra = 0
-    model = app_models.PositionInOrganization
-
-
 class ArticleSourceInline(admin.TabularInline):
     model = app_models.ArticleSource
     extra = 0
@@ -111,7 +106,7 @@ class ArticleAttachInline(admin.TabularInline):
 
 class LocalizedArticleContentInline(admin.StackedInline):
     model = app_models.LocalizedArticleContent
-    extra = 0
+    extra = len(settings.LANGUAGES)
     max_num = len(settings.LANGUAGES)
 
 
@@ -186,12 +181,14 @@ class ReviewFieldAdmin(JournalAdmin):
     list_display = ('name', 'field_type')
 
 
-class ReviewFileInline(admin.TabularInline):
-    model = app_models.ReviewFile
-    extra = 0
+class LocalizedIssueContentInline(admin.StackedInline):
+    model = app_models.LocalizedIssueContent
+    max_num = len(settings.LANGUAGES)
+    extra = len(settings.LANGUAGES)
 
 
 class IssueAdmin(JournalAdmin):
+    inlines = (LocalizedIssueContentInline, )
     list_display = ('__unicode__', 'is_active', 'articles_count')
 
     def articles_count(self, obj=None):
@@ -234,10 +231,16 @@ class JournalUserChangeForm(forms.ModelForm):
         return self.initial["password"]
 
 
+class PositionInOrganizationInline(admin.TabularInline):
+    model = app_models.PositionInOrganization
+    extra = 0
+    raw_id_fields = ('organization', )
+
+
 class JournalUserAdmin(UserAdmin):
     form = JournalUserChangeForm
     add_form = forms.ModelForm
-    inlines = (LocalizedNameInline, StaffMemberInline)
+    inlines = (StaffMemberInline, LocalizedNameInline, PositionInOrganizationInline)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         (_('Permissions'), {'fields': ('moderation_status', 'is_active', 'is_staff', 'is_superuser')}),

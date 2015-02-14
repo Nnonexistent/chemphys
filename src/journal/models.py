@@ -538,28 +538,12 @@ class Review(models.Model):
     render.short_description = _(u'Data')
 
 
-class ReviewFile(models.Model):
-    review = models.ForeignKey(Review, verbose_name=Review._meta.verbose_name)
-    file = models.FileField(upload_to='reviews', verbose_name=_(u'File'))
-    comment = models.TextField(default='', blank=True, verbose_name=_(u'Comment'))
-
-    class Meta:
-        ordering = ['id']
-        verbose_name = _(u'Review file')
-        verbose_name_plural = _(u'Review files')
-
-    def unicode(self):
-        return _(u'File for review for %s') % self.review.article
-
-
-class Issue(OrderedEntry):
+class Issue(OrderedEntry, BaseLocalizedObject):
     is_active = models.BooleanField(verbose_name=_(u'Active'), default=False, blank=True)
 
     number = models.CharField(max_length=100, verbose_name=_(u'Number'), blank=True, null=True)
     volume = models.PositiveIntegerField(verbose_name=_(u'Volume'))
     year = models.PositiveIntegerField(verbose_name=_(u'Year'))
-
-    description = models.TextField(verbose_name=_(u'Description'), default=u'', blank=True)
 
     class Meta:
         verbose_name = _(u'Issue')
@@ -572,9 +556,23 @@ class Issue(OrderedEntry):
         else:
             return ugettext(u'Volume %(volume)s, %(year)s year') % self.__dict__
 
+    @property
+    def first_name(self):
+        return self.get_localized('description') or ''
+
     @models.permalink
     def get_absolute_url(self):
         return 'show_issue', [self.id]
 
+
+class LocalizedIssueContent(BaseLocalizedContent):
+    issue = models.ForeignKey(Issue, verbose_name=Issue._meta.verbose_name)
+    description = models.TextField(verbose_name=_(u'Description'), default=u'', blank=True)
+
+    class Meta:
+        unique_together = ('lang', 'issue')
+
+    def __unicode__(self):
+        return unicode(self.issue)
 
 # TODO: article and profile user input escaping

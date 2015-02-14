@@ -11,7 +11,7 @@ from django.contrib.auth import get_user_model
 from django.utils.safestring import mark_safe
 
 from journal.models import Issue, Article, Organization, ARTICLE_ADDING_STATUSES, Review, JournalUser
-from journal.forms import AuthorEditForm, LocalizedNameFormSet, PIOFormSet, ARTICLE_ADDING_FORMS, ReviewForm, ReviewFileFormSet
+from journal.forms import AuthorEditForm, LocalizedNameFormSet, PIOFormSet, ARTICLE_ADDING_FORMS, ReviewForm
 
 
 def index(request):
@@ -274,20 +274,16 @@ def edit_review(request, key, do_login=False):
 
     if request.method == 'POST':
         form = ReviewForm(request.POST, instance=review)
-        formset = ReviewFileFormSet(request.POST, request.FILES, instance=review)
         if form.is_valid() and formset.is_valid():
             form.save()
-            formset.save()
             return HttpResponseRedirect(reverse('index'))
     else:
         form = ReviewForm(instance=review)
-        formset = ReviewFileFormSet(instance=review)
 
     return render(request, 'journal/review.html', {
         'title': _(u'Review for article'),
         'article': review.article,
         'subtitle': unicode(review.article),
         'form': form,
-        'formset': formset,
         'review': review,
     })
