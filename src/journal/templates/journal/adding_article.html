@@ -31,6 +31,7 @@
 <form method="post"{% if form.is_multipart or formset.is_multipart %} enctype="multipart/form-data" {% endif %}>
     {% csrf_token %}
 
+    {{ formset.non_form_errors }}
     {{ formset }}
     {{ form }}
     <button class="btn btn-primary" type="submit" />

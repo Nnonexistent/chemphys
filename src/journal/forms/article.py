@@ -31,15 +31,23 @@ class OverviewArticleForm(BootstrapForm):
 
     def save(self, commit=True):
         obj = super(OverviewArticleForm, self).save(commit)
-        # We believe article is already has an id
+        # We assume article is already has an id
         if self.files.get('file'):
             obj.articlesource_set.add(ArticleSource.objects.create(article=obj, file=self.files['file']))
         return obj
 
 
+class BaseLocalizedArticleTitleFormSet(BaseLocalizedFormSet):
+    def clean(self):
+        super(BaseLocalizedFormSet, self).clean()
+        titles = [form.cleaned_data.get('title') for form in self]
+        if not any(titles):
+            raise forms.ValidationError(_(u'Title must be filled at least at one language'))
+
+
 LocalizedArticleTitleFormSet = inlineformset_factory(Article, LocalizedArticleContent,
     fields=('lang', 'title'), extra=len(settings.LANGUAGES), max_num=len(settings.LANGUAGES),
-    can_delete=False, form=BaseLocalizedForm, formset=BaseLocalizedFormSet)
+    can_delete=False, form=BaseLocalizedForm, formset=BaseLocalizedArticleTitleFormSet)
 
 
 LocalizedArticleAbstractFormSet = inlineformset_factory(Article, LocalizedArticleContent,
@@ -143,6 +151,11 @@ class AuthorForm(BootstrapForm):
 
     # TODO: restrict self deletion
     # TODO: fetch organization initial choices from user's profile
+
+    def has_changed(self):
+        return (super(AuthorForm, self).has_changed()
+                or not self.cleaned_data.get('author')
+                or not self.cleaned_data.get('organization'))
 
     def clean_author_email(self):
         email = self.cleaned_data.get('author_email')
@@ -290,6 +303,10 @@ class BaseAuthorsFormSet(BaseInlineFormSet):
                 if email in emails:
                     form._errors.setdefault('author_email', []).append(_(u'Duplicate e-mails. Each author must have unique e-mail.'))
                 emails.append(email)
+
+#        if not any(form.is_valid() for form in self.forms) or len(self.forms) == 0:
+        if self.total_form_count() - len(self.deleted_forms) < 1:
+            raise forms.ValidationError(_(u'Please specify at least one author. Use "Add author to article" button below.'))
 
 
 AuthorsFormSet = inlineformset_factory(Article, ArticleAuthor, exclude=('user', 'organization', 'order'),
