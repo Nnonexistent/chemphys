@@ -51,10 +51,10 @@ def ctxparse(text, context, placement, selector):
 @register.tag(name='ctxblock')
 def do_ctxblock(parser, token):
     args = token.split_contents() or DEFAULT_SELECTOR
-    if len(args) not in (0, 1, 2):
+    if len(args) not in (1, 2, 3):
         raise template.TemplateSyntaxError("%r tag has two optional argument" % token.contents.split()[0])
 
-    placement, selector = (args + [None, None])[:2]
+    tag_name, placement, selector = (args + [None, None])[:3]
     if placement is None:
         placement = DEFAULT_PLACEMENT
     if selector is None:
