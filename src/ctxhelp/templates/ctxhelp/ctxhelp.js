@@ -1,7 +1,9 @@
-$(window).on('load', function(){
-    $('[data-toggle="popover"]')
+$(function(){
+    setTimeout(function() {
+        $('[data-toggle="popover"]')
         .popover({
             container: 'body',
+            viewport: 'html',
             template: '<div class="popover" role="tooltip"><div class="arrow"></div><span class="close pull-right">&times;</span><div class="popover-content"></div></div>'
         })
         .on('shown.bs.popover', function(e){
@@ -28,4 +30,5 @@ $(window).on('load', function(){
             }
         })
         .filter('.popover-show').popover('show');
-});
+    }, 500); // wait for transitions to finish
+})
