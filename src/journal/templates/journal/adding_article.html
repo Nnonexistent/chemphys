@@ -26,6 +26,7 @@
 
 <p>
     {% if step == 2 %}{% ctxhelp _('You can drag authors to change their order') "auto left" %}{% endif %}
+    {% if step == 3 %}{% ctxhelp _('Заполняется, если вы хотите отдельно представить дополнительные материалы к статье. Выберите тип приложения «Общий», если Вы хотите, чтобы файл можно было только скачать (например, если Ваша статья выполнена в виде презентации)') "auto left" %}{% endif %}
 </p>
 
 <form method="post"{% if form.is_multipart or formset.is_multipart %} enctype="multipart/form-data" {% endif %}>
@@ -33,7 +34,9 @@
 
     {{ formset.non_form_errors }}
     {{ formset }}
+    {% ctxblock %}
     {{ form }}
+    {% endctxblock %}
     <button class="btn btn-primary" type="submit" />
         {% trans "Save and proceed to next step" %}
         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>

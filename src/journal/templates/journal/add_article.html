@@ -3,9 +3,11 @@
 
 
 {% block content %}
-<p>Please read our rules etc.</p>
-<form method="post">
-    {% csrf_token %}
-    <input class="btn btn-primary" type="submit" value="{% trans "Proceed" %}" />
-</form>
+    <p>{% blocktrans %}Пожалуйста, ознакомьтесь с <a href="/rules/">Правилами для авторов</a> по подготовке статьи для публикации в нашем журнале{% endblocktrans %}</p>
+    <p>{% blocktrans %}Вы можете прервать работу на любом из этапов добавления статьи. Все данные пройденных этапов сохранятся, и вы сможете вернуться к прерванной работе.{% endblocktrans %}</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <input class="btn btn-primary" type="submit" value="{% trans "Proceed" %}" />
+    </form>
 {% endblock %}

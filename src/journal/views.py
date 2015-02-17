@@ -192,15 +192,15 @@ def add_article(request):
     })
 
 
-ARTICLE_ADDING_TITLES = OrderedDict((
-    (0, _(u'Overview')),
-    (1, _(u'Abstract')),
-    (2, _(u'Authors')),
-    (3, _(u'Media')),
-))
 
 
 def adding_article(request, article_id, step):
+    ARTICLE_ADDING_TITLES = OrderedDict((
+        (0, _(u'Overview')),
+        (1, _(u'Abstract')),
+        (2, _(u'Authors')),
+        (3, _(u'Media')),
+    ))
     step = int(step)
     final = (step == 3)
     article = get_object_or_404(Article, id=article_id, senders=request.user, status__in=ARTICLE_ADDING_STATUSES, status__gte=step)

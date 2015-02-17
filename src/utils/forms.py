@@ -36,10 +36,10 @@ class BootstrapForm(forms.ModelForm):
                 attrs['class'] = u' '.join(set(css_classes))
 
         return self._html_output(
-            normal_row='<div%(html_class_attr)s>%(errors)s %(label)s %(field)s%(help_text)s</div>',
+            normal_row='<div%(html_class_attr)s>%(errors)s %(label)s %(help_text)s%(field)s</div>',
             error_row='%s',
             row_ender='</div>',
-            help_text_html=' <p class="helptext">%s</p>',
+            help_text_html=' <div class="pull-right"><p class="helptext">%s</p></div>',
             errors_on_separate_row=False)
 
 

@@ -1,3 +1,5 @@
+# -*- coding:utf-8 -*-
+
 from collections import OrderedDict
 from itertools import chain
 
@@ -23,11 +25,16 @@ class OverviewArticleForm(BootstrapForm):
         self.fields['type'].widget = forms.RadioSelect(choices=self.fields['type'].choices)
         self.fields['sections'].help_text = ''
         self.fields['sections'].widget = forms.CheckboxSelectMultiple(choices=self.fields['sections'].widget.choices)
+        self.fields['image'].help_text = _(u'Файл иллюстрации, отражающей главный результат вашей работы. Он будет размещен на странице статьи и в содержании выпуска.')
         try:
             initial_file = self.instance.articlesource_set.latest().file
         except ArticleSource.DoesNotExist:
             initial_file = None
-        self.fields = OrderedDict([('file', forms.FileField(label=_(u'Article file'), required=True, initial=initial_file))] + self.fields.items())
+        self.fields = OrderedDict([('file',
+            forms.FileField(
+                label=_(u'Article file'), required=True, initial=initial_file,
+                help_text=_(u'Укажите файл статьи, подготовленный на основе шаблона в формате MS Word.')
+        ))] + self.fields.items())
 
     def save(self, commit=True):
         obj = super(OverviewArticleForm, self).save(commit)
