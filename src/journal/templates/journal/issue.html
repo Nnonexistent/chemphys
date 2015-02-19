@@ -3,7 +3,7 @@
 
 
 {% block content %}
-    {{ issue.description|linebreaks }}
+    {{ issue.description|safe }}
 
     <table class="table">
     {% for article in articles %}

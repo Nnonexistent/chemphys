@@ -3,6 +3,7 @@ from collections import OrderedDict
 from django.db.models import Q
 from django.shortcuts import render
 from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponseForbidden, JsonResponse, Http404
@@ -12,6 +13,14 @@ from django.utils.safestring import mark_safe
 
 from journal.models import Issue, Article, Organization, ARTICLE_ADDING_STATUSES, Review, JournalUser
 from journal.forms import AuthorEditForm, LocalizedNameFormSet, PIOFormSet, ARTICLE_ADDING_FORMS, ReviewForm
+
+
+ARTICLE_ADDING_TITLES = OrderedDict((
+    (0, ugettext_lazy(u'Overview')),
+    (1, ugettext_lazy(u'Abstract')),
+    (2, ugettext_lazy(u'Authors')),
+    (3, ugettext_lazy(u'Media')),
+))
 
 
 def index(request):
@@ -192,15 +201,7 @@ def add_article(request):
     })
 
 
-
-
 def adding_article(request, article_id, step):
-    ARTICLE_ADDING_TITLES = OrderedDict((
-        (0, _(u'Overview')),
-        (1, _(u'Abstract')),
-        (2, _(u'Authors')),
-        (3, _(u'Media')),
-    ))
     step = int(step)
     final = (step == 3)
     article = get_object_or_404(Article, id=article_id, senders=request.user, status__in=ARTICLE_ADDING_STATUSES, status__gte=step)

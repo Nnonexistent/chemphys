@@ -564,7 +564,7 @@ class Issue(OrderedEntry, BaseLocalizedObject):
             return ugettext(u'Volume %(volume)s, %(year)s year') % self.__dict__
 
     @property
-    def first_name(self):
+    def description(self):
         return self.get_localized('description') or ''
 
     @models.permalink
