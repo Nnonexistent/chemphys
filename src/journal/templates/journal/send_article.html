@@ -48,11 +48,11 @@
         {% endfor %}
         </h5>
         <label>{% trans "Abstract" %}</label>
-        <p>{{ c.abstract }}</p>
+        <p>{{ c.abstract|linebreaks }}</p>
         <label>{% trans "Keywords" %}</label>
         <p>{{ c.keywords }}</p>
         <label>{% trans "References" %}</label>
-        <p>{{ c.references }}</p>
+        <p>{{ c.references|linebreaksbr }}</p>
     </div>
     {% endfor %}
 </div>

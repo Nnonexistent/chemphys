@@ -255,12 +255,21 @@ class JournalUserAdmin(UserAdmin):
     list_display = ('__unicode__', 'email', 'is_active', 'moderation_status', 'is_staff')
     list_filter = ('is_staff', 'is_active', 'moderation_status')
     search_fields = ('localizedname__first_name', 'localizedname__last_name', 'email')
-    ordering = ('email', )
+    ordering = None  # handled inside get_queryset
 
     def get_formsets_with_inlines(self, request, obj=None):
         if obj is None:
             return ()
         return super(JournalUserAdmin, self).get_formsets_with_inlines(request, obj)
+
+    def get_queryset(self, request):
+        from django.db import models
+
+        qs = self.model._default_manager.get_queryset()
+        # For ordering by localizedname__last_name
+        ordering = self.get_ordering(request) + ('localizedname__last_name__max', )
+        qs = qs.annotate(models.Max('localizedname__last_name')).order_by(*ordering)
+        return qs
 
 
 admin.site.register(app_models.Organization, OrganizationAdmin)
