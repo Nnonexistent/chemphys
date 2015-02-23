@@ -1,7 +1,12 @@
 {% extends "base.html" %}
-{% load i18n ctxhelp %}
+{% load i18n ctxhelp static %}
 
 {% block content %}
+    <p class="text-center">
+        <img src="{% static "img/msu.png" %}" alt="" />
+        <div class="h4 text-center" style="margin: -90px 0 60px">{% trans "Lomonosov Moscow State University<br />Institute of Mechanics" %}</div>
+    </p>
+
     {% if user.is_authenticated %}
     <div class="panel panel-default">
         <div class="panel-body row">
