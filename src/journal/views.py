@@ -24,7 +24,14 @@ ARTICLE_ADDING_TITLES = OrderedDict((
 
 
 def index(request):
-    return render(request, 'index.html', {})
+    from mailauth.forms import MailAuthForm
+
+    recent_articles = Article.objects.filter(status=10, issue__is_active=True).distinct().order_by('date_published')[:5]
+    auth_form = MailAuthForm()
+    return render(request, 'index.html', {
+        'recent_articles': recent_articles,
+        'auth_form': auth_form,
+    })
 
 
 def show_issues(request):
@@ -181,7 +188,7 @@ def search_articles(request):
                     'articleauthor__user__localizedname__last_name'):
             qobjs.append(Q(**{'%s__icontains' % arg: query}))
         qobj = reduce(lambda x, y: x | y, qobjs)
-        items = Article.objects.filter(status=10).filter(qobj).distinct()[:50]
+        items = Article.objects.filter(status=10, issue__is_active=True).filter(qobj).distinct()[:50]
     else:
         items = []
     return render(request, 'journal/articles.html', {'articles': items, 'title': _(u'Articles found')})

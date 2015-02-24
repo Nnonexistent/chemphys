@@ -23,8 +23,8 @@
                 <p><a class="btn btn-info" href="{% url 'edit_author' %}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> {% trans "Edit profile" %}</a></p>
                 <p><a class="btn btn-info" href="{% url 'add_article' %}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {% trans "Add article" %}</a></p>
             </div>
-        {% if user.unpublished_articles %}
             <div class="col-md-8">
+        {% if user.unpublished_articles %}
                 <h5>{% trans "Unpublished articles" %}</h5>
                 <table class="table">
                 <thead>
@@ -76,7 +76,45 @@
             </div>
         </div>
     </div>
-    {% else %}
-        <p><a class="btn btn-info" href="{% url 'mailauth_form' %}">{% trans "Enter journal" %}</a></p>
+    {% endif %}
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+        {% for article in recent_articles %}
+        {% if forloop.first %}<h5>{% trans "Recent articles" %}</h5><table class="table">{% endif %}
+        <tr>
+            <td>{% if article.image %}<a href="{{ article.get_absolute_url }}"><img src="{{ article.image.url }}" width="100" alt="" /></a>{% endif %}</td>
+            <td>
+                <a class="text-muted" href="{{ article.issue.get_absolute_url }}">{{ article.issue }}</a><br />
+                <a href="{{ article.get_absolute_url }}">{{ article }}</a><br />
+                <span class="text-muted">
+                {% for aa in article.articleauthor_set.all %}
+                    <a href="{{ aa.user.get_absolute_url }}" class="text-muted" title="{{ aa.organization }}">{{ aa.user }}</a>{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+                </span>
+            </td>
+            <td><a href="{{ article.content.url }}" class="btn btn-primary">View article <br /><small class="text-muted">PDF, {{ article.content.size|filesizeformat }}</small></a></td>
+        </tr>
+        {% if forloop.last %}</table>{% endif %}
+        {% endfor %}
+        </div>
+    </div>
+
+    {% if user.is_anonymous %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p>{% trans "Чтобы отправить статью войдите в журнал, используя свой e-mail. Вы получите письмо со ссылкой для входа." %}</p>
+                    <form role="form" method="post" action="{% url 'mailauth_form' %}">
+                    {% csrf_token %}
+                    {{ auth_form }}
+                    <input class="btn btn-info pull-right" type="submit" value="{% trans "Enter journal" %}" />
+                    </form>
+                    <br /><br />
+                </div>
+            </div>
+        </div>
+    </div>
     {% endif %}
 {% endblock %}
