@@ -27,6 +27,7 @@ INSTALLED_APPS = (
     'pages',
     'mailauth',
     'ctxhelp',
+    'udc',
     'utils',
 )
 
