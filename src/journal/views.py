@@ -59,9 +59,13 @@ def show_issue(request, id):
     })
 
 
-def show_article(request, iss_year, iss_volume, iss_number, id):
-    kwargs = {'id': id, 'status':10, 'issue__year':iss_year,
-              'issue__volume': iss_volume, 'issue__number': iss_number}
+def show_article(request, year, volume, number=None, id=None):
+    if id is None:
+        raise Http404
+    kwargs = {'id': id, 'status': 10, 'issue__year':year, 'issue__volume': volume}
+    if number:
+        kwargs['issue_number'] = number
+
     if not (request.user.is_authenticated() and request.user.is_staff):
         kwargs['issue__is_active'] = True
 

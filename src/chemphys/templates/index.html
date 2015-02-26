@@ -93,7 +93,7 @@
                 {% endfor %}
                 </span>
             </td>
-            <td><a href="{{ article.content.url }}" class="btn btn-primary">View article <br /><small class="text-muted">PDF, {{ article.content.size|filesizeformat }}</small></a></td>
+            <td><a href="{{ article.content.url }}" class="btn btn-primary">{% trans "View article" %}<br /><small class="text-muted">PDF, {{ article.content.size|filesizeformat }}</small></a></td>
         </tr>
         {% if forloop.last %}</table>{% endif %}
         {% endfor %}

@@ -326,7 +326,10 @@ class Article(BaseLocalizedObject):
 
     def get_absolute_url(self):
         if self.issue:
-            return reverse('show_article', args=(self.issue.year, self.issue.volume, self.issue.number, self.id))
+            kwargs = {'year': self.issue.year, 'volume': self.issue.volume, 'id': self.id}
+            if self.issue.number:
+                kwargs['number'] = self.issue.number
+            return reverse('show_article', kwargs=kwargs)
         return u''
 
     def get_authors(self):
