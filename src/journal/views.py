@@ -64,7 +64,7 @@ def show_article(request, year, volume, number=None, id=None):
         raise Http404
     kwargs = {'id': id, 'status': 10, 'issue__year':year, 'issue__volume': volume}
     if number:
-        kwargs['issue_number'] = number
+        kwargs['issue__number'] = number
 
     if not (request.user.is_authenticated() and request.user.is_staff):
         kwargs['issue__is_active'] = True
