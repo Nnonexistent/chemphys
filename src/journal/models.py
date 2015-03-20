@@ -316,7 +316,7 @@ class Article(BaseLocalizedObject):
     sections = models.ManyToManyField(Section, blank=True, verbose_name=_(u'Sections'))
 
     class Meta:
-        ordering = ['date_in']
+        ordering = ('date_published', 'id')
         verbose_name = _(u'Article')
         verbose_name_plural = _(u'Articles')
 
@@ -555,6 +555,8 @@ class Issue(OrderedEntry, BaseLocalizedObject):
     volume = models.PositiveIntegerField(verbose_name=_(u'Volume'))
     year = models.PositiveIntegerField(verbose_name=_(u'Year'))
 
+    title = models.CharField(max_length=200, default='', blank=True, verbose_name=_(u'Title'))
+
     class Meta:
         verbose_name = _(u'Issue')
         verbose_name_plural = _(u'Issues')
@@ -565,6 +567,12 @@ class Issue(OrderedEntry, BaseLocalizedObject):
             return ugettext(u'Volume %(volume)s, issue %(number)s, %(year)s year') % self.__dict__
         else:
             return ugettext(u'Volume %(volume)s, %(year)s year') % self.__dict__
+
+    def to_str_no_year(self):
+        if self.number:
+            return ugettext(u'Volume %(volume)s, issue %(number)s') % self.__dict__
+        else:
+            return ugettext(u'Volume %(volume)s') % self.__dict__
 
     @property
     def description(self):

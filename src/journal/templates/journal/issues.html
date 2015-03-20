@@ -2,9 +2,31 @@
 
 
 {% block content %}
-    <ul>
+    <div class="row" id="contents">
     {% for issue in issues %}
-        <li><a href="{{ issue.get_absolute_url }}">{{ issue }}</a></li>
+        {% if issue.year > SPLIT_YEAR %}
+            {% ifchanged issue.year %}<div class="h4 col-md-12" >{{ issue.year }}</div>{% endifchanged %}
+        {% else %}
+            {% ifchanged %}<div class="h4 col-md-12">{{ first_year }} &mdash; {{ SPLIT_YEAR }}</div>{% endifchanged %}
+        {% endif %}
+        <div class="col-md-4 col-lg-3">
+            <a class="panel panel-info" href="{{ issue.get_absolute_url }}">
+                <div class="panel-heading">
+                    <span class="panel-title">
+                {% if issue.year > SPLIT_YEAR %}
+                    {{ issue.to_str_no_year }}
+                {% else %}
+                    {{ issue }}
+                {% endif %}
+                    </span>
+                </div>
+                {% if issue.title %}
+                <div class="panel-body text-muted">
+                    {{ issue.title }}
+                </div>
+                {% endif %}
+            </a>
+        </div>
     {% endfor %}
-    </ul>
+    </div>
 {% endblock %}

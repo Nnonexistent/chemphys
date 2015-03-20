@@ -35,14 +35,24 @@ def index(request):
 
 
 def show_issues(request):
+    SPLIT_YEAR = 2010
+    
     if request.user.is_authenticated() and request.user.is_staff:
         qs = Issue.objects.all()
     else:
         qs = Issue.objects.filter(is_active=True)
 
+    issues = (
+        tuple(qs.filter(year__gt=SPLIT_YEAR).order_by('-year', 'order')) +
+        tuple(qs.filter(year__lte=SPLIT_YEAR))
+    )
+
     return render(request, 'journal/issues.html', {
-        'title': _('Index'),
-        'issues': qs,
+        'title': _('Contents'),
+        'issues': issues,
+        'first_year': qs[0].year,
+        'SPLIT_YEAR': SPLIT_YEAR,
+        'contents': True,
     })
 
 

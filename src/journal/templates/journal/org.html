@@ -16,8 +16,8 @@
     <table class="table">
     {% for user in authors %}
         <tr>
-            <td><a href="{{ user.author.get_absolute_url }}">{{ user }}</a></td>
-            <td>{% blocktrans count count=user.author.published_articles.count %}One article{% plural %}{{ count }} articles{% endblocktrans %}</td>
+            <td><a href="{{ user.get_absolute_url }}">{{ user }}</a></td>
+            <td>{% blocktrans count count=user.published_articles.count %}One article{% plural %}{{ count }} articles{% endblocktrans %}</td>
         </tr>
     {% endfor %}
     </table>

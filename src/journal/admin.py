@@ -187,7 +187,7 @@ class LocalizedIssueContentInline(admin.StackedInline):
 
 class IssueAdmin(JournalAdmin):
     inlines = (LocalizedIssueContentInline, )
-    list_display = ('__unicode__', 'is_active', 'articles_count')
+    list_display = ('__unicode__', 'is_active', 'articles_count', 'title')
 
     def articles_count(self, obj=None):
         if obj:
