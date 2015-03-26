@@ -68,10 +68,10 @@
             </div>
             <div class="col-lg-3">
                 <div>
-                {% if article.articleauthor_set.all.count == 1 %}{% trans "Author" %}{% else %}{% trans "Authors" %}{% endif %}:
+                {% if article.get_authors.keys|length == 1 %}{% trans "Author" %}{% else %}{% trans "Authors" %}{% endif %}:
                 <span id="authors">
-                {% for aa in article.articleauthor_set.all %}
-                    <a href="{{ aa.user.get_absolute_url }}" title="{{ aa.organization }}">{{ aa.user }}</a>{% if forloop.first and forloop.last %} (<a href="{{ aa.organization.get_absolute_url }}" class="text-default">{{ aa.organization }}</a>){% endif %}{% if not forloop.last %}, {% endif %}
+                {% for aa, orgs in article.get_authors.iteritems %}
+                    <a href="{{ aa.get_absolute_url }}" title="{{ orgs|join:", " }}">{{ aa }}</a>{% if forloop.first and forloop.last %} ({% for org in orgs %}<a href="{{ org.get_absolute_url }}" class="text-default">{{ org }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}){% endif %}{% if not forloop.last %}, {% endif %}
 
                     {% if forloop.last and not forloop.first %}
                 <br />
@@ -79,9 +79,12 @@
 
                     <div class="collapse" id="orgs">
                         <ul class="list-unstyled authors-orgs">
-                    {% for aaa in article.articleauthor_set.all %}
+                    {% for aa2, orgs2 in article.get_authors.iteritems %}
                         <li>
-                            <a href="{{ aaa.user.get_absolute_url }}">{{ aaa.user }}</a><br /><a href="{{ aaa.organization.get_absolute_url }}" class="text-default">{{ aaa.organization }}</a>
+                            <a href="{{ aa2.get_absolute_url }}">{{ aa2 }}</a><br />
+                            {% for org in orgs2 %}
+                                <a href="{{ org.get_absolute_url }}" class="text-default">{{ org }}</a>
+                            {% endfor %}
                         </li>
                     {% endfor %}
                         </ul>

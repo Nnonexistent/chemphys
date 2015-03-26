@@ -3,6 +3,7 @@
 import json
 import uuid
 import mimetypes
+from collections import OrderedDict
 
 from django.db import models
 from django.utils import timezone
@@ -333,10 +334,9 @@ class Article(BaseLocalizedObject):
         return u''
 
     def get_authors(self):
-        authors = []
+        authors = OrderedDict()
         for aa in self.articleauthor_set.all():
-            if aa.user not in authors:
-                authors.append(aa.user)
+            authors.setdefault(aa.user, []).append(aa.organization)
         return authors
 
     @property

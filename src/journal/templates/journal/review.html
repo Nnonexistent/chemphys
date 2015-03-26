@@ -24,9 +24,9 @@
             <a target="_blank" href="{{ article.articlesource_set.latest.file.url }}" class="btn btn-primary">View article <br /><small class="text-muted">{{ article.articlesource_set.latest.file.size|filesizeformat }}</small></a>
         </div>
         <div class="col-md-6">
-        {% blocktrans count count=article.articleauthor_set.all.count %}Author{% plural %}Authors{% endblocktrans %}:
-        {% for aa in article.articleauthor_set.all %}
-            <a href="{{ aa.author.author.get_absolute_url }}" target="_blank" title="{{ aa.organization }}">{{ aa.author }}</a>{% if not forloop.last %}, {% endif %}
+        {% blocktrans count count=article.get_authors.keys|length %}Author{% plural %}Authors{% endblocktrans %}:
+        {% for aa, orgs in article.get_authors.iteritems %}
+            <a href="{{ aa.get_absolute_url }}" target="_blank" title="{{ orgs|join:", " }}">{{ aa }}</a>{% if not forloop.last %}, {% endif %}
         {% endfor %}
         </div>
     </div>

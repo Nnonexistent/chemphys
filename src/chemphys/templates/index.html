@@ -88,8 +88,8 @@
                 <a class="text-muted" href="{{ article.issue.get_absolute_url }}">{{ article.issue }}</a><br />
                 <a href="{{ article.get_absolute_url }}">{{ article }}</a><br />
                 <span class="text-muted">
-                {% for aa in article.articleauthor_set.all %}
-                    <a href="{{ aa.user.get_absolute_url }}" class="text-muted" title="{{ aa.organization }}">{{ aa.user }}</a>{% if not forloop.last %}, {% endif %}
+                {% for aa, orgs in article.get_authors.iteritems %}
+                    <a href="{{ aa.get_absolute_url }}" class="text-muted" title="{{ orgs|join:", " }}">{{ aa }}</a>{% if not forloop.last %}, {% endif %}
                 {% endfor %}
                 </span>
             </td>

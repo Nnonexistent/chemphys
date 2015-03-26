@@ -58,7 +58,7 @@
 </div>
 
 <h4>{{ ARTICLE_ADDING_TITLES.2 }}</h4>
-<p>{{ article.articleauthor_set.all|join:"<br />" }}</p>
+<p>{{ article.get_authors.keys|join:"<br />" }}</p>
 
 <h4>{{ ARTICLE_ADDING_TITLES.3 }}</h4>
 {% for entry in article.articleattach_set.all %}

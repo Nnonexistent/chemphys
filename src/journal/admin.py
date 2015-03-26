@@ -154,7 +154,7 @@ class ArticleAdmin(JournalAdmin):
         if not obj:
             return u''
         out = []
-        for user in obj.get_authors():
+        for user, orgs in obj.get_authors().iteritems():
             out.append(u'<a href="%s" target="_blank">%s</a>' % (
                 reverse('admin:journal_journaluser_change', args=[user.id]), user))
         return mark_safe(u', '.join(out))
