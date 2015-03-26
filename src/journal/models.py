@@ -362,7 +362,7 @@ class Article(BaseLocalizedObject):
 class LocalizedArticleContent(BaseLocalizedContent):
     article = models.ForeignKey(Article, verbose_name=Article._meta.verbose_name)
 
-    title = models.TextField(verbose_name=_(u'Title'))
+    title = models.TextField(verbose_name=_(u'Title'), default='', blank=True)
     abstract = models.TextField(verbose_name=_(u'Abstract'), default=u'', blank=True)
     keywords = models.TextField(verbose_name=_(u'Keywords'), default=u'', blank=True)
     references = models.TextField(verbose_name=_(u'References'), default='', blank=True)

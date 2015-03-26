@@ -51,10 +51,14 @@ class BaseLocalizedArticleTitleFormSet(BaseLocalizedFormSet):
         if not any(titles):
             raise forms.ValidationError(_(u'Title must be filled at least at one language'))
 
+class BaseLocalizedArticleTitleForm(BaseLocalizedForm):
+    def has_changed(self):
+        return True
+
 
 LocalizedArticleTitleFormSet = inlineformset_factory(Article, LocalizedArticleContent,
     fields=('lang', 'title'), extra=len(settings.LANGUAGES), max_num=len(settings.LANGUAGES),
-    can_delete=False, form=BaseLocalizedForm, formset=BaseLocalizedArticleTitleFormSet)
+    can_delete=False, form=BaseLocalizedArticleTitleForm, formset=BaseLocalizedArticleTitleFormSet)
 
 
 LocalizedArticleAbstractFormSet = inlineformset_factory(Article, LocalizedArticleContent,
