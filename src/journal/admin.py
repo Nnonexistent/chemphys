@@ -116,7 +116,7 @@ class ReviewInline(admin.StackedInline):
 
 
 class ArticleAdmin(JournalAdmin):
-    search_fields = ('title', 'abstract', 'references')
+    search_fields = ('localizedarticlecontent__title', 'localizedarticlecontent__abstract', 'localizedarticlecontent__references')
     list_filter = ('status', 'type', 'issue', 'sections')
     list_display = ('display_title', 'status', 'type', 'issue', 'display_authors', 'display_reviews')
     inlines = (LocalizedArticleContentInline, ArticleAuthorInline, ArticleSourceInline, ArticleAttachInline, ReviewInline, ArticleResolutionInline)
@@ -183,11 +183,12 @@ class LocalizedIssueContentInline(admin.StackedInline):
     model = app_models.LocalizedIssueContent
     max_num = len(settings.LANGUAGES)
     extra = len(settings.LANGUAGES)
+    fields = ('lang', 'title', 'description')
 
 
 class IssueAdmin(JournalAdmin):
     inlines = (LocalizedIssueContentInline, )
-    list_display = ('__unicode__', 'is_active', 'articles_count', 'title')
+    list_display = ('__unicode__', 'is_active', 'articles_count')
 
     def articles_count(self, obj=None):
         if obj:

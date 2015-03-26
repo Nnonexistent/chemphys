@@ -555,8 +555,6 @@ class Issue(OrderedEntry, BaseLocalizedObject):
     volume = models.PositiveIntegerField(verbose_name=_(u'Volume'))
     year = models.PositiveIntegerField(verbose_name=_(u'Year'))
 
-    title = models.CharField(max_length=200, default='', blank=True, verbose_name=_(u'Title'))
-
     class Meta:
         verbose_name = _(u'Issue')
         verbose_name_plural = _(u'Issues')
@@ -578,6 +576,10 @@ class Issue(OrderedEntry, BaseLocalizedObject):
     def description(self):
         return self.get_localized('description') or ''
 
+    @property
+    def title(self):
+        return self.get_localized('title') or ''
+
     @models.permalink
     def get_absolute_url(self):
         return 'show_issue', [self.id]
@@ -586,6 +588,7 @@ class Issue(OrderedEntry, BaseLocalizedObject):
 class LocalizedIssueContent(BaseLocalizedContent):
     issue = models.ForeignKey(Issue, verbose_name=Issue._meta.verbose_name)
     description = models.TextField(verbose_name=_(u'Description'), default=u'', blank=True)
+    title = models.CharField(max_length=200, default='', blank=True, verbose_name=_(u'Title'))
 
     class Meta:
         unique_together = ('lang', 'issue')
