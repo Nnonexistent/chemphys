@@ -3,6 +3,5 @@ $(function(){
 });
 
 $(window).load(function() {
-    console.log('remove preload');
     $("body").removeClass("preload");
 });
