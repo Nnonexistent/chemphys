@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-22 08:32+0300\n"
+"POT-Creation-Date: 2015-04-02 09:53+0300\n"
 "PO-Revision-Date: 2015-01-09 00:54+0300\n"
 "Last-Translator: Elena Sergievska <skubird@gmail.com>\n"
 "Language-Team: Chemphys <skubird@gmail.com>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.7.1\n"
 
-#: settings.py:75
+#: settings.py:77
 msgid "Russian"
 msgstr "Russian"
 
-#: settings.py:76
+#: settings.py:78
 msgid "English"
 msgstr "English"
 
@@ -52,97 +52,143 @@ msgstr "Delete?"
 msgid "Физико-химическая кинетика в газовой динамике"
 msgstr "Physical-Chemical Kinetics in Gas Dynamics"
 
-#: templates/base.html:144
+#: templates/base.html:180
 msgid "Физико-химическая<br />кинетика"
 msgstr "Physical-Chemical<br />Kinetics"
 
-#: templates/base.html:146
+#: templates/base.html:182
 msgid "в газовой<br />динамике"
 msgstr "in Gas<br />Dynamics"
 
-#: templates/base.html:165
+#: templates/base.html:201
 msgid "Contents"
 msgstr "Contents"
 
-#: templates/base.html:174
+#: templates/base.html:207
 msgid "Advanced Search"
 msgstr "Advanced Search"
 
-#: templates/base.html:175
+#: templates/base.html:208
 msgid "Search"
 msgstr "Search"
 
-#: templates/base.html:201
-msgid "Институт Механики МГУ"
-msgstr "Institute of Mechanics of Moscow State University, Russia"
-
-#: templates/base.html:202
+#: templates/base.html:233
 msgid "Administration"
 msgstr "Administration"
 
-#: templates/base.html:206
+#: templates/base.html:234
+msgid ""
+"Журнал рецензируемый, электронный, полные тексты статей находятся в "
+"свободном доступе на сайте http://chemphys.edu.ru/"
+msgstr ""
+
+#: templates/base.html:235
+msgid "Научно-исследовательский институт механики МГУ им. М.В.Ломоносова"
+msgstr ""
+
+#: templates/base.html:239
 msgid "Свидетельство СМИ: Эл № 77-6360 от 10 июля 2002 г."
 msgstr ""
 "Certificate of Mass Media Registration: digital № 77-6360, Jun. 10, 2002."
 
-#: templates/base.html:207
+#: templates/base.html:240
 msgid "Журнал издается с 2003 года"
 msgstr "Published since 2003"
 
-#: templates/base.html:208
+#: templates/base.html:241
 msgid "Периодичность: 4 выпуска в год"
 msgstr "4 issues per year"
 
-#: templates/index.html:9
+#: templates/index.html:7
+msgid "Lomonosov Moscow State University<br />Institute of Mechanics"
+msgstr ""
+
+#: templates/index.html:14
+msgid ""
+"This is context help. You can invoke it by pressing on this symbol on any "
+"page. To&nbsp;close it press the symbol again."
+msgstr ""
+
+#: templates/index.html:17
+#, fuzzy, python-format
+#| msgid "You are logged in as %(user)s"
+msgid "You are logged in as <a href=\"%(link)s\">%(user)s</a>"
+msgstr "You are logged in as %(user)s"
+
+#: templates/index.html:19
 #, python-format
 msgid "You are logged in as %(user)s"
 msgstr "You are logged in as %(user)s"
 
-#: templates/index.html:9
+#: templates/index.html:21
 msgid "Logout"
 msgstr "Logout"
 
-#: templates/index.html:10
+#: templates/index.html:23
 msgid "Edit profile"
 msgstr "Edit profile"
 
-#: templates/index.html:11
+#: templates/index.html:24
 msgid "Add article"
 msgstr "Add article"
 
-#: templates/index.html:15
+#: templates/index.html:28
 msgid "Unpublished articles"
 msgstr "Unpublished articles"
 
-#: templates/index.html:19
+#: templates/index.html:32
 msgid "Title"
 msgstr ""
 
-#: templates/index.html:20 templates/index.html.py:48
+#: templates/index.html:33 templates/index.html.py:61
 msgid "Status"
 msgstr ""
 
-#: templates/index.html:36
+#: templates/index.html:49
 msgid "Continue filling form"
 msgstr ""
 
-#: templates/index.html:43
+#: templates/index.html:56
 msgid "Pending reviews"
 msgstr ""
 
-#: templates/index.html:47
+#: templates/index.html:60
 #, fuzzy
 #| msgid "Add article"
 msgid "Article"
 msgstr "Add article"
 
-#: templates/index.html:57
+#: templates/index.html:70
 msgid "Proceed to review form"
 msgstr ""
 
-#: templates/index.html:67
-msgid "Login as author"
-msgstr "Login as author"
+#: templates/index.html:84
+#, fuzzy
+#| msgid "Add article"
+msgid "Recent articles"
+msgstr "Add article"
+
+#: templates/index.html:97
+#, fuzzy
+#| msgid "Add article"
+msgid "View article"
+msgstr "Add article"
+
+#: templates/index.html:109
+msgid ""
+"Чтобы отправить статью войдите в журнал, используя свой e-mail. Вы получите "
+"письмо со ссылкой для входа."
+msgstr ""
+
+#: templates/index.html:113
+msgid "Enter journal"
+msgstr ""
+
+#~ msgid "Институт Механики МГУ"
+#~ msgstr "Institute of Mechanics of Moscow State University, Russia"
+
+#~ msgid "Login as author"
+#~ msgstr "Login as author"
 
 #~ msgid "Django site admin"
 #~ msgstr "Django site admin"

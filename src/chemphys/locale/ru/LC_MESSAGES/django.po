@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-22 08:32+0300\n"
+"POT-Creation-Date: 2015-04-02 09:53+0300\n"
 "PO-Revision-Date: 2015-01-09 00:54+0300\n"
 "Last-Translator: Elena Sergievska <skubird@gmail.com>\n"
 "Language-Team: \n"
@@ -19,11 +19,11 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 1.7.1\n"
 
-#: settings.py:75
+#: settings.py:77
 msgid "Russian"
 msgstr "Русский"
 
-#: settings.py:76
+#: settings.py:78
 msgid "English"
 msgstr "Английский"
 
@@ -54,91 +54,131 @@ msgstr "Удалить?"
 msgid "Физико-химическая кинетика в газовой динамике"
 msgstr "Физико-химическая кинетика в газовой динамике"
 
-#: templates/base.html:144
+#: templates/base.html:180
 msgid "Физико-химическая<br />кинетика"
 msgstr "Физико-химическая<br />кинетика"
 
-#: templates/base.html:146
+#: templates/base.html:182
 msgid "в газовой<br />динамике"
 msgstr "в газовой<br />динамике"
 
-#: templates/base.html:165
+#: templates/base.html:201
 msgid "Contents"
 msgstr "Содержание"
 
-#: templates/base.html:174
+#: templates/base.html:207
 msgid "Advanced Search"
 msgstr "Расширенный поиск"
 
-#: templates/base.html:175
+#: templates/base.html:208
 msgid "Search"
 msgstr "Поиск"
 
-#: templates/base.html:201
-msgid "Институт Механики МГУ"
-msgstr "Институт Механики МГУ"
-
-#: templates/base.html:202
+#: templates/base.html:233
 msgid "Administration"
 msgstr "Администрирование"
 
-#: templates/base.html:206
+#: templates/base.html:234
+msgid ""
+"Журнал рецензируемый, электронный, полные тексты статей находятся в "
+"свободном доступе на сайте http://chemphys.edu.ru/"
+msgstr "Журнал рецензируемый, электронный, полные тексты статей находятся в "
+"свободном доступе на сайте http://chemphys.edu.ru/"
+
+#: templates/base.html:235
+msgid "Научно-исследовательский институт механики МГУ им. М.В.Ломоносова"
+msgstr "Научно-исследовательский институт механики МГУ им. М.В.Ломоносова"
+
+#: templates/base.html:239
 msgid "Свидетельство СМИ: Эл № 77-6360 от 10 июля 2002 г."
 msgstr "Свидетельство СМИ: Эл № 77-6360 от 10 июля 2002 г."
 
-#: templates/base.html:207
+#: templates/base.html:240
 msgid "Журнал издается с 2003 года"
 msgstr "Журнал издается с 2003 года"
 
-#: templates/base.html:208
+#: templates/base.html:241
 msgid "Периодичность: 4 выпуска в год"
 msgstr "Периодичность: 4 выпуска в год"
 
-#: templates/index.html:9
+#: templates/index.html:7
+msgid "Lomonosov Moscow State University<br />Institute of Mechanics"
+msgstr "Московский Государственный Университет им. М.В.Ломоносова<br />Институт Механики"
+
+#: templates/index.html:14
+msgid ""
+"This is context help. You can invoke it by pressing on this symbol on any "
+"page. To&nbsp;close it press the symbol again."
+msgstr ""
+"Это контекстная подсказка. Ее можно вызвать, нажав на этот символ на любой странице."
+"Чтобы закрыть, нажмите на символ ещё раз"
+
+#: templates/index.html:17
+#, python-format
+msgid "You are logged in as <a href=\"%(link)s\">%(user)s</a>"
+msgstr "Вы вошли как <a href=\"%(link)s\">%(user)s</a>"
+
+#: templates/index.html:19
 #, python-format
 msgid "You are logged in as %(user)s"
 msgstr "Вы вошли как %(user)s"
 
-#: templates/index.html:9
+#: templates/index.html:21
 msgid "Logout"
 msgstr "Выйти"
 
-#: templates/index.html:10
+#: templates/index.html:23
 msgid "Edit profile"
 msgstr "Редактировать профайл"
 
-#: templates/index.html:11
+#: templates/index.html:24
 msgid "Add article"
 msgstr "Добавить статью"
 
-#: templates/index.html:15
+#: templates/index.html:28
 msgid "Unpublished articles"
 msgstr "Неопубликованные статьи"
 
-#: templates/index.html:19
+#: templates/index.html:32
 msgid "Title"
 msgstr "Заголовок"
 
-#: templates/index.html:20 templates/index.html.py:48
+#: templates/index.html:33 templates/index.html.py:61
 msgid "Status"
 msgstr "Статус"
 
-#: templates/index.html:36
+#: templates/index.html:49
 msgid "Continue filling form"
 msgstr "Продолжить заполнение формы"
 
-#: templates/index.html:43
+#: templates/index.html:56
 msgid "Pending reviews"
 msgstr "Незавершенные рецензии"
 
-#: templates/index.html:47
+#: templates/index.html:60
 msgid "Article"
 msgstr "Статья"
 
-#: templates/index.html:57
+#: templates/index.html:70
 msgid "Proceed to review form"
 msgstr "Перейти к форме рецензии"
 
-#: templates/index.html:67
-msgid "Login as author"
-msgstr "Войти как автор"
+#: templates/index.html:84
+msgid "Recent articles"
+msgstr "Недавние статьи"
+
+#: templates/index.html:97
+msgid "View article"
+msgstr "Просмотр статьи"
+
+#: templates/index.html:109
+msgid ""
+"Чтобы отправить статью войдите в журнал, используя свой e-mail. Вы получите "
+"письмо со ссылкой для входа."
+msgstr "Чтобы отправить статью, войдите в журнал, используя свой e-mail. Вы получите "
+"письмо со ссылкой для входа."
+
+#: templates/index.html:113
+msgid "Enter journal"
+msgstr "Вход в журнал"
+
