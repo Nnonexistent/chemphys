@@ -20,6 +20,12 @@
       <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <style type="text/css">
+    .preload * {
+        -webkit-transition: none !important;
+        -moz-transition: none !important;
+        -ms-transition: none !important;
+        -o-transition: none !important;
+    }
     .errorlist {
         list-style: none;
         color: red;
@@ -172,7 +178,7 @@
 {% endblock %}
   </head>
 
-  <body>
+  <body class="preload">
     <nav class="navbar navbar-inverse" role="navigation">
       <div class="container">
         <div class="navbar-header">
