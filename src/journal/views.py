@@ -35,7 +35,7 @@ def index(request):
 
 
 def show_issues(request):
-    SPLIT_YEAR = 2010
+    SPLIT_YEAR = 1970
     
     if request.user.is_authenticated() and request.user.is_staff:
         qs = Issue.objects.all()
