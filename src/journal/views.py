@@ -26,7 +26,7 @@ ARTICLE_ADDING_TITLES = OrderedDict((
 def index(request):
     from mailauth.forms import MailAuthForm
 
-    recent_articles = Article.objects.filter(status=10, issue__is_active=True).distinct().order_by('date_published')[:5]
+    recent_articles = Article.objects.filter(status=10, issue__is_active=True).distinct().order_by('-date_published')[:5]
     auth_form = MailAuthForm()
     return render(request, 'index.html', {
         'recent_articles': recent_articles,

@@ -317,7 +317,7 @@ class Article(BaseLocalizedObject):
     sections = models.ManyToManyField(Section, blank=True, verbose_name=_(u'Sections'))
 
     class Meta:
-        ordering = ('date_published', 'id')
+        ordering = ('-date_published', 'id')
         verbose_name = _(u'Article')
         verbose_name_plural = _(u'Articles')
 

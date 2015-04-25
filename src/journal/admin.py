@@ -118,7 +118,7 @@ class ReviewInline(admin.StackedInline):
 class ArticleAdmin(JournalAdmin):
     search_fields = ('localizedarticlecontent__title', 'localizedarticlecontent__abstract', 'localizedarticlecontent__references')
     list_filter = ('status', 'type', 'issue', 'sections')
-    list_display = ('display_title', 'status', 'type', 'issue', 'display_authors', 'display_reviews')
+    list_display = ('display_title', 'status', 'type', 'issue', 'date_published', 'display_authors', 'display_reviews')
     inlines = (LocalizedArticleContentInline, ArticleAuthorInline, ArticleSourceInline, ArticleAttachInline, ReviewInline, ArticleResolutionInline)
     raw_id_fields = ['senders']
 
