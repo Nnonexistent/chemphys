@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-02 09:53+0300\n"
+"POT-Creation-Date: 2015-05-20 05:11+0300\n"
 "PO-Revision-Date: 2015-01-09 12:14+0300\n"
 "Last-Translator: Nik Sergievskiy <nnonexistent@gmail.com>\n"
 "Language-Team: Chemphys <skubird@gmail.com>\n"
@@ -73,7 +73,8 @@ msgstr ""
 msgid ""
 "Файл иллюстрации, отражающей главный результат вашей работы. Он будет "
 "размещен на странице статьи и в содержании выпуска."
-msgstr "Файл иллюстрации, отражающей главный результат вашей работы. Он будет "
+msgstr ""
+"Файл иллюстрации, отражающей главный результат вашей работы. Он будет "
 "размещен на странице статьи и в содержании выпуска."
 
 #: forms/article.py:35
@@ -83,7 +84,8 @@ msgstr "Файл статьи"
 #: forms/article.py:36
 msgid ""
 "Укажите файл статьи, подготовленный на основе шаблона в формате MS Word."
-msgstr "Укажите файл статьи, подготовленный на основе шаблона в формате MS Word."
+msgstr ""
+"Укажите файл статьи, подготовленный на основе шаблона в формате MS Word."
 
 #: forms/article.py:52
 msgid "Title must be filled at least at one language"
@@ -102,8 +104,9 @@ msgstr "Добавить новую огранизацию в журнал"
 msgid ""
 "User with this e-mail is already registered in Journal. Find him by typing "
 "his last name in selection field above."
-msgstr "Пользователь с таким e-mail'ом уже зарегистрирован в журнале. "
-"Найдите его, набрав его фамилию в поле выбора выше."
+msgstr ""
+"Пользователь с таким e-mail'ом уже зарегистрирован в журнале. Найдите его, "
+"набрав его фамилию в поле выбора выше."
 
 #: forms/article.py:181 forms/article.py:192
 msgid "This field is required if new author specified."
@@ -124,13 +127,16 @@ msgstr "Данные организации должны быть заполне
 
 #: forms/article.py:315
 msgid "Duplicate e-mails. Each author must have unique e-mail."
-msgstr "Повторяющиеся e-mail'ы. Каждый автор должен иметь свой уникальный адрес."
+msgstr ""
+"Повторяющиеся e-mail'ы. Каждый автор должен иметь свой уникальный адрес."
 
 #: forms/article.py:320
 msgid ""
 "Please specify at least one author. Use \"Add author to article\" button "
 "below."
-msgstr "Укажите хотя бы одного автора. Используйте кнопку \"Добавить автора в статью\"."
+msgstr ""
+"Укажите хотя бы одного автора. Используйте кнопку \"Добавить автора в статью"
+"\"."
 
 #: forms/profile.py:35 templates/journal/edit_author.html:67
 msgid "Add new organization"
@@ -678,9 +684,9 @@ msgstr "Том %(volume)s"
 msgid ""
 "Пожалуйста, ознакомьтесь с <a href=\"/rules/\">Правилами для авторов</a> по "
 "подготовке статьи для публикации в нашем журнале"
-msgstr "Пожалуйста, ознакомьтесь с <a href=\"/rules/\">Правилами для авторов</a> по "
+msgstr ""
+"Пожалуйста, ознакомьтесь с <a href=\"/rules/\">Правилами для авторов</a> по "
 "подготовке статьи для публикации в нашем журнале"
-
 
 #: templates/journal/add_article.html:7
 msgid ""
@@ -705,7 +711,8 @@ msgid ""
 "different organizations to associate one person with many organizations."
 msgstr ""
 "Можно перетаскивать авторов, чтобы менять их порядок следования в статье."
-"Чтобы указать у автора несколько организаций, добавьте этого автора несколько раз с разными организациями."
+"Чтобы указать у автора несколько организаций, добавьте этого автора "
+"несколько раз с разными организациями."
 
 #: templates/journal/adding_article.html:29
 msgid ""
@@ -781,7 +788,6 @@ msgid "Add author to article"
 msgstr "Добавить автора в статью"
 
 #: templates/journal/forms/article_author_formset.html:65
-#| msgid "Enter author name"
 msgid "Enter author last name"
 msgstr "Введите фамилию автора"
 
