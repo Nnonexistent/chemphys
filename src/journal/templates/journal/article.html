@@ -65,6 +65,9 @@
             {% endif %}
             <div class="col-lg-{% if article.image %}6{% else %}9{% endif %} text-justify">
             {{ entry.abstract|linebreaks }}
+            {% if entry.keywords %}
+            <p><label>{% trans "Keywords" %}:</label> {{ entry.keywords }}</p>
+            {% endif %}
             </div>
             <div class="col-lg-3">
                 <div>

@@ -6,9 +6,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 SECRET_KEY = 'w7r3-u^_v1e447kb%(k65^=c7$gp+)-d+*lqw1wa_ma^8ye#&c'
 
-DEBUG = True
-
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
+
+ADMINS = (('Nik', 'nik@init-ltd.ru'),)
+MANAGERS = ADMINS
 
 ALLOWED_HOSTS = (
     '127.0.0.1',

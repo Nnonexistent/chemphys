@@ -115,8 +115,8 @@ msgid ""
 msgstr ""
 "\n"
 "<p>The journal was founded in 2003.</p>\n"
-"<p>The purpose of the journal is rapid publication of new research findings, review articles, databases, computer codes, information on new instruments and methods in the field of physical and chemical kinetics in gas dynamics, as well as plasma physics in the processes of combustion and explosion.</p>\n"
-"<p>The journal gives readers free access to its full content in the Internet.</p>\n"
+"<p>The purpose of the journal is the rapid publication of new research findings, review articles, databases, computer codes, information on new instruments and methods in the field of physical and chemical kinetics in gas dynamics, as well as plasma physics in the processes of combustion and explosion.</p>\n"
+"<p>The journal gives readers free web access to its full content in the Internet.</p>\n"
 "<p>The journal is intended for researchers, teachers and students.</p>\n"
 
 #: templates/index.html:22
