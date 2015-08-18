@@ -5,6 +5,7 @@ from django.contrib import admin
 urlpatterns = patterns(
     '',  # prefix
 
+    url(r'^i18n/setlang/$', 'chemphys.views.set_language_ex'),  # override django.views.i18n.set_language
     url(r'^i18n/', include('django.conf.urls.i18n')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^mailauth/', include('mailauth.urls')),
