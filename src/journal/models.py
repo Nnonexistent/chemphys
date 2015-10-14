@@ -416,6 +416,7 @@ class ArticleAttach(OrderedEntry):
         mt = mimetypes.guess_type(self.file.path)[0]
         return staticfiles_storage.url(u'img/mimetypes/%s.png' % mt.replace('/', '-'))
 
+
 class ArticleSource(models.Model):
     article = models.ForeignKey(Article, verbose_name=Article._meta.verbose_name)
 

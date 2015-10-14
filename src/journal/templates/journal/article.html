@@ -120,6 +120,13 @@
                 <div class="thumbnail">
                 {% if entry.type == 1 %}
                     <img src="{{ entry.file.url }}" alt="" />
+                {% elif entry.type == 2 %}
+                    <div class="embed-responsive embed-responsive-4by3">
+                    <video controls class="embed-responsive-item">
+                        <source src="{{ entry.file.url }}">
+                        <img src="{{ entry.icon_url }}" alt="" />
+                    </video>
+                    </div>
                 {% else %}
                     <img src="{{ entry.icon_url }}" alt="" />
                 {% endif %}
