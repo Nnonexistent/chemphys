@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-20 05:11+0300\n"
+"POT-Creation-Date: 2015-08-18 15:03+0300\n"
 "PO-Revision-Date: 2015-01-09 12:20+0300\n"
 "Last-Translator: Nik Sergievskiy <nnonexistent@gmail.com>\n"
 "Language-Team: Chemphys <skubird@gmail.com>\n"
@@ -19,42 +19,42 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 1.7.1\n"
 
-#: admin.py:29
+#: pages/admin.py:29
 msgid "Link"
 msgstr "Ссылка"
 
-#: models.py:9
+#: pages/models.py:9
 msgid "Order"
 msgstr "Порядок"
 
-#: models.py:10
+#: pages/models.py:10
 msgid "URL part"
 msgstr "Часть URL"
 
-#: models.py:11
+#: pages/models.py:11
 msgid "Visible in menu"
 msgstr "Показывать в меню"
 
-#: models.py:15
+#: pages/models.py:15
 msgid "Page"
 msgstr "Страница"
 
-#: models.py:16
+#: pages/models.py:16
 msgid "Pages"
 msgstr "Страницы"
 
-#: models.py:45
+#: pages/models.py:45
 msgid "Title"
 msgstr "Заголовок"
 
-#: models.py:46
+#: pages/models.py:46
 msgid "Content"
 msgstr "Содержимое"
 
-#: models.py:50
+#: pages/models.py:50
 msgid "Localized page content"
 msgstr "Локализованное содержимое страницы"
 
-#: models.py:51
+#: pages/models.py:51
 msgid "Localized page contents"
 msgstr "Локализованное содержимое страниц"

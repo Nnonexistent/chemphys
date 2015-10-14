@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-20 05:11+0300\n"
+"POT-Creation-Date: 2015-08-18 15:03+0300\n"
 "PO-Revision-Date: 2015-01-09 01:17+0300\n"
 "Last-Translator: Elena Sergievska <skubird@gmail.com>\n"
 "Language-Team: Chemphys <skubird@gmail.com>\n"
@@ -19,6 +19,6 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 1.7.1\n"
 
-#: localized.py:41
+#: utils/localized.py:41
 msgid "Language"
 msgstr "Язык"

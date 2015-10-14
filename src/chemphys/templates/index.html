@@ -3,17 +3,21 @@
 
 {% block content %}
 
-    <p class="text-center">
-        <img src="{% static "img/msu.png" %}" alt="" />
-        <div class="h4 text-center" style="margin: -90px 0 60px">{% trans "Lomonosov Moscow State University<br />Institute of Mechanics" %}</div>
-    </p>
-
+<div class="row">
+    <div class="col-md-8">
 {% blocktrans %}
-<p>Журнал основан в 2003 году.<br/>
+<p>Журнал зарегистрирован как электронное периодическое издание.<br />Регистрационное свидетельство — Эл No 77-6360 от 10 июля 2002 г.<br/>
 <p>Журнал предназначен для оперативной публикации научных результатов, баз данных, компьютерных кодов, информации о новых приборах и методах физического эксперимента в области физико-химической кинетики в газовой динамике, физике плазмы и газового разряда, в процессах горения и взрыва (подробнее см. <a href="/about/">О журнале</a>).</p>
 <p>Статьи, опубликованные в журнале, открыты для свободного доступа в Интернете.</p>
 <p>Журнал ориентируется на научных работников, преподавателей, аспирантов и студентов.</p>
 {% endblocktrans %}
+    </div>
+    <div class="col-md-4 text-center">
+        <img src="{% static "img/msu.png" %}" alt="" width="175" />
+        <div class="h5 text-center" style="margin: -75px 0 60px">{% trans "Lomonosov Moscow State University<br />Institute of Mechanics" %}</div>
+    </div>
+</div>
+
 
     {% if user.is_authenticated %}
     <div class="panel panel-default">

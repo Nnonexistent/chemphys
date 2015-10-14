@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-20 05:11+0300\n"
+"POT-Creation-Date: 2015-08-18 19:07+0300\n"
 "PO-Revision-Date: 2015-01-09 01:15+0300\n"
 "Last-Translator: Elena Sergievska <skubird@gmail.com>\n"
 "Language-Team: Chemphys <skubird@gmail.com>\n"
@@ -17,42 +17,42 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.7.1\n"
 
-#: admin.py:29
+#: pages/admin.py:29
 msgid "Link"
 msgstr "Link"
 
-#: models.py:9
+#: pages/models.py:9
 msgid "Order"
 msgstr "Order"
 
-#: models.py:10
+#: pages/models.py:10
 msgid "URL part"
 msgstr "URL part"
 
-#: models.py:11
+#: pages/models.py:11
 msgid "Visible in menu"
 msgstr "Visible in menu"
 
-#: models.py:15
+#: pages/models.py:15
 msgid "Page"
 msgstr "Page"
 
-#: models.py:16
+#: pages/models.py:16
 msgid "Pages"
 msgstr "Pages"
 
-#: models.py:45
+#: pages/models.py:45
 msgid "Title"
 msgstr "Title"
 
-#: models.py:46
+#: pages/models.py:46
 msgid "Content"
 msgstr "Content"
 
-#: models.py:50
+#: pages/models.py:50
 msgid "Localized page content"
 msgstr "Localized page content"
 
-#: models.py:51
+#: pages/models.py:51
 msgid "Localized page contents"
 msgstr "Localized page contents"
