@@ -414,7 +414,10 @@ class ArticleAttach(OrderedEntry):
 
     def icon_url(self):
         mt = mimetypes.guess_type(self.file.path)[0]
-        return staticfiles_storage.url(u'img/mimetypes/%s.png' % mt.replace('/', '-'))
+        if mt:
+            return staticfiles_storage.url(u'img/mimetypes/%s.png' % mt.replace('/', '-'))
+        else:
+            return staticfiles_storage.url(u'img/mimetypes/unknown.png')
 
 
 class ArticleSource(models.Model):
