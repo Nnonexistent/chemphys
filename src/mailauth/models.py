@@ -1,6 +1,7 @@
 import uuid
 
 from django.db import models
+from django.db.utils import OperationalError
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.conf import settings
@@ -41,7 +42,10 @@ class MailAuthToken(models.Model):
 @register()
 def email_uniqueness_check(app_configs, **kwargs):
     errors = []
-    emails = list(get_user_model().objects.all().exclude(email='').values_list('email'))
+    try:
+        emails = list(get_user_model().objects.all().exclude(email='').values_list('email'))
+    except OperationalError:
+        return []  # Database not ready - skip checking
     unique_emails = []
     for email in emails:
         if email in unique_emails:

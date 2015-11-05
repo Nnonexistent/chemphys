@@ -10,7 +10,7 @@ import journal.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('auth', '0002_auto_20150212_1350'),
+        ('auth', '0001_initial'),
     ]
 
     operations = [

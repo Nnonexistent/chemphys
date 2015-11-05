@@ -14,6 +14,7 @@ MANAGERS = ADMINS
 
 ALLOWED_HOSTS = (
     '127.0.0.1',
+    'localhost',
     'chemphys.init-ltd.ru',
     'chemphys.edu.ru',
 )
@@ -51,7 +52,7 @@ WSGI_APPLICATION = 'chemphys.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'chemphys', 'db.sqlite3'),
     }
 }
 
@@ -95,3 +96,6 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_FROM_EMAIL = 'no-reply@chemphys.edu.ru'
+
+
+from settings_local import *

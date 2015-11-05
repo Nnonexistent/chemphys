@@ -57,7 +57,8 @@ target/
 *.komodoproject
 
 # Project specific
-/src/db.sqlite3
-/src/static/
-/src/media/
-/src/django/
+/src/chemphys/settings_local.py
+/src/chemphys/db.sqlite3
+/src/static
+/src/media
+/src/django
