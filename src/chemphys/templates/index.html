@@ -94,7 +94,7 @@
         <div class="panel-body">
         {% for article in recent_articles %}
         {% if forloop.first %}<h5>{% trans "Recent articles" %}</h5><table class="table">{% endif %}
-        {% include "journal/includes/article-row.html" %}
+        {% include "journal/includes/article-row.html" with article_show_issue=True %}
         {% if forloop.last %}</table>{% endif %}
         {% endfor %}
         </div>

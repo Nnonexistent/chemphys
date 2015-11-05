@@ -5,7 +5,7 @@
 
     {% for article in articles %}
         {% if forloop.first %}<table class="table">{% endif %}
-        {% include "journal/includes/article-row.html" %}
+        {% include "journal/includes/article-row.html" with article_show_issue=True %}
         {% if forloop.last %}</table>{% endif %}
     {% empty %}
         <p>{% trans "Sorry, no articles found." %}</p>

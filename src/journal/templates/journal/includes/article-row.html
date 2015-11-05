@@ -3,6 +3,7 @@
 <tr>
     <td>{% if article.image %}<a href="{{ article.get_absolute_url }}"><img src="{{ article.image.url }}" width="100" alt="" /></a>{% endif %}</td>
     <td>
+        {% if article_show_issue %}<a class="text-muted" href="{{ article.issue.get_absolute_url }}">{{ article.issue }}</a><br />{% endif %}
         <a href="{{ article.get_absolute_url }}">{{ article }}</a><br />
         <span class="text-muted">
         {% for aa, orgs in article.get_authors.iteritems %}
