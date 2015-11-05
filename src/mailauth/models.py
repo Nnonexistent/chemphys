@@ -1,7 +1,7 @@
 import uuid
 
 from django.db import models
-from django.db.utils import OperationalError
+from django.db.utils import DatabaseError
 from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from django.conf import settings
@@ -44,7 +44,7 @@ def email_uniqueness_check(app_configs, **kwargs):
     errors = []
     try:
         emails = list(get_user_model().objects.all().exclude(email='').values_list('email'))
-    except OperationalError:
+    except DatabaseError:
         return []  # Database not ready - skip checking
     unique_emails = []
     for email in emails:
