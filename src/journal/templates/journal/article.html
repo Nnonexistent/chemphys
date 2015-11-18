@@ -39,9 +39,9 @@
 <div role="tabpanel">
 
   <ul class="nav nav-tabs" role="tablist">
-    {% for entry in article.localizedarticlecontent_set.all %}
+    {% for entry in article.localizedarticlecontent_set.all %}{% if entry.is_filled %}
     <li role="presentation"{% if forloop.first %} class="active"{% endif %}><a href="#{{ entry.lang }}_overview" aria-controls="{{ entry.lang }}_overview" role="tab" data-toggle="tab">{% trans "Overview" %} ({{ entry.get_lang_display }})</a></li>
-    {% endfor %}
+    {% endif %}{% endfor %}
     {% if article.articleattach_set.all.exists %}
     <li role="presentation"><a href="#media" aria-controls="media" role="tab" data-toggle="tab">{% trans "Media" %}</a></li>
     {% endif %}
@@ -53,7 +53,7 @@
 
   <div class="tab-content">
 
-    {% for entry in article.localizedarticlecontent_set.all %}
+    {% for entry in article.localizedarticlecontent_set.all %}{% if entry.is_filled %}
     <div role="tabpanel" class="tab-pane{% if forloop.first %} active{% endif %}" id="{{ entry.lang }}_overview">
         {% if LANGUAGE_CODE != entry.lang %}<h1 class="h5">{{ entry.title }}</h1>{% else %}<br />{% endif %}
 
@@ -109,7 +109,7 @@
             </div>
         </div>
     </div>
-    {% endfor %}
+    {% endif %}{% endfor %}
 
     {% if article.articleattach_set.all.exists %}
     <div role="tabpanel" class="tab-pane" id="media">

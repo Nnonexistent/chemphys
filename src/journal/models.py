@@ -395,6 +395,9 @@ class LocalizedArticleContent(BaseLocalizedContent):
     def __unicode__(self):
         return _(u'Loclized content for %s') % self.article
 
+    def is_filled(self):
+        return any((self.title, self.abstract, self.keywords))
+
 
 class ArticleAuthor(OrderedEntry):
     article = models.ForeignKey(Article, verbose_name=Article._meta.verbose_name)
