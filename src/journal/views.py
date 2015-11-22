@@ -36,7 +36,7 @@ def index(request):
 
 def show_issues(request):
     SPLIT_YEAR = 1970
-    
+
     if request.user.is_authenticated() and request.user.is_staff:
         qs = Issue.objects.all()
     else:
@@ -223,6 +223,9 @@ def add_article(request):
 
 
 def adding_article(request, article_id, step):
+    if not request.user.is_authenticated() or not request.user.is_active:
+        return HttpResponseForbidden()
+
     step = int(step)
     final = (step == 3)
     article = get_object_or_404(Article, id=article_id, senders=request.user, status__in=ARTICLE_ADDING_STATUSES, status__gte=step)
