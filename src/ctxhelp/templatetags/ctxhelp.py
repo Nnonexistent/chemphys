@@ -36,7 +36,7 @@ def ctxhelp(context, text, placement=DEFAULT_PLACEMENT):
 
 
 def ctxparse(text, context, placement, selector):
-    doc = html5lib.parse(text, treebuilder='lxml', namespaceHTMLElements=False, encoding='utf-8')
+    doc = html5lib.parse(text, treebuilder='lxml', namespaceHTMLElements=False)
     css = cssselect.CSSSelector(selector)
     out = etree.tostring(doc, encoding='utf-8').decode('utf-8')
 
