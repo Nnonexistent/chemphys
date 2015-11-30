@@ -12,6 +12,7 @@ from django.utils.translation import ugettext
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.core.mail import send_mail
+from django.core.exceptions import ValidationError
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.template.loader import render_to_string
@@ -351,6 +352,15 @@ class Article(BaseLocalizedObject):
                 kwargs['number'] = self.issue.number
             return reverse('show_article', kwargs=kwargs)
         return u''
+
+    def clean(self):
+        if self.status == 10:
+            if not self.content:
+                raise ValidationError(_(u'Published article must have content file'))
+            if not self.date_published:
+                raise ValidationError(_(u'Published article must have published date'))
+        if self.date_published and self.date_published < self.date_in:
+            raise ValidationError(_(u'Published date must be after date in'))
 
     def get_authors(self):
         authors = OrderedDict()
