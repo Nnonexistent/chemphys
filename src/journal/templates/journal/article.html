@@ -106,6 +106,10 @@
                     {% trans "Permanent link to this article" %}:<br />
                     <input type="text" value="{{ link }}" class="form-control input-sm" readonly="true" />
                 </p>
+                <p>
+                    {% trans "Recommended bibliographic description of this article" %}:<br />
+                    <textarea readonly="true" class="form-control input-sm" style="max-height:300px;resize:none">{{ article.str_authors }} {{ article.title }}//{% trans "Физико-химическая кинетика в газовой динамике" %}. {{ article.issue.str_compact }} {{ link }}</textarea>
+                </p>
             </div>
         </div>
     </div>

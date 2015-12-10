@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-18 15:03+0300\n"
+"POT-Creation-Date: 2015-12-10 05:40+0300\n"
 "PO-Revision-Date: 2015-01-09 00:54+0300\n"
 "Last-Translator: Elena Sergievska <skubird@gmail.com>\n"
 "Language-Team: \n"
@@ -19,11 +19,11 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 1.7.1\n"
 
-#: chemphys/settings.py:79
+#: chemphys/settings.py:80
 msgid "Russian"
 msgstr "Русский"
 
-#: chemphys/settings.py:80
+#: chemphys/settings.py:81
 msgid "English"
 msgstr "Английский"
 
@@ -102,8 +102,8 @@ msgstr "Журнал издается с 2003 года"
 #: chemphys/templates/index.html:8
 msgid ""
 "\n"
-"<p>Журнал зарегистрирован как электронное периодическое издание "
-"(Регистрационное свидетельство — Эл No 77-6360 от 10 июля 2002 г.).<br/>\n"
+"<p>Журнал зарегистрирован как электронное периодическое издание.<br /"
+">Регистрационное свидетельство — Эл No 77-6360 от 10 июля 2002 г.<br/>\n"
 "<p>Журнал предназначен для оперативной публикации научных результатов, баз "
 "данных, компьютерных кодов, информации о новых приборах и методах "
 "физического эксперимента в области физико-химической кинетики в газовой "
@@ -183,17 +183,13 @@ msgstr "Перейти к форме рецензии"
 msgid "Recent articles"
 msgstr "Недавние статьи"
 
-#: chemphys/templates/index.html:109
-msgid "View article"
-msgstr "Просмотр статьи"
-
-#: chemphys/templates/index.html:121
+#: chemphys/templates/index.html:108
 msgid ""
 "Для представления статьи введите свой e-mail. На введённый адрес будет "
 "отправлено письмо со ссылкой для входа в электронный журнал."
 msgstr ""
 
-#: chemphys/templates/index.html:125
+#: chemphys/templates/index.html:112
 msgid "Enter journal"
 msgstr "Вход в журнал"
 
@@ -1246,7 +1242,10 @@ msgstr ""
 
 #: udc/models.py:9
 msgid "Language"
-msgstr ""
+msgstr "Язык"
+
+#~ msgid "View article"
+#~ msgstr "Просмотр статьи"
 
 #~ msgid "Периодичность: 4 выпуска в год"
 #~ msgstr "Периодичность: 4 выпуска в год"

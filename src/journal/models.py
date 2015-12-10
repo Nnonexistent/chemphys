@@ -155,6 +155,9 @@ class JournalUser(AbstractBaseUser, PermissionsMixin, ModeratedObject, BaseLocal
     def email_user(self, subject, message, from_email=None, **kwargs):
         send_mail(subject, message, from_email, [self.email], **kwargs)
 
+    def str_compact(self):
+        return u'%s %s' % (self.last_name, u' '.join(u'%s.' % i[0] for i in self.first_name.split() if i))
+
     @property
     def first_name(self):
         return self.get_localized('first_name') or ''
@@ -387,6 +390,9 @@ class Article(BaseLocalizedObject):
     def adding(self):
         return self.status in ARTICLE_ADDING_STATUSES
 
+    def str_authors(self):
+        return u', '.join(a.str_compact() for a in self.get_authors().keys())
+
 
 class LocalizedArticleContent(BaseLocalizedContent):
     article = models.ForeignKey(Article, verbose_name=Article._meta.verbose_name)
@@ -607,6 +613,12 @@ class Issue(OrderedEntry, BaseLocalizedObject):
             return ugettext(u'Volume %(volume)s, issue %(number)s') % self.__dict__
         else:
             return ugettext(u'Volume %(volume)s') % self.__dict__
+
+    def str_compact(self):
+        if self.number:
+            return ugettext(u'%(year)s, V.%(volume)s, iss. %(number)s') % self.__dict__
+        else:
+            return ugettext(u'%(year)s, V.%(volume)s') % self.__dict__
 
     @property
     def description(self):
