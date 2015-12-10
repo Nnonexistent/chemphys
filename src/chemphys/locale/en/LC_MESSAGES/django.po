@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-18 19:07+0300\n"
+"POT-Creation-Date: 2015-12-10 15:00+0300\n"
 "PO-Revision-Date: 2015-01-09 00:54+0300\n"
 "Last-Translator: Elena Sergievska <skubird@gmail.com>\n"
 "Language-Team: Chemphys <skubird@gmail.com>\n"
@@ -17,67 +17,66 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.7.1\n"
 
-#: chemphys/settings.py:79
+#: settings.py:80
 msgid "Russian"
 msgstr "Russian"
 
-#: chemphys/settings.py:80
+#: settings.py:81
 msgid "English"
 msgstr "English"
 
-#: chemphys/templates/admin/base_site.html:5
-#: chemphys/templates/admin/base_site.html:9
+#: templates/admin/base_site.html:5 templates/admin/base_site.html.py:9
 msgid "Journal administration"
 msgstr "Journal administration"
 
-#: chemphys/templates/admin/edit_inline/stacked.html:9
+#: templates/admin/edit_inline/stacked.html:9
 msgid "View on site"
 msgstr "View on site"
 
-#: chemphys/templates/admin/edit_inline/stacked.html:26
-#: chemphys/templates/admin/edit_inline/tabular.html:74
+#: templates/admin/edit_inline/stacked.html:26
+#: templates/admin/edit_inline/tabular.html:74
 msgid "Remove"
 msgstr "Remove"
 
-#: chemphys/templates/admin/edit_inline/stacked.html:27
-#: chemphys/templates/admin/edit_inline/tabular.html:73
+#: templates/admin/edit_inline/stacked.html:27
+#: templates/admin/edit_inline/tabular.html:73
 #, python-format
 msgid "Add another %(verbose_name)s"
 msgstr "Add another %(verbose_name)s"
 
-#: chemphys/templates/admin/edit_inline/tabular.html:17
+#: templates/admin/edit_inline/tabular.html:17
 msgid "Delete?"
 msgstr "Delete?"
 
-#: chemphys/templates/base.html:11
+#: templates/base.html:11
 msgid "Физико-химическая кинетика в газовой динамике"
 msgstr "Physical-Chemical Kinetics in Gas Dynamics"
 
-#: chemphys/templates/base.html:188 chemphys/templates/base.html.py:212
+#: templates/base.html:188 templates/base.html.py:212
 msgid "Физико-химическая<br />кинетика"
 msgstr "Physical-Chemical<br />Kinetics"
 
-#: chemphys/templates/base.html:190 chemphys/templates/base.html.py:214
+#: templates/base.html:190 templates/base.html.py:214
 msgid "в газовой<br />динамике"
 msgstr "in Gas<br />Dynamics"
 
-#: chemphys/templates/base.html:232
+#: templates/base.html:232
 msgid "Contents"
 msgstr "Contents"
 
-#: chemphys/templates/base.html:238
+#: templates/base.html:238
 msgid "Advanced Search"
 msgstr "Advanced Search"
 
-#: chemphys/templates/base.html:239
+#: templates/base.html:239
 msgid "Search"
 msgstr "Search"
 
-#: chemphys/templates/base.html:264
+#: templates/base.html:264
 msgid "Administration"
 msgstr "Administration"
 
-#: chemphys/templates/base.html:265
+#: templates/base.html:265
 msgid ""
 "Журнал рецензируемый, электронный, полные тексты статей находятся в "
 "свободном доступе на сайте http://chemphys.edu.ru/"
@@ -85,20 +84,20 @@ msgstr ""
 "Electronic, peer-reviewed journal, full-text articles are available at "
 "http://chemphys.edu.ru/"
 
-#: chemphys/templates/base.html:266
+#: templates/base.html:266
 msgid "Научно-исследовательский институт механики МГУ им. М.В.Ломоносова"
 msgstr "Institute of Mechanics Lomonosov Moscow State University"
 
-#: chemphys/templates/base.html:270
+#: templates/base.html:270
 msgid "Свидетельство СМИ: Эл № 77-6360 от 10 июля 2002 г."
 msgstr ""
 "Certificate of Mass Media Registration: digital № 77-6360, Jun. 10, 2002."
 
-#: chemphys/templates/base.html:271
+#: templates/base.html:271
 msgid "Журнал издается с 2003 года"
 msgstr "Published since 2003"
 
-#: chemphys/templates/index.html:8
+#: templates/index.html:8
 msgid ""
 "\n"
 "<p>Журнал зарегистрирован как электронное периодическое издание.<br /"
@@ -125,11 +124,11 @@ msgstr ""
 "Internet.</p>\n"
 "<p>The journal is intended for researchers, teachers and students.</p>\n"
 
-#: chemphys/templates/index.html:17
+#: templates/index.html:17
 msgid "Lomonosov Moscow State University<br />Institute of Mechanics"
 msgstr "Lomonosov Moscow State University<br />Institute of Mechanics"
 
-#: chemphys/templates/index.html:26
+#: templates/index.html:26
 msgid ""
 "This is context help. You can invoke it by pressing on this symbol on any "
 "page. To&nbsp;close it press the symbol again."
@@ -137,65 +136,61 @@ msgstr ""
 "This is context help. You can invoke it by pressing on this symbol on any "
 "page. To&nbsp;close it press the symbol again."
 
-#: chemphys/templates/index.html:29
+#: templates/index.html:29
 #, python-format
 msgid "You are logged in as <a href=\"%(link)s\">%(user)s</a>"
 msgstr "You are logged in as <a href=\"%(link)s\">%(user)s</a>"
 
-#: chemphys/templates/index.html:31
+#: templates/index.html:31
 #, python-format
 msgid "You are logged in as %(user)s"
 msgstr "You are logged in as %(user)s"
 
-#: chemphys/templates/index.html:33
+#: templates/index.html:33
 msgid "Logout"
 msgstr "Logout"
 
-#: chemphys/templates/index.html:35
+#: templates/index.html:35
 msgid "Edit profile"
 msgstr "Edit profile"
 
-#: chemphys/templates/index.html:36
+#: templates/index.html:36
 msgid "Add article"
 msgstr "Add article"
 
-#: chemphys/templates/index.html:40
+#: templates/index.html:40
 msgid "Unpublished articles"
 msgstr "Unpublished articles"
 
-#: chemphys/templates/index.html:44
+#: templates/index.html:44
 msgid "Title"
 msgstr "Title"
 
-#: chemphys/templates/index.html:45 chemphys/templates/index.html.py:73
+#: templates/index.html:45 templates/index.html.py:73
 msgid "Status"
 msgstr "Status"
 
-#: chemphys/templates/index.html:61
+#: templates/index.html:61
 msgid "Continue filling form"
 msgstr "Continue filling form"
 
-#: chemphys/templates/index.html:68
+#: templates/index.html:68
 msgid "Pending reviews"
 msgstr "Pending reviews"
 
-#: chemphys/templates/index.html:72
+#: templates/index.html:72
 msgid "Article"
 msgstr "Article"
 
-#: chemphys/templates/index.html:82
+#: templates/index.html:82
 msgid "Proceed to review form"
 msgstr "Proceed to review form"
 
-#: chemphys/templates/index.html:96
+#: templates/index.html:96
 msgid "Recent articles"
 msgstr "Recent articles"
 
-#: chemphys/templates/index.html:109
-msgid "View article"
-msgstr "View article"
-
-#: chemphys/templates/index.html:121
+#: templates/index.html:108
 msgid ""
 "Для представления статьи введите свой e-mail. На введённый адрес будет "
 "отправлено письмо со ссылкой для входа в электронный журнал."
@@ -203,1045 +198,39 @@ msgstr ""
 "For article submission, enter your e-mail. You will receive a link to enter "
 "the journal."
 
-#: chemphys/templates/index.html:125
+#: templates/index.html:112
 msgid "Enter journal"
 msgstr "Enter journal"
 
-#: django/contrib/sitemaps/apps.py:8
-msgid "Site Maps"
-msgstr ""
+#~ msgid "View article"
+#~ msgstr "View article"
 
-#: django/contrib/staticfiles/apps.py:8
-msgid "Static Files"
-msgstr ""
-
-#: django/contrib/syndication/apps.py:8
-msgid "Syndication"
-msgstr ""
-
-#: django/contrib/webdesign/apps.py:8
-msgid "Web Design"
-msgstr ""
-
-#: django/core/validators.py:21
-msgid "Enter a valid value."
-msgstr ""
-
-#: django/core/validators.py:77 django/forms/fields.py:664
-msgid "Enter a valid URL."
-msgstr ""
-
-#: django/core/validators.py:115
-msgid "Enter a valid integer."
-msgstr ""
-
-#: django/core/validators.py:120
-msgid "Enter a valid email address."
-msgstr ""
-
-#: django/core/validators.py:185
-msgid ""
-"Enter a valid 'slug' consisting of letters, numbers, underscores or hyphens."
-msgstr ""
-
-#: django/core/validators.py:188 django/core/validators.py:207
-msgid "Enter a valid IPv4 address."
-msgstr ""
-
-#: django/core/validators.py:193 django/core/validators.py:208
-msgid "Enter a valid IPv6 address."
-msgstr ""
-
-#: django/core/validators.py:203 django/core/validators.py:206
-msgid "Enter a valid IPv4 or IPv6 address."
-msgstr ""
-
-#: django/core/validators.py:229 django/db/models/fields/__init__.py:1075
-msgid "Enter only digits separated by commas."
-msgstr ""
-
-#: django/core/validators.py:236
-#, python-format
-msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
-msgstr ""
-
-#: django/core/validators.py:255
-#, python-format
-msgid "Ensure this value is less than or equal to %(limit_value)s."
-msgstr ""
-
-#: django/core/validators.py:262
-#, python-format
-msgid "Ensure this value is greater than or equal to %(limit_value)s."
-msgstr ""
-
-#: django/core/validators.py:271
-#, python-format
-msgid ""
-"Ensure this value has at least %(limit_value)d character (it has "
-"%(show_value)d)."
-msgid_plural ""
-"Ensure this value has at least %(limit_value)d characters (it has "
-"%(show_value)d)."
-msgstr[0] ""
-msgstr[1] ""
-
-#: django/core/validators.py:282
-#, python-format
-msgid ""
-"Ensure this value has at most %(limit_value)d character (it has "
-"%(show_value)d)."
-msgid_plural ""
-"Ensure this value has at most %(limit_value)d characters (it has "
-"%(show_value)d)."
-msgstr[0] ""
-msgstr[1] ""
-
-#: django/db/models/base.py:971 django/forms/models.py:716
-msgid "and"
-msgstr ""
-
-#: django/db/models/base.py:973
-#, python-format
-msgid "%(model_name)s with this %(field_labels)s already exists."
-msgstr ""
-
-#: django/db/models/fields/__init__.py:104
-#, python-format
-msgid "Value %(value)r is not a valid choice."
-msgstr ""
-
-#: django/db/models/fields/__init__.py:105
-msgid "This field cannot be null."
-msgstr ""
-
-#: django/db/models/fields/__init__.py:106
-msgid "This field cannot be blank."
-msgstr ""
-
-#: django/db/models/fields/__init__.py:107
-#, python-format
-msgid "%(model_name)s with this %(field_label)s already exists."
-msgstr ""
-
-#. Translators: The 'lookup_type' is one of 'date', 'year' or 'month'.
-#. Eg: "Title must be unique for pub_date year"
-#: django/db/models/fields/__init__.py:111
-#, python-format
-msgid ""
-"%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
-msgstr ""
-
-#: django/db/models/fields/__init__.py:118
-#, python-format
-msgid "Field of type: %(field_type)s"
-msgstr ""
-
-#: django/db/models/fields/__init__.py:852
-#: django/db/models/fields/__init__.py:1582
-msgid "Integer"
-msgstr ""
-
-#: django/db/models/fields/__init__.py:856
-#: django/db/models/fields/__init__.py:1580
-#, python-format
-msgid "'%(value)s' value must be an integer."
-msgstr ""
-
-#: django/db/models/fields/__init__.py:931
-#, python-format
-msgid "'%(value)s' value must be either True or False."
-msgstr ""
-
-#: django/db/models/fields/__init__.py:933
-msgid "Boolean (Either True or False)"
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1009
-#, python-format
-msgid "String (up to %(max_length)s)"
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1070
-msgid "Comma-separated integers"
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1085
-#, python-format
-msgid ""
-"'%(value)s' value has an invalid date format. It must be in YYYY-MM-DD "
-"format."
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1087
-#: django/db/models/fields/__init__.py:1194
-#, python-format
-msgid ""
-"'%(value)s' value has the correct format (YYYY-MM-DD) but it is an invalid "
-"date."
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1090
-msgid "Date (without time)"
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1192
-#, python-format
-msgid ""
-"'%(value)s' value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[."
-"uuuuuu]][TZ] format."
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1196
-#, python-format
-msgid ""
-"'%(value)s' value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]]"
-"[TZ]) but it is an invalid date/time."
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1200
-msgid "Date (with time)"
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1306
-#, python-format
-msgid "'%(value)s' value must be a decimal number."
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1308
-msgid "Decimal number"
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1453
-msgid "Email address"
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1479
-msgid "File path"
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1546
-#, python-format
-msgid "'%(value)s' value must be a float."
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1548
-msgid "Floating point number"
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1632
-msgid "Big (8 byte) integer"
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1647
-msgid "IPv4 address"
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1677
-msgid "IP address"
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1756
-#, python-format
-msgid "'%(value)s' value must be either None, True or False."
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1758
-msgid "Boolean (Either True, False or None)"
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1818
-msgid "Positive integer"
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1830
-msgid "Positive small integer"
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1843
-#, python-format
-msgid "Slug (up to %(max_length)s)"
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1872
-msgid "Small integer"
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1879
-msgid "Text"
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1902
-#, python-format
-msgid ""
-"'%(value)s' value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] "
-"format."
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1904
-#, python-format
-msgid ""
-"'%(value)s' value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an "
-"invalid time."
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1907
-msgid "Time"
-msgstr ""
-
-#: django/db/models/fields/__init__.py:1989
-msgid "URL"
-msgstr ""
-
-#: django/db/models/fields/__init__.py:2012
-msgid "Raw binary data"
-msgstr ""
-
-#: django/db/models/fields/files.py:225
-msgid "File"
-msgstr ""
-
-#: django/db/models/fields/files.py:375
-msgid "Image"
-msgstr ""
-
-#: django/db/models/fields/related.py:1603
-#, python-format
-msgid "%(model)s instance with pk %(pk)r does not exist."
-msgstr ""
-
-#: django/db/models/fields/related.py:1605
-msgid "Foreign Key (type determined by related field)"
-msgstr ""
-
-#: django/db/models/fields/related.py:1795
-msgid "One-to-one relationship"
-msgstr ""
-
-#: django/db/models/fields/related.py:1865
-msgid "Many-to-many relationship"
-msgstr ""
-
-#: django/forms/fields.py:55
-msgid "This field is required."
-msgstr ""
-
-#: django/forms/fields.py:225
-msgid "Enter a whole number."
-msgstr ""
-
-#: django/forms/fields.py:268 django/forms/fields.py:305
-msgid "Enter a number."
-msgstr ""
-
-#: django/forms/fields.py:307
-#, python-format
-msgid "Ensure that there are no more than %(max)s digit in total."
-msgid_plural "Ensure that there are no more than %(max)s digits in total."
-msgstr[0] ""
-msgstr[1] ""
-
-#: django/forms/fields.py:311
-#, python-format
-msgid "Ensure that there are no more than %(max)s decimal place."
-msgid_plural "Ensure that there are no more than %(max)s decimal places."
-msgstr[0] ""
-msgstr[1] ""
-
-#: django/forms/fields.py:315
-#, python-format
-msgid ""
-"Ensure that there are no more than %(max)s digit before the decimal point."
-msgid_plural ""
-"Ensure that there are no more than %(max)s digits before the decimal point."
-msgstr[0] ""
-msgstr[1] ""
-
-#: django/forms/fields.py:426 django/forms/fields.py:1132
-msgid "Enter a valid date."
-msgstr ""
-
-#: django/forms/fields.py:450 django/forms/fields.py:1133
-msgid "Enter a valid time."
-msgstr ""
-
-#: django/forms/fields.py:472
-msgid "Enter a valid date/time."
-msgstr ""
-
-#: django/forms/fields.py:553
-msgid "No file was submitted. Check the encoding type on the form."
-msgstr ""
-
-#: django/forms/fields.py:554
-msgid "No file was submitted."
-msgstr ""
-
-#: django/forms/fields.py:555
-msgid "The submitted file is empty."
-msgstr ""
-
-#: django/forms/fields.py:557
-#, python-format
-msgid "Ensure this filename has at most %(max)d character (it has %(length)d)."
-msgid_plural ""
-"Ensure this filename has at most %(max)d characters (it has %(length)d)."
-msgstr[0] ""
-msgstr[1] ""
-
-#: django/forms/fields.py:560
-msgid "Please either submit a file or check the clear checkbox, not both."
-msgstr ""
-
-#: django/forms/fields.py:621
-msgid ""
-"Upload a valid image. The file you uploaded was either not an image or a "
-"corrupted image."
-msgstr ""
-
-#: django/forms/fields.py:771 django/forms/fields.py:860
-#: django/forms/models.py:1205
-#, python-format
-msgid "Select a valid choice. %(value)s is not one of the available choices."
-msgstr ""
-
-#: django/forms/fields.py:861 django/forms/fields.py:976
-#: django/forms/models.py:1204
-msgid "Enter a list of values."
-msgstr ""
-
-#: django/forms/fields.py:977
-msgid "Enter a complete value."
-msgstr ""
-
-#. Translators: This is the default suffix added to form field labels
-#: django/forms/forms.py:122
-msgid ":"
-msgstr ""
-
-#: django/forms/forms.py:192
-#, python-format
-msgid "(Hidden field %(name)s) %(error)s"
-msgstr ""
-
-#. Translators: If found as last label character, these punctuation
-#. characters will prevent the default label_suffix to be appended to the label
-#: django/forms/forms.py:620
-msgid ":?.!"
-msgstr ""
-
-#: django/forms/formsets.py:95
-msgid "ManagementForm data is missing or has been tampered with"
-msgstr ""
-
-#: django/forms/formsets.py:332
-#, python-format
-msgid "Please submit %d or fewer forms."
-msgid_plural "Please submit %d or fewer forms."
-msgstr[0] ""
-msgstr[1] ""
-
-#: django/forms/formsets.py:339
-#, python-format
-msgid "Please submit %d or more forms."
-msgid_plural "Please submit %d or more forms."
-msgstr[0] ""
-msgstr[1] ""
-
-#: django/forms/formsets.py:367 django/forms/formsets.py:369
-msgid "Order"
-msgstr ""
-
-#: django/forms/formsets.py:371
 #, fuzzy
-#| msgid "Delete?"
-msgid "Delete"
-msgstr "Delete?"
+#~| msgid "Delete?"
+#~ msgid "Delete"
+#~ msgstr "Delete?"
 
-#: django/forms/models.py:710
-#, python-format
-msgid "Please correct the duplicate data for %(field)s."
-msgstr ""
-
-#: django/forms/models.py:714
-#, python-format
-msgid "Please correct the duplicate data for %(field)s, which must be unique."
-msgstr ""
-
-#: django/forms/models.py:720
-#, python-format
-msgid ""
-"Please correct the duplicate data for %(field_name)s which must be unique "
-"for the %(lookup)s in %(date_field)s."
-msgstr ""
-
-#: django/forms/models.py:728
-msgid "Please correct the duplicate values below."
-msgstr ""
-
-#: django/forms/models.py:1030
-msgid "The inline foreign key did not match the parent instance primary key."
-msgstr ""
-
-#: django/forms/models.py:1096
-msgid "Select a valid choice. That choice is not one of the available choices."
-msgstr ""
-
-#: django/forms/models.py:1207
-#, python-format
-msgid "\"%(pk)s\" is not a valid value for a primary key."
-msgstr ""
-
-#: django/forms/models.py:1218
-msgid ""
-"Hold down \"Control\", or \"Command\" on a Mac, to select more than one."
-msgstr ""
-
-#: django/forms/utils.py:157
-#, python-format
-msgid ""
-"%(datetime)s couldn't be interpreted in time zone %(current_timezone)s; it "
-"may be ambiguous or it may not exist."
-msgstr ""
-
-#: django/forms/widgets.py:350
-msgid "Currently"
-msgstr ""
-
-#: django/forms/widgets.py:351
-msgid "Change"
-msgstr ""
-
-#: django/forms/widgets.py:352
-msgid "Clear"
-msgstr ""
-
-#: django/forms/widgets.py:546
-msgid "Unknown"
-msgstr ""
-
-#: django/forms/widgets.py:547
-msgid "Yes"
-msgstr ""
-
-#: django/forms/widgets.py:548
-msgid "No"
-msgstr ""
-
-#: django/template/defaultfilters.py:855
-msgid "yes,no,maybe"
-msgstr ""
-
-#: django/template/defaultfilters.py:884 django/template/defaultfilters.py:896
-#, python-format
-msgid "%(size)d byte"
-msgid_plural "%(size)d bytes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: django/template/defaultfilters.py:898
-#, python-format
-msgid "%s KB"
-msgstr ""
-
-#: django/template/defaultfilters.py:900
-#, python-format
-msgid "%s MB"
-msgstr ""
-
-#: django/template/defaultfilters.py:902
-#, python-format
-msgid "%s GB"
-msgstr ""
-
-#: django/template/defaultfilters.py:904
-#, python-format
-msgid "%s TB"
-msgstr ""
-
-#: django/template/defaultfilters.py:906
-#, python-format
-msgid "%s PB"
-msgstr ""
-
-#: django/utils/dateformat.py:59
-msgid "p.m."
-msgstr ""
-
-#: django/utils/dateformat.py:60
-msgid "a.m."
-msgstr ""
-
-#: django/utils/dateformat.py:65
-msgid "PM"
-msgstr ""
-
-#: django/utils/dateformat.py:66
-msgid "AM"
-msgstr ""
-
-#: django/utils/dateformat.py:149
-msgid "midnight"
-msgstr ""
-
-#: django/utils/dateformat.py:151
-msgid "noon"
-msgstr ""
-
-#: django/utils/dates.py:6
-msgid "Monday"
-msgstr ""
-
-#: django/utils/dates.py:6
-msgid "Tuesday"
-msgstr ""
-
-#: django/utils/dates.py:6
-msgid "Wednesday"
-msgstr ""
-
-#: django/utils/dates.py:6
-msgid "Thursday"
-msgstr ""
-
-#: django/utils/dates.py:6
-msgid "Friday"
-msgstr ""
-
-#: django/utils/dates.py:7
-msgid "Saturday"
-msgstr ""
-
-#: django/utils/dates.py:7
-msgid "Sunday"
-msgstr ""
-
-#: django/utils/dates.py:10
-msgid "Mon"
-msgstr ""
-
-#: django/utils/dates.py:10
-msgid "Tue"
-msgstr ""
-
-#: django/utils/dates.py:10
-msgid "Wed"
-msgstr ""
-
-#: django/utils/dates.py:10
-msgid "Thu"
-msgstr ""
-
-#: django/utils/dates.py:10
-msgid "Fri"
-msgstr ""
-
-#: django/utils/dates.py:11
 #, fuzzy
-#| msgid "Status"
-msgid "Sat"
-msgstr "Status"
+#~| msgid "Status"
+#~ msgid "Sat"
+#~ msgstr "Status"
 
-#: django/utils/dates.py:11
-msgid "Sun"
-msgstr ""
-
-#: django/utils/dates.py:18
-msgid "January"
-msgstr ""
-
-#: django/utils/dates.py:18
-msgid "February"
-msgstr ""
-
-#: django/utils/dates.py:18
 #, fuzzy
-#| msgid "Search"
-msgid "March"
-msgstr "Search"
+#~| msgid "Search"
+#~ msgid "March"
+#~ msgstr "Search"
 
-#: django/utils/dates.py:18
-msgid "April"
-msgstr ""
-
-#: django/utils/dates.py:18
-msgid "May"
-msgstr ""
-
-#: django/utils/dates.py:18
-msgid "June"
-msgstr ""
-
-#: django/utils/dates.py:19
-msgid "July"
-msgstr ""
-
-#: django/utils/dates.py:19
-msgid "August"
-msgstr ""
-
-#: django/utils/dates.py:19
-msgid "September"
-msgstr ""
-
-#: django/utils/dates.py:19
-msgid "October"
-msgstr ""
-
-#: django/utils/dates.py:19
-msgid "November"
-msgstr ""
-
-#: django/utils/dates.py:20
-msgid "December"
-msgstr ""
-
-#: django/utils/dates.py:23
-msgid "jan"
-msgstr ""
-
-#: django/utils/dates.py:23
-msgid "feb"
-msgstr ""
-
-#: django/utils/dates.py:23
-msgid "mar"
-msgstr ""
-
-#: django/utils/dates.py:23
-msgid "apr"
-msgstr ""
-
-#: django/utils/dates.py:23
-msgid "may"
-msgstr ""
-
-#: django/utils/dates.py:23
-msgid "jun"
-msgstr ""
-
-#: django/utils/dates.py:24
-msgid "jul"
-msgstr ""
-
-#: django/utils/dates.py:24
-msgid "aug"
-msgstr ""
-
-#: django/utils/dates.py:24
-msgid "sep"
-msgstr ""
-
-#: django/utils/dates.py:24
-msgid "oct"
-msgstr ""
-
-#: django/utils/dates.py:24
-msgid "nov"
-msgstr ""
-
-#: django/utils/dates.py:24
-msgid "dec"
-msgstr ""
-
-#: django/utils/dates.py:31
-msgctxt "abbrev. month"
-msgid "Jan."
-msgstr ""
-
-#: django/utils/dates.py:32
-msgctxt "abbrev. month"
-msgid "Feb."
-msgstr ""
-
-#: django/utils/dates.py:33
 #, fuzzy
-#| msgid "Search"
-msgctxt "abbrev. month"
-msgid "March"
-msgstr "Search"
+#~| msgid "Search"
+#~ msgctxt "abbrev. month"
+#~ msgid "March"
+#~ msgstr "Search"
 
-#: django/utils/dates.py:34
-msgctxt "abbrev. month"
-msgid "April"
-msgstr ""
-
-#: django/utils/dates.py:35
-msgctxt "abbrev. month"
-msgid "May"
-msgstr ""
-
-#: django/utils/dates.py:36
-msgctxt "abbrev. month"
-msgid "June"
-msgstr ""
-
-#: django/utils/dates.py:37
-msgctxt "abbrev. month"
-msgid "July"
-msgstr ""
-
-#: django/utils/dates.py:38
-msgctxt "abbrev. month"
-msgid "Aug."
-msgstr ""
-
-#: django/utils/dates.py:39
-msgctxt "abbrev. month"
-msgid "Sept."
-msgstr ""
-
-#: django/utils/dates.py:40
-msgctxt "abbrev. month"
-msgid "Oct."
-msgstr ""
-
-#: django/utils/dates.py:41
-msgctxt "abbrev. month"
-msgid "Nov."
-msgstr ""
-
-#: django/utils/dates.py:42
-msgctxt "abbrev. month"
-msgid "Dec."
-msgstr ""
-
-#: django/utils/dates.py:45
-msgctxt "alt. month"
-msgid "January"
-msgstr ""
-
-#: django/utils/dates.py:46
-msgctxt "alt. month"
-msgid "February"
-msgstr ""
-
-#: django/utils/dates.py:47
 #, fuzzy
-#| msgid "Search"
-msgctxt "alt. month"
-msgid "March"
-msgstr "Search"
-
-#: django/utils/dates.py:48
-msgctxt "alt. month"
-msgid "April"
-msgstr ""
-
-#: django/utils/dates.py:49
-msgctxt "alt. month"
-msgid "May"
-msgstr ""
-
-#: django/utils/dates.py:50
-msgctxt "alt. month"
-msgid "June"
-msgstr ""
-
-#: django/utils/dates.py:51
-msgctxt "alt. month"
-msgid "July"
-msgstr ""
-
-#: django/utils/dates.py:52
-msgctxt "alt. month"
-msgid "August"
-msgstr ""
-
-#: django/utils/dates.py:53
-msgctxt "alt. month"
-msgid "September"
-msgstr ""
-
-#: django/utils/dates.py:54
-msgctxt "alt. month"
-msgid "October"
-msgstr ""
-
-#: django/utils/dates.py:55
-msgctxt "alt. month"
-msgid "November"
-msgstr ""
-
-#: django/utils/dates.py:56
-msgctxt "alt. month"
-msgid "December"
-msgstr ""
-
-#: django/utils/ipv6.py:10
-msgid "This is not a valid IPv6 address."
-msgstr ""
-
-#: django/utils/text.py:76
-#, python-format
-msgctxt "String to return when truncating text"
-msgid "%(truncated_text)s..."
-msgstr ""
-
-#: django/utils/text.py:245
-msgid "or"
-msgstr ""
-
-#. Translators: This string is used as a separator between list elements
-#: django/utils/text.py:264 django/utils/timesince.py:57
-msgid ", "
-msgstr ""
-
-#: django/utils/timesince.py:25
-#, python-format
-msgid "%d year"
-msgid_plural "%d years"
-msgstr[0] ""
-msgstr[1] ""
-
-#: django/utils/timesince.py:26
-#, python-format
-msgid "%d month"
-msgid_plural "%d months"
-msgstr[0] ""
-msgstr[1] ""
-
-#: django/utils/timesince.py:27
-#, python-format
-msgid "%d week"
-msgid_plural "%d weeks"
-msgstr[0] ""
-msgstr[1] ""
-
-#: django/utils/timesince.py:28
-#, python-format
-msgid "%d day"
-msgid_plural "%d days"
-msgstr[0] ""
-msgstr[1] ""
-
-#: django/utils/timesince.py:29
-#, python-format
-msgid "%d hour"
-msgid_plural "%d hours"
-msgstr[0] ""
-msgstr[1] ""
-
-#: django/utils/timesince.py:30
-#, python-format
-msgid "%d minute"
-msgid_plural "%d minutes"
-msgstr[0] ""
-msgstr[1] ""
-
-#: django/utils/timesince.py:46
-msgid "0 minutes"
-msgstr ""
-
-#: django/views/csrf.py:105
-msgid "Forbidden"
-msgstr ""
-
-#: django/views/csrf.py:106
-msgid "CSRF verification failed. Request aborted."
-msgstr ""
-
-#: django/views/csrf.py:110
-msgid ""
-"You are seeing this message because this HTTPS site requires a 'Referer "
-"header' to be sent by your Web browser, but none was sent. This header is "
-"required for security reasons, to ensure that your browser is not being "
-"hijacked by third parties."
-msgstr ""
-
-#: django/views/csrf.py:115
-msgid ""
-"If you have configured your browser to disable 'Referer' headers, please re-"
-"enable them, at least for this site, or for HTTPS connections, or for 'same-"
-"origin' requests."
-msgstr ""
-
-#: django/views/csrf.py:120
-msgid ""
-"You are seeing this message because this site requires a CSRF cookie when "
-"submitting forms. This cookie is required for security reasons, to ensure "
-"that your browser is not being hijacked by third parties."
-msgstr ""
-
-#: django/views/csrf.py:125
-msgid ""
-"If you have configured your browser to disable cookies, please re-enable "
-"them, at least for this site, or for 'same-origin' requests."
-msgstr ""
-
-#: django/views/csrf.py:129
-msgid "More information is available with DEBUG=True."
-msgstr ""
-
-#: django/views/generic/dates.py:43
-msgid "No year specified"
-msgstr ""
-
-#: django/views/generic/dates.py:99
-msgid "No month specified"
-msgstr ""
-
-#: django/views/generic/dates.py:158
-msgid "No day specified"
-msgstr ""
-
-#: django/views/generic/dates.py:214
-msgid "No week specified"
-msgstr ""
-
-#: django/views/generic/dates.py:369 django/views/generic/dates.py:397
-#, python-format
-msgid "No %(verbose_name_plural)s available"
-msgstr ""
-
-#: django/views/generic/dates.py:650
-#, python-format
-msgid ""
-"Future %(verbose_name_plural)s not available because %(class_name)s."
-"allow_future is False."
-msgstr ""
-
-#: django/views/generic/dates.py:682
-#, python-format
-msgid "Invalid date string '%(datestr)s' given format '%(format)s'"
-msgstr ""
-
-#: django/views/generic/detail.py:54
-#, python-format
-msgid "No %(verbose_name)s found matching the query"
-msgstr ""
-
-#: django/views/generic/list.py:62
-msgid "Page is not 'last', nor can it be converted to an int."
-msgstr ""
-
-#: django/views/generic/list.py:67
-#, python-format
-msgid "Invalid page (%(page_number)s): %(message)s"
-msgstr ""
-
-#: django/views/generic/list.py:158
-#, python-format
-msgid "Empty list and '%(class_name)s.allow_empty' is False."
-msgstr ""
-
-#: django/views/static.py:56
-msgid "Directory indexes are not allowed here."
-msgstr ""
-
-#: django/views/static.py:58
-#, python-format
-msgid "\"%(path)s\" does not exist"
-msgstr ""
-
-#: django/views/static.py:100
-#, python-format
-msgid "Index of %(directory)s"
-msgstr ""
-
-#: udc/models.py:9
-msgid "Language"
-msgstr ""
+#~| msgid "Search"
+#~ msgctxt "alt. month"
+#~ msgid "March"
+#~ msgstr "Search"
 
 #~ msgid "Периодичность: 4 выпуска в год"
 #~ msgstr "4 issues per year"

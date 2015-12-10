@@ -6,7 +6,7 @@ from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponseForbidden, JsonResponse, Http404
+from django.http import HttpResponseRedirect, HttpResponseForbidden, JsonResponse, Http404, HttpResponsePermanentRedirect
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.utils.safestring import mark_safe
@@ -90,6 +90,11 @@ def show_article(request, year, volume, number=None, id=None):
         'link': request.build_absolute_uri(article.get_absolute_url()),
         'issue': article.issue,
     })
+
+
+def redirect_old_article(request, old_number):
+    article = get_object_or_404(Article, status=10, old_number=old_number)
+    return HttpResponsePermanentRedirect(article.get_absolute_url())
 
 
 def show_organization(request, id):

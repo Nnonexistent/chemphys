@@ -10,6 +10,7 @@ urlpatterns = patterns(
     url(r'^issues/(?P<year>\d{4})-(?P<volume>\d+)/$', 'journal.views.show_issue', name='show_issue'),
     url(r'^issues/(?P<year>\d{4})-(?P<volume>\d+)-(?P<number>\d+)/articles/(?P<id>\d+)/$', 'journal.views.show_article', name='show_article'),
     url(r'^issues/(?P<year>\d{4})-(?P<volume>\d+)/articles/(?P<id>\d+)/$', 'journal.views.show_article', name='show_article'),
+    url(r'^pdf/([\d_.-]+).pdf$', 'journal.views.redirect_old_article', name='redirect_old_article'),
     url(r'^organizations/(\d+)/$', 'journal.views.show_organization', name='show_organization'),
     url(r'^organizations/search/$', 'journal.views.search_organizations', name='search_organizations'),
     url(r'^authors/(\d+)/$', 'journal.views.show_author', name='show_author'),

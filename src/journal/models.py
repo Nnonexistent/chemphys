@@ -326,8 +326,8 @@ class Article(BaseLocalizedObject):
     status = models.PositiveSmallIntegerField(default=0, choices=ARTICLE_STATUSES, verbose_name=_(u'Status'))
     date_in = models.DateTimeField(default=timezone.now, verbose_name=_(u'Date in'))
     date_published = models.DateTimeField(null=True, blank=True, verbose_name=_(u'Publish date'))
-    old_number = models.SmallIntegerField(null=True, blank=True, verbose_name=_(u'Old number'),
-                                          help_text=_(u'to link consistency with old articles'))
+    old_number = models.CharField(default='', blank=True, verbose_name=_(u'Old number'), max_length=20,
+                                  help_text=_(u'to link consistency with old articles'))
 
     image = models.ImageField(verbose_name=_(u'Image'), upload_to=article_upload_to, blank=True, default='')
     type = models.PositiveSmallIntegerField(verbose_name=_(u'Article type'), choices=ARTICLE_TYPES, default=1)
@@ -621,9 +621,9 @@ class Issue(OrderedEntry, BaseLocalizedObject):
 
     def str_compact(self):
         if self.number:
-            return ugettext(u'%(year)s, V.%(volume)s, iss. %(number)s') % self.__dict__
+            return ugettext(u'%(year)s. V.%(volume)s, iss. %(number)s') % self.__dict__
         else:
-            return ugettext(u'%(year)s, V.%(volume)s') % self.__dict__
+            return ugettext(u'%(year)s. V.%(volume)s') % self.__dict__
 
     @property
     def description(self):

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-10 07:19+0300\n"
+"POT-Creation-Date: 2015-12-10 15:00+0300\n"
 "PO-Revision-Date: 2015-01-09 12:14+0300\n"
 "Last-Translator: Nik Sergievskiy <nnonexistent@gmail.com>\n"
 "Language-Team: Chemphys <nnonexistent@gmail.com>\n"
@@ -36,7 +36,7 @@ msgstr "Сайт"
 msgid "Article link"
 msgstr "Ссылка на статью"
 
-#: admin.py:171 models.py:349 models.py:400 models.py:639
+#: admin.py:171 models.py:349 models.py:400 models.py:649
 #: templates/journal/send_article.html:29
 msgid "Title"
 msgstr "Заголовок"
@@ -46,7 +46,7 @@ msgstr "Заголовок"
 msgid "Authors"
 msgstr "Авторы"
 
-#: admin.py:193 models.py:482 models.py:568
+#: admin.py:193 models.py:487 models.py:573
 msgid "Reviews"
 msgstr "Рецензии"
 
@@ -206,7 +206,7 @@ msgstr "Краткое сообщение"
 msgid "Presentation"
 msgstr "Презентация"
 
-#: models.py:41 models.py:590
+#: models.py:41 models.py:595
 msgid "Data"
 msgstr "Данные"
 
@@ -324,7 +324,7 @@ msgstr "Секция"
 msgid "Sections"
 msgstr "Секции"
 
-#: models.py:205 models.py:275 models.py:498
+#: models.py:205 models.py:275 models.py:503
 msgid "Name"
 msgstr "Название"
 
@@ -348,7 +348,7 @@ msgstr "Главный редактор"
 msgid "Editor"
 msgstr "Редактор"
 
-#: models.py:218 models.py:555
+#: models.py:218 models.py:560
 msgid "Reviewer"
 msgstr "Рецензент"
 
@@ -441,7 +441,7 @@ msgstr "Должность в организации"
 msgid "Position in organizations"
 msgstr "Должность в организациях"
 
-#: models.py:326 models.py:483 models.py:556
+#: models.py:326 models.py:488 models.py:561
 msgid "Status"
 msgstr "Статус"
 
@@ -481,7 +481,7 @@ msgstr "Содержимое"
 msgid "Senders"
 msgstr "Отправители"
 
-#: models.py:339 models.py:601 templates/journal/article.html:104
+#: models.py:339 models.py:606 templates/journal/article.html:104
 msgid "Issue"
 msgstr "Выпуск"
 
@@ -541,7 +541,7 @@ msgstr "Авторы статьи"
 msgid "Attach type"
 msgstr "Тип приложения"
 
-#: models.py:438 models.py:465
+#: models.py:438 models.py:470
 msgid "File"
 msgstr "Файл"
 
@@ -549,7 +549,7 @@ msgstr "Файл"
 msgid "Comment to file"
 msgstr "Комментарий к файлу"
 
-#: models.py:440 models.py:464 models.py:481
+#: models.py:440 models.py:469 models.py:486
 msgid "Date created"
 msgstr "Дата создания"
 
@@ -566,146 +566,146 @@ msgstr "Приложения к статье"
 msgid "Attach for %s"
 msgstr "Приложение к %s"
 
-#: models.py:466
+#: models.py:471
 msgid "Staff comment"
 msgstr "Комментарий администрации"
 
-#: models.py:470
+#: models.py:475
 msgid "Article source"
 msgstr "Исходник статьи"
 
-#: models.py:471
+#: models.py:476
 msgid "Article sources"
 msgstr "Исходники статьи"
 
-#: models.py:475
+#: models.py:480
 #, python-format
 msgid "Source of %s"
 msgstr "Исходник %s"
 
-#: models.py:484
+#: models.py:489
 msgid "Text"
 msgstr "Текст"
 
-#: models.py:488
+#: models.py:493
 msgid "Article resolution"
 msgstr "Решение по статье"
 
-#: models.py:489
+#: models.py:494
 msgid "Article resolutions"
 msgstr "Решения по статье"
 
-#: models.py:493
+#: models.py:498
 #, python-format
 msgid "Resolution for %s"
 msgstr "Решение по %s"
 
-#: models.py:497
+#: models.py:502
 msgid "Field type"
 msgstr "Тип поля"
 
-#: models.py:499 models.py:638
+#: models.py:504 models.py:648
 msgid "Description"
 msgstr "Описание"
 
-#: models.py:500
+#: models.py:505
 msgid "Choices"
 msgstr "Опции"
 
-#: models.py:504
+#: models.py:509
 msgid "Review field"
 msgstr "Поле рецензии"
 
-#: models.py:505
+#: models.py:510
 msgid "Review fields"
 msgstr "Поля рецензии"
 
-#: models.py:553
+#: models.py:558
 msgid "Key"
 msgstr "Ключ"
 
-#: models.py:557
+#: models.py:562
 msgid "Created"
 msgstr "Создано"
 
-#: models.py:559
+#: models.py:564
 msgid "Field values"
 msgstr "Значения полей"
 
-#: models.py:561
+#: models.py:566
 msgid "Comment for authors"
 msgstr "Комментарий для авторов"
 
-#: models.py:562
+#: models.py:567
 msgid "Comment for editors"
 msgstr "Комментарий для редакторов"
 
-#: models.py:563
+#: models.py:568
 msgid "Resolution"
 msgstr "Решение"
 
-#: models.py:567
+#: models.py:572
 msgid "Review"
 msgstr "Рецензия"
 
-#: models.py:571
+#: models.py:576
 #, python-format
 msgid "Review for %s"
 msgstr "Рецензия для %s"
 
-#: models.py:580
+#: models.py:585
 msgid "Review request"
 msgstr "Запрос на рецензию"
 
-#: models.py:594
+#: models.py:599
 msgid "Active"
 msgstr "Активный"
 
-#: models.py:596
+#: models.py:601
 msgid "Number"
 msgstr "Номер"
 
-#: models.py:597
+#: models.py:602
 msgid "Volume"
 msgstr "Том"
 
-#: models.py:598
+#: models.py:603
 msgid "Year"
 msgstr "Год"
 
-#: models.py:602
+#: models.py:607
 msgid "Issues"
 msgstr "Выпуски"
 
-#: models.py:607
+#: models.py:612
 #, python-format
 msgid "Volume %(volume)s, issue %(number)s, %(year)s year"
 msgstr "Том %(volume)s, выпуск %(number)s, %(year)s год"
 
-#: models.py:609
+#: models.py:614
 #, python-format
 msgid "Volume %(volume)s, %(year)s year"
 msgstr "Том %(volume)s, %(year)s год"
 
-#: models.py:613
+#: models.py:618
 #, python-format
 msgid "Volume %(volume)s, issue %(number)s"
 msgstr "Том %(volume)s, выпуск %(number)s"
 
-#: models.py:615
+#: models.py:620
 #, python-format
 msgid "Volume %(volume)s"
 msgstr "Том %(volume)s"
 
-#: models.py:619
+#: models.py:624
 #, python-format
-msgid "%(year)s, V.%(volume)s, iss. %(number)s"
-msgstr "%(year)s, Т.%(volume)s, вып. %(number)s"
+msgid "%(year)s. V.%(volume)s, iss. %(number)s"
+msgstr "%(year)s. Т.%(volume)s, вып. %(number)s"
 
-#: models.py:621
+#: models.py:626
 #, python-format
-msgid "%(year)s, V.%(volume)s"
-msgstr "%(year)s, Т. %(volume)s"
+msgid "%(year)s. V.%(volume)s"
+msgstr "%(year)s. Т. %(volume)s"
 
 #: templates/journal/add_article.html:6
 msgid ""
@@ -727,12 +727,12 @@ msgstr ""
 msgid "Proceed"
 msgstr "Продолжить"
 
-#: templates/journal/adding_article.html:21
-#: templates/journal/send_article.html:14 views.py:274
+#: templates/journal/adding_article.html:22
+#: templates/journal/send_article.html:14 views.py:283
 msgid "Send article"
 msgstr "Отправить статью"
 
-#: templates/journal/adding_article.html:28
+#: templates/journal/adding_article.html:29
 msgid ""
 "You can drag authors to change their order. Add person multiple times with "
 "different organizations to associate one person with many organizations."
@@ -741,7 +741,7 @@ msgstr ""
 "Чтобы указать у автора несколько организаций, добавьте этого автора "
 "несколько раз с разными организациями."
 
-#: templates/journal/adding_article.html:29
+#: templates/journal/adding_article.html:30
 msgid ""
 "Заполняется, если вы хотите отдельно представить дополнительные материалы к "
 "статье. Выберите тип приложения «Общий», если Вы хотите, чтобы файл можно "
@@ -751,7 +751,7 @@ msgstr ""
 "статье. Выберите тип приложения «Общий», если Вы хотите, чтобы файл можно "
 "было только скачать (например, если Ваша статья выполнена в виде презентации)"
 
-#: templates/journal/adding_article.html:41
+#: templates/journal/adding_article.html:42
 msgid "Save and proceed to next step"
 msgstr "Сохранить и продолжить"
 
@@ -895,31 +895,31 @@ msgstr "Отправить статью в журнал"
 msgid "Contents"
 msgstr "Содержимое"
 
-#: views.py:66
+#: views.py:70
 msgid "(Inactive)"
 msgstr "(Неактивный)"
 
-#: views.py:135
+#: views.py:144
 msgid "Profile was updated"
 msgstr "Профайл был обновлен"
 
-#: views.py:143
+#: views.py:152
 msgid "Edit profile"
 msgstr "Редактировать профайл"
 
-#: views.py:208
+#: views.py:217
 msgid "Articles found"
 msgstr "Найденные статьи"
 
-#: views.py:221 views.py:254
+#: views.py:230 views.py:263
 msgid "Add article"
 msgstr "Добавить статью"
 
-#: views.py:240
+#: views.py:249
 msgid "Article draft was updated."
 msgstr "Черновик статьи был обновлён."
 
-#: views.py:270
+#: views.py:279
 msgid ""
 "Thank you for submission. Your article will be reviewed by our staff. We "
 "will notify you soon about progress."
@@ -927,7 +927,7 @@ msgstr ""
 "Спасибо! Статья отправлена на проверку. Мы будем уведомлять вас по почте о "
 "том, как обстоят дела."
 
-#: views.py:297
+#: views.py:306
 msgid ""
 "You cannot view view this review because you already logged in as different "
 "user. Log out and try again."
@@ -935,7 +935,7 @@ msgstr ""
 "Вы не можете редактировать эту рецензию, потому что уже вошли из-под другого "
 "пользователя. Выйдите из журнала и попробуйте снова."
 
-#: views.py:311
+#: views.py:320
 msgid "Review for article"
 msgstr "Рецензия на статью"
 
