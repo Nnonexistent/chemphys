@@ -116,13 +116,18 @@ class ReviewInline(admin.StackedInline):
 
 
 class ArticleAdmin(JournalAdmin):
-    search_fields = ('localizedarticlecontent__title', 'localizedarticlecontent__abstract', 'localizedarticlecontent__references', 'articleauthor__user__localizedname__last_name')
+    search_fields = ('localizedarticlecontent__title', 'localizedarticlecontent__abstract',
+                     'localizedarticlecontent__references', 'articleauthor__user__localizedname__last_name')
     list_filter = ('status', 'type', 'issue', 'sections')
     list_display = ('display_title', 'status', 'type', 'issue', 'date_published', 'date_in', 'display_authors', 'display_reviews')
     inlines = (LocalizedArticleContentInline, ArticleAuthorInline, ArticleSourceInline, ArticleAttachInline, ReviewInline, ArticleResolutionInline)
     raw_id_fields = ['senders']
-
-    # TODO: search by author names
+    readonly_fields = ['article_link']
+    fieldsets = (
+        (None, {'fields': (('status', 'article_link'), 'issue', ('date_in', 'date_published'), 'old_number')}),
+        (None, {'fields': ('content', )}),
+        (None, {'fields': ('senders', 'image', 'type', 'lang', 'report', 'sections')}),
+    )
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
         if db_field.name == "sections":
@@ -141,6 +146,21 @@ class ArticleAdmin(JournalAdmin):
                 form.instance.send(request.build_absolute_uri)
         else:
             formset.save()
+
+    def get_readonly_fields(self, request, obj=None):
+        # This is rather ugly inception but I see no better option to pull *request* object
+        # It is required to construct absolute (i.e. with host) link for article
+        # we could get rid of this hack by specifying host in settings or use sites framework
+        # but both options seems to be less acceptable for now
+        def article_link(obj):
+            if obj.issue:
+                return request.build_absolute_uri(obj.get_absolute_url())
+            else:
+                return u''
+        article_link.short_description = _(u'Article link')
+        self.article_link = article_link
+
+        return self.readonly_fields
 
     def display_title(self, obj=None, max_length=64):
         if not obj:
