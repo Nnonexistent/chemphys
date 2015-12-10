@@ -83,7 +83,7 @@ def show_article(request, year, volume, number=None, id=None):
     return render(request, 'journal/article.html', {
         'title': unicode(article),
         'article': article,
-        'link': request.build_absolute_uri(),
+        'link': request.build_absolute_uri(article.get_absolute_url()),
         'issue': article.issue,
     })
 
@@ -96,7 +96,7 @@ def show_organization(request, id):
     return render(request, 'journal/org.html', {
         'title': unicode(org),
         'org': org,
-        'link': request.build_absolute_uri(),
+        'link': request.build_absolute_uri(org.get_absolute_url()),
         'articles': articles,
         'authors': authors,
     })
@@ -114,7 +114,7 @@ def show_author(request, id):
         'author': author,
         'articles': articles,
         'orgs': orgs,
-        'link': request.build_absolute_uri(),
+        'link': request.build_absolute_uri(author.get_absolute_url()),
     })
 
 

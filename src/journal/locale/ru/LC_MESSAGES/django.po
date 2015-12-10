@@ -10,7 +10,7 @@ msgstr ""
 "POT-Creation-Date: 2015-12-10 05:40+0300\n"
 "PO-Revision-Date: 2015-01-09 12:14+0300\n"
 "Last-Translator: Nik Sergievskiy <nnonexistent@gmail.com>\n"
-"Language-Team: Chemphys <skubird@gmail.com>\n"
+"Language-Team: Chemphys <nnonexistent@gmail.com>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -415,7 +415,7 @@ msgstr "Локализованное содержимое организации
 
 #: journal/models.py:292
 msgid "First name"
-msgstr "Имя"
+msgstr "Имя (и отчество)"
 
 #: journal/models.py:293
 msgid "Last name"
