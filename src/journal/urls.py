@@ -6,7 +6,8 @@ urlpatterns = patterns(
 
     url(r'^$', 'journal.views.index', name='index'),
     url(r'^issues/$', 'journal.views.show_issues', name='show_issues'),
-    url(r'^issues/(\d+)/$', 'journal.views.show_issue', name='show_issue'),
+    url(r'^issues/(?P<year>\d{4})-(?P<volume>\d+)-(?P<number>\d+)/$', 'journal.views.show_issue', name='show_issue'),
+    url(r'^issues/(?P<year>\d{4})-(?P<volume>\d+)/$', 'journal.views.show_issue', name='show_issue'),
     url(r'^issues/(?P<year>\d{4})-(?P<volume>\d+)-(?P<number>\d+)/articles/(?P<id>\d+)/$', 'journal.views.show_article', name='show_article'),
     url(r'^issues/(?P<year>\d{4})-(?P<volume>\d+)/articles/(?P<id>\d+)/$', 'journal.views.show_article', name='show_article'),
     url(r'^organizations/(\d+)/$', 'journal.views.show_organization', name='show_organization'),

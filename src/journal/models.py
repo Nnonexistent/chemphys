@@ -633,9 +633,11 @@ class Issue(OrderedEntry, BaseLocalizedObject):
     def title(self):
         return self.get_localized('title') or ''
 
-    @models.permalink
     def get_absolute_url(self):
-        return 'show_issue', [self.id]
+        kwargs = {'year': self.year, 'volume': self.volume}
+        if self.number:
+            kwargs['number'] = self.number
+        return reverse('show_issue', kwargs=kwargs)
 
     def published_count(self):
         return self.article_set.filter(status=10).count()

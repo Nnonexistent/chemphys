@@ -56,10 +56,14 @@ def show_issues(request):
     })
 
 
-def show_issue(request, id):
-    kwargs = {'id': id}
+def show_issue(request, year, volume, number=None):
+    kwargs = {'year': year, 'volume': volume}
+    if number:
+        kwargs['number'] = number
+
     if not (request.user.is_authenticated() and request.user.is_staff):
         kwargs['is_active'] = True
+
     issue = get_object_or_404(Issue, **kwargs)
     return render(request, 'journal/issue.html', {
         'title': unicode(issue),
