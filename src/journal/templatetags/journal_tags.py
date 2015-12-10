@@ -26,3 +26,34 @@ def issues_menu(context):
             issue
         ))
     return u'\n'.join(out)
+
+
+import itertools
+
+
+class ResetCycleNode(template.Node):
+    def __init__(self, variable_name, cycle_node):
+        self.variable_name = variable_name
+        self.cycle_node = cycle_node
+
+    def render(self, context):
+        cycle_iter = itertools.cycle(self.cycle_node.cyclevars)
+        context.render_context[self.cycle_node] = cycle_iter
+        context[self.variable_name] = next(cycle_iter).resolve(context)
+        return ''
+
+
+@register.tag
+def reset_cycle(parser, token, escape=False):
+    args = token.split_contents()
+
+    if len(args) != 2:
+        raise TemplateSyntaxError("'reset_cycle' tag requires exactly one argument")
+
+    name = args[1]
+    if not hasattr(parser, '_namedCycleNodes'):
+        raise TemplateSyntaxError("No named cycles in template. '%s' is not defined" % name)
+    if name not in parser._namedCycleNodes:
+        raise TemplateSyntaxError("Named cycle '%s' does not exist" % name)
+
+    return ResetCycleNode(name, parser._namedCycleNodes[name])

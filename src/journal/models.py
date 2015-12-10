@@ -637,6 +637,9 @@ class Issue(OrderedEntry, BaseLocalizedObject):
     def get_absolute_url(self):
         return 'show_issue', [self.id]
 
+    def published_count(self):
+        return self.article_set.filter(status=10).count()
+
 
 class LocalizedIssueContent(BaseLocalizedContent):
     issue = models.ForeignKey(Issue, verbose_name=Issue._meta.verbose_name)

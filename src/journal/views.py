@@ -72,7 +72,7 @@ def show_issue(request, id):
 def show_article(request, year, volume, number=None, id=None):
     if id is None:
         raise Http404
-    kwargs = {'id': id, 'status': 10, 'issue__year':year, 'issue__volume': volume}
+    kwargs = {'id': id, 'status': 10, 'issue__year': year, 'issue__volume': volume}
     if number:
         kwargs['issue__number'] = number
 

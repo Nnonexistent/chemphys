@@ -1,11 +1,16 @@
 {% extends "base.html" %}
+{% load journal_tags %}
 
 
 {% block content %}
+    {% cycle 0 0 0 1 as col4 silent %}
+    {% cycle 0 0 1 as col3 silent %}
     <div class="row" id="contents">
     {% for issue in issues %}
         {% if issue.year > SPLIT_YEAR %}
-            {% ifchanged issue.year %}<div class="h4 col-md-12" >{{ issue.year }}</div>{% endifchanged %}
+            {% ifchanged issue.year %}
+                <div class="h4 col-md-12" >{{ issue.year }}{% reset_cycle col3 %}{% reset_cycle col4 %}</div>
+            {% endifchanged %}
         {% else %}
             {% ifchanged %}<div class="h4 col-md-12">{{ first_year }} &mdash; {{ SPLIT_YEAR }}</div>{% endifchanged %}
         {% endif %}
@@ -18,7 +23,7 @@
                 {% else %}
                     {{ issue }}
                 {% endif %}
-            ({{ issue.article_set.all.count}})
+                ({{ issue.published_count }})
                     </span>
                 </div>
                 {% if issue.title %}
@@ -28,6 +33,8 @@
                 {% endif %}
             </a>
         </div>
+        {% if col4 %}<div class="col-md-12 visible-lg-block"></div>{% endif %}{% cycle col3 %}
+        {% if col3 %}<div class="col-md-12 visible-md-block"></div>{% endif %}{% cycle col4 %}
     {% endfor %}
     </div>
 {% endblock %}
