@@ -310,7 +310,7 @@ def edit_review(request, key, do_login=False):
 
     if request.method == 'POST':
         form = ReviewForm(request.POST, instance=review)
-        if form.is_valid() and formset.is_valid():
+        if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('index'))
     else:
