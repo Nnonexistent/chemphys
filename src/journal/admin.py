@@ -119,7 +119,7 @@ class ArticleAdmin(JournalAdmin):
     search_fields = ('localizedarticlecontent__title', 'localizedarticlecontent__abstract',
                      'localizedarticlecontent__references', 'articleauthor__user__localizedname__last_name')
     list_filter = ('status', 'type', 'issue', 'sections')
-    list_display = ('display_title', 'status', 'type', 'issue', 'date_published', 'date_in', 'display_authors', 'display_reviews')
+    list_display = ('display_title', 'id', 'status', 'type', 'issue', 'date_published', 'date_in', 'display_authors', 'display_reviews')
     inlines = (LocalizedArticleContentInline, ArticleAuthorInline, ArticleSourceInline, ArticleAttachInline, ReviewInline, ArticleResolutionInline)
     raw_id_fields = ['senders']
     readonly_fields = ['article_link']
@@ -176,7 +176,7 @@ class ArticleAdmin(JournalAdmin):
         out = []
         for user, orgs in obj.get_authors().iteritems():
             out.append(u'<a href="%s" target="_blank">%s</a>' % (
-                reverse('admin:journal_journaluser_change', args=[user.id]), user))
+                reverse('admin:journal_journaluser_change', args=[user.id]), user.str_compact()))
         return mark_safe(u', '.join(out))
     display_authors.short_description = _(u'Authors')
 
@@ -186,7 +186,7 @@ class ArticleAdmin(JournalAdmin):
         out = []
         for review in obj.review_set.all():
             out.append(u'%s: %s' % (
-                review.reviewer.get_full_name() or review.reviewer.username,
+                review.reviewer.str_compact(),
                 u'%s - %s' % (review.get_status_display(),
                               review.get_resolution_display()) if review.resolution else review.get_status_display()))
         return mark_safe(u'<br />'.join(out))

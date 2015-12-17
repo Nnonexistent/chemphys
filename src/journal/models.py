@@ -124,7 +124,7 @@ class JournalUserManager(BaseUserManager):
 
 
 class JournalUser(AbstractBaseUser, PermissionsMixin, ModeratedObject, BaseLocalizedObject):  # Moderation only applied to author role
-    email = models.EmailField(_('email address'), unique=True)
+    email = models.EmailField(_('email address'))
     is_staff = models.BooleanField(_('staff status'), default=False,
                                    help_text=_('Designates whether the user can log into this admin site.'))
     is_active = models.BooleanField(_('active'), default=True,
@@ -144,6 +144,18 @@ class JournalUser(AbstractBaseUser, PermissionsMixin, ModeratedObject, BaseLocal
 
     def __unicode__(self):
         return self.get_full_name() or self.email
+
+    @models.permalink
+    def get_absolute_url(self):
+        return 'show_author', [self.id]
+
+    def clean(self):
+        if self.moderation_status == 2:
+            qs = self.__class__.objects.filter(email=self.email)
+            if self.id:
+                qs = qs.exclude(id=self.id)
+            if qs.exists():
+                raise ValidationError(_(u'Duplicated email for approved users'))
 
     def get_full_name(self):
         return (u'%s %s' % (self.first_name, self.last_name)).strip()
@@ -175,9 +187,6 @@ class JournalUser(AbstractBaseUser, PermissionsMixin, ModeratedObject, BaseLocal
     def pending_reviews(self):
         return self.review_set.filter(status__in=(0, 1)).distinct()
 
-    @models.permalink
-    def get_absolute_url(self):
-        return 'show_author', [self.id]
 
     def has_journal_profile(self):
         return bool(self.is_active and self.moderation_status == 2 and self.published_articles())
