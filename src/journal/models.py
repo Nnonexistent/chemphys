@@ -374,6 +374,14 @@ class Article(BaseLocalizedObject):
         if self.date_published and self.date_published < self.date_in:
             raise ValidationError(_(u'Published date must be after date in'))
 
+        if self.old_number:
+            qs = self.__class__.objects.filter(old_number=self.old_number)
+            if self.id:
+                qs = qs.exclude(id=self.id)
+            if qs.exists():
+                raise ValidationError(_(u'Duplicated %s field') % self._meta.get_field('old_number').verbose_name)
+
+
     def get_authors(self):
         authors = OrderedDict()
         for aa in self.articleauthor_set.all():

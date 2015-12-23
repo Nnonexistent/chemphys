@@ -1,3 +1,4 @@
+import logging
 from collections import OrderedDict
 
 from django.db.models import Q
@@ -21,6 +22,7 @@ ARTICLE_ADDING_TITLES = OrderedDict((
     (2, ugettext_lazy(u'Authors')),
     (3, ugettext_lazy(u'Media')),
 ))
+logger = logging.getLogger('django.request')
 
 
 def index(request):
@@ -93,7 +95,11 @@ def show_article(request, year, volume, number=None, id=None):
 
 
 def redirect_old_article(request, old_number):
-    article = get_object_or_404(Article, status=10, old_number=old_number)
+    try:
+        article = get_object_or_404(Article, status=10, old_number=old_number)
+    except MultipleObjectsReturned:
+        logger.error('Duplicated old_numbers %s' % old_number)
+        raise Http404
     return HttpResponsePermanentRedirect(article.get_absolute_url())
 
 
