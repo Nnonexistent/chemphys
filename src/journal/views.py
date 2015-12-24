@@ -7,6 +7,7 @@ from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
+from django.core.exceptions import MultipleObjectsReturned
 from django.http import HttpResponseRedirect, HttpResponseForbidden, JsonResponse, Http404, HttpResponsePermanentRedirect
 from django.contrib import messages
 from django.contrib.auth import get_user_model
