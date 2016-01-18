@@ -122,7 +122,7 @@
                     <img src="{{ entry.file.url }}" alt="" />
                 {% elif entry.type == 2 %}
                     <div class="embed-responsive embed-responsive-4by3">
-                    <video controls class="embed-responsive-item">
+                    <video controls class="embed-responsive-item" preload="metadata">
                         <source src="{{ entry.file.url }}">
                         <img src="{{ entry.icon_url }}" alt="" />
                     </video>
