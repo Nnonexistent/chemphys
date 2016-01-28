@@ -11,6 +11,13 @@
         {% endfor %}
         </span>
     </td>
-    <td><span title="{% trans "Primary article language" %}" class="label label-{% if LANGUAGE_CODE == article.lang %}primary{% else %}info{% endif %}">{{ article.get_lang_display }}</span></td>
-    <td><a href="{{ article.content.url }}" class="btn btn-primary">{% trans "View article" %} <br /><small class="text-muted">PDF, {{ article.content.size|filesizeformat }}</small></a></td>
+    <td>
+        <span title="{% trans "Primary article language" %}" class="label label-{% if LANGUAGE_CODE == article.lang %}primary{% else %}info{% endif %}">{{ article.get_lang_display }}</span>
+        {% if article.has_video %}
+        <span title="{% trans "This article contains video" %}" class="label label-success">{% trans "Video" %}</span>
+        {% endif %}
+    </td>
+    <td>
+        <a href="{{ article.content.url }}" class="btn btn-primary">{% trans "View article" %} <br /><small class="text-muted">PDF, {{ article.content.size|filesizeformat }}</small></a>
+    </td>
 </tr>

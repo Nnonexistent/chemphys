@@ -410,6 +410,9 @@ class Article(BaseLocalizedObject):
     def str_authors(self):
         return u', '.join(a.str_compact() for a in self.get_authors().keys())
 
+    def has_video(self):
+        return self.articleattach_set.filter(type=2).exists()
+
 
 class LocalizedArticleContent(BaseLocalizedContent):
     article = models.ForeignKey(Article, verbose_name=Article._meta.verbose_name)
