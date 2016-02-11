@@ -1,0 +1,13 @@
+{% extends "journal/mail/base.txt" %}
+
+
+{% block content_en %}
+Article was reworked by {{ article.senders.all.0 }}: {{ article }}
+Admin link: {{ link }}
+{% endblock %}
+
+
+{% block content_ru %}
+Переработка статьи закончена автором {{ article.senders.all.0 }}: {{ article }}
+Ссылка на редактирование: {{ link }}
+{% endblock %}

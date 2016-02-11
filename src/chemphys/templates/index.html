@@ -52,13 +52,21 @@
                 <td>
                     {% if article.adding %}
                     <a href="{% url "adding_article" article.id article.status %}">{{ article }}</a>
+                    {% elif article.status == 15 %}
+                    <a href="{% url "rework_article" article.id '0' %}">{{ article }}</a>
                     {% else %}
                     {{ article }}
                     {% endif %}
                 </td>
                 {# TODO: display author-friendly status descriptions. Such as "Pending moderation" instead of "New" #}
-                <td>{{ article.get_status_display }}</td>
-                <td>{% if article.adding %}<a class="btn btn-primary btn-xs" href="{% url "adding_article" article.id article.status %}">{% trans "Continue adding article" %}</a>{% endif %}</td>
+                <td>{% if article.adding %}{% trans "Adding" %}{% else %}{{ article.get_status_display }}{% endif %}</td>
+                <td>
+                    {% if article.adding %}
+                    <a class="btn btn-primary btn-xs" href="{% url "adding_article" article.id article.status %}">{% trans "Continue adding article" %}</a>
+                    {% elif article.status == 15 %}
+                    <a class="btn btn-primary btn-xs" href="{% url "rework_article" article.id '0' %}">{% trans "Rework article" %}</a>
+                    {% endif %}
+                </td>
                 </tr>
                 {% endfor %}
                 </tbody>

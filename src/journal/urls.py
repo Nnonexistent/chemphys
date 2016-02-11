@@ -19,6 +19,7 @@ urlpatterns = patterns(
     url(r'^authors/edit/$', 'journal.views.edit_author', name='edit_author'),
     url(r'^articles/add/$', 'journal.views.add_article', name='add_article'),
     url(r'^articles/(\d+)/adding/(\d)/$', 'journal.views.adding_article', name='adding_article'),
+    url(r'^articles/(\d+)/rework/(\d)/$', 'journal.views.adding_article', name='rework_article'),
     url(r'^articles/(\d+)/send/$', 'journal.views.send_article', name='send_article'),
     url(r'^articles/search/$', 'journal.views.search_articles', name='search_articles'),
 

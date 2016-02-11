@@ -247,8 +247,11 @@ def adding_article(request, article_id, step):
 
     step = int(step)
     final = (step == 3)
-    article = get_object_or_404(Article, id=article_id, senders=request.user, status__in=ARTICLE_ADDING_STATUSES, status__gte=step)
+    if not step in ARTICLE_ADDING_FORMS:
+        raise Http404
+    article = get_object_or_404(Article, id=article_id, senders=request.user, status__in=ARTICLE_ADDING_STATUSES + (15,), status__gte=step)
     Form, FormSet = ARTICLE_ADDING_FORMS[step]
+    rework = article.status == 15
 
     if request.method == 'POST':
         form = Form(request.POST, request.FILES, instance=article)
@@ -260,7 +263,8 @@ def adding_article(request, article_id, step):
             if final:
                 continue_url = reverse('send_article', args=[article_id])
             else:
-                article.status = step + 1
+                if not rework:
+                    article.status = step + 1
                 continue_url = reverse('adding_article', args=(article_id, article.status))
             form.save_m2m()
             article.save()
@@ -278,21 +282,27 @@ def adding_article(request, article_id, step):
         'form': form,
         'formset': formset,
         'final': final,
+        'rework': rework,
+        'urlname': 'rework_article' if rework else 'adding_article',
     })
 
 
 def send_article(request, article_id):
-    article = get_object_or_404(Article, id=article_id, senders=request.user, status=3)
+    article = get_object_or_404(Article, id=article_id, senders=request.user, status__in=(3, 15))
     if request.method == 'POST':
-        article.status = 11
+        new = article.status == 3
+        if new:
+            article.status = 11
+        else:
+            article.status = 16
         article.save()
 
         emails = JournalUser.objects.filter(staffmember__editor=True).distinct().values_list('email', flat=True)
-        msg = render_to_string('journal/mail/new_article.txt', {
+        msg = render_to_string('journal/mail/%s_article.txt' % ('new' if new else 'reworked'), {
             'link': settings.SITE_URL + reverse('admin:journal_article_change', args=[article.id]),
             'article': article,
         })
-        send_mail(u'New article', msg, settings.DEFAULT_FROM_EMAIL, emails)
+        send_mail(u'New article' if new else u'Reworked article', msg, settings.DEFAULT_FROM_EMAIL, emails)
 
         messages.success(request, _(u'Thank you for submission. Your article will be reviewed by our staff. We will notify you soon about progress.'))
         return HttpResponseRedirect(reverse('index'))

@@ -27,11 +27,11 @@ ARTICLE_STATUSES = (
     (2, _(u'Adding / Authors')),
     (3, _(u'Adding / Media')),
     (11, _(u'New')),
-    (12, _(u'Rejected')),
     (13, _(u'In review')),
-    (14, _(u'Reviewed')),
     (15, _(u'In rework')),
+    (16, _(u'Reworked')),
     (10, _(u'Published')),
+    (12, _(u'Rejected')),
 )
 ARTICLE_ADDING_STATUSES = (0, 1, 2, 3)
 ARTICLE_TYPES = (
