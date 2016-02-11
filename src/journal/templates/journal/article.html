@@ -43,7 +43,7 @@
     <li role="presentation"{% if forloop.first %} class="active"{% endif %}><a href="#{{ entry.lang }}_overview" aria-controls="{{ entry.lang }}_overview" role="tab" data-toggle="tab">{% trans "Overview" %} ({{ entry.get_lang_display }})</a></li>
     {% endif %}{% endfor %}
     {% if article.articleattach_set.all.exists %}
-    <li role="presentation"><a href="#media" aria-controls="media" role="tab" data-toggle="tab">{% trans "Media" %}</a></li>
+    <li role="presentation"><a href="#media" aria-controls="media" role="tab" data-toggle="tab">{% trans "Media" %} <span class="badge">{{ article.articleattach_set.all.count }}</span></a></li>
     {% endif %}
     {% if article.references %}
     <li role="presentation"><a href="#refs" aria-controls="refs" role="tab" data-toggle="tab">{% trans "References" %}</a></li>
@@ -71,10 +71,12 @@
             </div>
             <div class="col-lg-3">
                 <div>
-                {% if article.get_authors.keys|length == 1 %}{% trans "Author" %}{% else %}{% trans "Authors" %}{% endif %}:
+                    <label>
+                    {% if article.get_authors.keys|length == 1 %}{% trans "Author" %}{% else %}{% trans "Authors" %}{% endif %}:
+                    </label>
                 <span id="authors">
                 {% for aa, orgs in article.get_authors.iteritems %}
-                    <a href="{{ aa.get_absolute_url }}" title="{{ orgs|join:", " }}">{{ aa }}</a>{% if forloop.first and forloop.last %} ({% for org in orgs %}<a href="{{ org.get_absolute_url }}" class="text-default">{{ org }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}){% endif %}{% if not forloop.last %}, {% endif %}
+                    <a href="{{ aa.get_absolute_url }}" title="{{ orgs|join:", " }}">{{ aa }}</a>{% if forloop.first and forloop.last %} {% for org in orgs %}<a href="{{ org.get_absolute_url }}" class="text-default">{{ org }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}{% if not forloop.last %}, {% endif %}
 
                     {% if forloop.last and not forloop.first %}
                 <br />
@@ -92,8 +94,7 @@
                     {% endfor %}
                         </ul>
                     </div>
-
-                    <a class="btn btn-xs btn-info btn-show-orgs" data-toggle="collapse" data-parent="#authors" data-target="#orgs" aria-expanded="false" aria-controls="orgs authors">{% trans "Show organizations" %}</a>
+                    <a class="btn btn-xs btn-default btn-show-orgs" style="margin-top:.5em;" data-toggle="collapse" data-parent="#authors" data-target="#orgs" aria-expanded="false" aria-controls="orgs authors">{% trans "Show organizations" %}</a>
 
                     {% elif forloop.last %}
                 </span>
@@ -101,10 +102,10 @@
                 {% endfor %}
                 </div>
                 <br />
-                <p>{% trans "Issue" %}: <a href="{{ article.issue.get_absolute_url }}">{{ article.issue }}</a></p>
+                <p><label>{% trans "Issue" %}:</label> <a href="{{ article.issue.get_absolute_url }}">{{ article.issue }}</a></p>
                 <p>
-                    {% trans "Recommended bibliographic description of this article" %}:<br />
-                    <textarea readonly="true" class="form-control input-sm" style="max-height:300px;resize:none">{{ article.str_authors }} {{ article.title }}//{% trans "Физико-химическая кинетика в газовой динамике" %}. {{ article.issue.str_compact }}. {{ link }}</textarea>
+                    <label>{% trans "Recommended bibliographic description of this article" %}:</label><br />
+                    <textarea readonly="true" class="form-control input-sm" style="max-height:300px;resize:none;font-size:13px;">{{ article.str_authors }} {{ article.title }}//{% trans "Физико-химическая кинетика в газовой динамике" %}. {{ article.issue.str_compact }}. {{ link }}</textarea>
                 </p>
             </div>
         </div>

@@ -1,6 +1,6 @@
 {% load i18n pages_menu journal_tags static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
 {% block head %}
     <meta charset="utf-8">
@@ -9,9 +9,10 @@
     <meta name="description" content="Электронный журнал Физико-химическая кинетика в газовой динамике">
 
     <title>{{ title|default:_("Физико-химическая кинетика в газовой динамике") }}</title>
-    <script src="//yastatic.net/jquery/2.1.3/jquery.min.js"></script>
-    <script src="//yastatic.net/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="//yastatic.net/jquery/2.2.0/jquery.min.js"></script>
+    <script src="//yastatic.net/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="{% static "js/jquery.autosize.min.js" %}"></script>
+    <script src="{% static "js/jquery.stickytabs.js" %}"></script>
     <script src="{% static "js/main.js" %}"></script>
     <script src="{% url "ctxhelp_js" %}"></script>
     <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet" media="screen">
@@ -59,32 +60,6 @@
         display: inline;
         margin-top: -20px;
     }
-    form textarea.form-control {
-        height: 2.5em;
-        resize: none;
-        max-height: 400px;
-    }
-    body .pull-right.form-group,
-    body .pull-right .form-group {
-        margin-bottom: 0;
-    }
-    .form-group ul {
-        padding: 0;
-        list-style: none;
-    }
-    .form-group ul label {
-        font-weight: normal;
-    }
-    .form-group ul input[type=radio],
-    .form-group ul input[type=checkbox] {
-        margin: 0;
-        vertical-align: -3px;
-        height: 15px;
-        width: 15px;
-    }
-    .form-group input[type=file] {
-        background: none;
-    }
     div.select2-container .select2-choice {
         background-image: none;
         border: 1px solid #ddd;
@@ -112,24 +87,11 @@
         margin: 0;
         clear: both;
     }
-    .dropdown-menu>li.text-muted>a {
-        color: inherit;
-    }
-    .popover.popover-static {
-        display: block;
-        position: relative;
-        max-width: none;
-        margin-left: 5%;
-    }
-    .popover-static.popover.bottom {
-        margin-top: -.6em;
-        margin-bottom: 1em;
-    }
     body .ctxhelp {
         font-size: 20px;
         font-weight: bold;
         border-radius: 20px;
-        padding: 2px 8px 2px 7px;
+        padding: 2px 7px 2px 7px;
         line-height: 20px;
         box-shadow: none;
     }
@@ -142,20 +104,6 @@
     }
     ul.authors-orgs li {
         margin: .5em 0;
-    }
-    .label::before {
-        content: "";
-        border-radius: 3px;
-        background-color: #fff;
-        display: inline-block;
-        width: 6px;
-        height: 6px;
-        margin-right: 4px;
-    }
-    .label {
-        corner-shape: bevel;
-        border-top-left-radius: 10px;
-        border-bottom-left-radius: 10px;
     }
     #contents a {
         display: block;
@@ -181,7 +129,7 @@
             {% csrf_token %}
             <input name="next" type="hidden" value="{{ request.get_full_path }}" />
             <input name="language" type="hidden" value="{{ lang_code }}" />
-            <input type="submit" value="{{ lang.name_local }}" class="btn btn-xs btn-{% if lang_code == LANGUAGE_CODE %}primary{% else %}info{% endif %}" />
+            <input type="submit" value="{{ lang.name_local }}" class="btn btn-xs btn-info{% if lang_code == LANGUAGE_CODE %} active{% endif %}" />
           </form>
           {% endfor %}
         </div>
@@ -206,7 +154,7 @@
             {% csrf_token %}
             <input name="next" type="hidden" value="{{ request.get_full_path }}" />
             <input name="language" type="hidden" value="{{ lang_code }}" />
-            <input type="submit" value="{{ lang.name_local }}" class="btn btn-xs btn-{% if lang_code == LANGUAGE_CODE %}primary{% else %}info{% endif %}" />
+            <input type="submit" value="{{ lang.name_local }}" class="btn btn-xs btn-info{% if lang_code == LANGUAGE_CODE %} active{% endif %}" />
         </form>
         {% endfor %}
         </li></ul>

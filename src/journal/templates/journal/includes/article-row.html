@@ -12,9 +12,9 @@
         </span>
     </td>
     <td>
-        <span title="{% trans "Primary article language" %}" class="label label-{% if LANGUAGE_CODE == article.lang %}primary{% else %}info{% endif %}">{{ article.get_lang_display }}</span>
+        <span title="{% trans "Primary article language" %}" data-toggle="tooltip" class="label label-info">{{ article.get_lang_display }}</span>
         {% if article.has_video %}
-        <span title="{% trans "This article contains video" %}" class="label label-success">{% trans "Video" %}</span>
+        <span title="{% trans "This article contains video" %}" data-toggle="tooltip" class="label label-success">{% trans "Video" %}</span>
         {% endif %}
     </td>
     <td>
