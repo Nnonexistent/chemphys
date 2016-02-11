@@ -37,7 +37,7 @@ class MailAuthToken(models.Model):
     def send(self, uri_builder):
         try:
             user = get_user_model().objects.filter(email=self.email)[0]
-        except IndexeError:
+        except IndexError:
             user = None
 
         msg = render_to_string('mailauth/auth_mail.txt', {
