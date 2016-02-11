@@ -187,7 +187,6 @@ class JournalUser(AbstractBaseUser, PermissionsMixin, ModeratedObject, BaseLocal
     def pending_reviews(self):
         return self.review_set.filter(status__in=(0, 1)).distinct()
 
-
     def has_journal_profile(self):
         return bool(self.is_active and self.moderation_status == 2 and self.published_articles())
 
@@ -327,7 +326,7 @@ class PositionInOrganization(models.Model):
 
 
 def article_upload_to(instance, filename):
-    out = uuid.uuid4().hex + (filename.rsplit('.', 1)[-1][:4].lower() if '.' in filename else '')
+    out = uuid.uuid4().hex + '.' + (filename.rsplit('.', 1)[-1][:4].lower() if '.' in filename else '')
     return 'articles/' + out
 
 
@@ -595,23 +594,40 @@ class Review(models.Model):
     def __unicode__(self):
         return _(u'Review for %s') % self.article
 
-    def send(self, uri_builder):
+    def save(self, *args, **kwargs):
+        new = not self.id
+
+        super(Review, self).save(*args, **kwargs)
+
+        if new:
+            self.send()
+
+    def send(self):
         msg = render_to_string('journal/mail/review.txt', {
-            'link': uri_builder(reverse('edit_review_login', args=[self.key])),
+            'link': settings.SITE_URL + reverse('edit_review_login', args=[self.key]),
             'review': self,
-            'reviewer': self.reviewer,
+            'user': self.reviewer,
             'article': self.article,
         })
-        send_mail(_('Review request'), msg, settings.DEFAULT_FROM_EMAIL, [self.reviewer.email], fail_silently=False)
+        self.reviewer.email_user(u'Review request', msg)
 
     @models.permalink
     def get_absolute_url(self):
         return 'edit_review', [self.key]
 
+    @property
+    def values(self):
+        return json.loads(self.field_values)
+
+    @values.setter
+    def values(self, value):
+        # beware: if you change value after assignement changes will not be saved
+        self.field_values = json.dumps(value)
+
     def render(self):
         from django.utils.html import strip_spaces_between_tags
 
-        return strip_spaces_between_tags(render_to_string('journal/review_result.html', {'data': json.loads(self.field_values)}))
+        return strip_spaces_between_tags(render_to_string('journal/review_result.html', {'data': self.values}))
     render.short_description = _(u'Data')
 
 

@@ -21,8 +21,10 @@ class ReviewForm(BootstrapForm):
     def __init__(self, *args, **kwargs):
         super(ReviewForm, self).__init__(*args, **kwargs)
         self.fields['resolution'].widget.choices[0] = (0, _(u'Undecided yet (complete review afterwards)'))
+        values_dict = dict(map(lambda x: (x[0], x[3]), self.instance.values))
         for field in ReviewField.objects.all():
             self.fields['field_%s' % field.id] = field.formfield()
+            self.initial['field_%s' % field.id] = values_dict.get(field.id)
 
     def __unicode__(self):
         def subform(fields=None, exclude=None):
@@ -43,7 +45,7 @@ class ReviewForm(BootstrapForm):
         data = []
         for field in ReviewField.objects.all():
             data.append((field.id, field.name, field.field_type, self.cleaned_data['field_%s' % field.id]))
-        obj.field_values = json.dumps(data)
+        obj.values = data
 
         if self.cleaned_data['resolution'] != 0:
             obj.status = 2
@@ -52,3 +54,5 @@ class ReviewForm(BootstrapForm):
 
         if commit:
             obj.save()
+
+        return obj

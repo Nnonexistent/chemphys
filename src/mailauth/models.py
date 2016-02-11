@@ -35,8 +35,16 @@ class MailAuthToken(models.Model):
         super(MailAuthToken, self).save(*args, **kwargs)
 
     def send(self, uri_builder):
-        msg = render_to_string('journal/mail/auth.txt', {'link': uri_builder(self.get_absolute_url())})
-        send_mail(_('Journal authentication'), msg, settings.DEFAULT_FROM_EMAIL, [self.email], fail_silently=False)
+        try:
+            user = get_user_model().objects.filter(email=self.email)[0]
+        except IndexeError:
+            user = None
+
+        msg = render_to_string('mailauth/auth_mail.txt', {
+            'link': uri_builder(self.get_absolute_url()),
+            'user': user,
+        })
+        send_mail('Journal authentication', msg, settings.DEFAULT_FROM_EMAIL, [self.email], fail_silently=False)
 
 
 @register()

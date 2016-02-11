@@ -1,12 +1,50 @@
 {% extends "admin/base.html" %}
 {% load i18n %}
 
+{% block extrahead %}{{ block.super }}
+<style type="text/css">
+    div.dynamic-localizedarticlecontent_set h3 {
+        display: none;
+    }
+    div.dynamic-localizedarticlecontent_set {
+        width: 50%;
+        min-width: 640px;
+        display: inline-block;
+        vertical-align: top;
+    }
+    div.dynamic-review_set {
+        width: 440px;
+        display: inline-block;
+        vertical-align: top;
+        margin-right: 2em;
+    }
+    div.dynamic-review_set textarea {
+        width: 400px !important;
+    }
+    div.dynamic-review_set .field-render label {
+        display: none;
+    }
+    div.dynamic-review_set .field-comment_for_authors label,
+    div.dynamic-review_set .field-comment_for_editors label {
+        float: none;
+        display: inline;
+    }
+    
+    .form-row ul li {
+        list-style: none;
+    }
+</style>
+{% endblock %}
+
 
 {% block title %}{{ title }} | {{ site_title|default:_('Journal administration') }}{% endblock %}
 
 
 {% block branding %}
-<h1 id="site-name"><a href="{% url 'index' %}">{% trans "Journal administration" %}</a></h1>
+<h1 id="site-name">
+    <a href="{% url 'index' %}" style="color:#fff">{% trans "Journal" %}</a> |
+    <a href="{% url 'admin:index' %}">{% trans "Administration" %}</a>
+</h1>
 {% endblock %}
 
 

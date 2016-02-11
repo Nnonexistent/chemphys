@@ -1,10 +1,17 @@
-{% load i18n %}
-{% blocktrans %}
-Hello {{ reviewer }},
+{% extends "journal/mail/base.txt" %}
 
+
+{% block content_en %}
 New article "{{ article }}" was uploaded in journal and your review was requested.
 Please follow the link to fill the review form: {{ link }}
 
 Thanks.
+{% endblock %}
 
-{% endblocktrans %}
+
+{% block content_ru %}
+Новая статья "{{ article }}" была загружена и требует вашей рецензии.
+Перейдите по ссылке, чтобы заполнить форму рецензии: {{ link }}
+
+Спасибо.
+{% endblock %}

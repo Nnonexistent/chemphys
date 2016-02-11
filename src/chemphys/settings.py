@@ -95,7 +95,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-DEFAULT_FROM_EMAIL = 'journal@chemphys.edu.ru'
+DEFAULT_FROM_EMAIL = 'Journal <journal@chemphys.edu.ru>'
+SERVER_EMAIL = 'journal@chemphys.edu.ru'
+
+SITE_URL = 'http://chemphys.edu.ru'
 
 
 from settings_local import *

@@ -2,16 +2,19 @@ import logging
 from collections import OrderedDict
 
 from django.db.models import Q
+from django.conf import settings
 from django.shortcuts import render
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 from django.core.exceptions import MultipleObjectsReturned
+from django.core.mail import send_mail
 from django.http import HttpResponseRedirect, HttpResponseForbidden, JsonResponse, Http404, HttpResponsePermanentRedirect
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.utils.safestring import mark_safe
+from django.template.loader import render_to_string
 
 from journal.models import Issue, Article, Organization, ARTICLE_ADDING_STATUSES, Review, JournalUser
 from journal.forms import AuthorEditForm, LocalizedNameFormSet, PIOFormSet, ARTICLE_ADDING_FORMS, ReviewForm
@@ -90,7 +93,7 @@ def show_article(request, year, volume, number=None, id=None):
     return render(request, 'journal/article.html', {
         'title': unicode(article),
         'article': article,
-        'link': request.build_absolute_uri(article.get_absolute_url()),
+        'link': settings.SITE_URL + article.get_absolute_url(),
         'issue': article.issue,
     })
 
@@ -112,7 +115,7 @@ def show_organization(request, id):
     return render(request, 'journal/org.html', {
         'title': unicode(org),
         'org': org,
-        'link': request.build_absolute_uri(org.get_absolute_url()),
+        'link': settings.SITE_URL + org.get_absolute_url(),
         'articles': articles,
         'authors': authors,
     })
@@ -130,7 +133,7 @@ def show_author(request, id):
         'author': author,
         'articles': articles,
         'orgs': orgs,
-        'link': request.build_absolute_uri(author.get_absolute_url()),
+        'link': settings.SITE_URL + author.get_absolute_url(),
     })
 
 
@@ -283,6 +286,14 @@ def send_article(request, article_id):
     if request.method == 'POST':
         article.status = 11
         article.save()
+
+        emails = JournalUser.objects.filter(staffmember__editor=True).distinct().values_list('email', flat=True)
+        msg = render_to_string('journal/mail/new_article.txt', {
+            'link': settings.SITE_URL + reverse('admin:journal_article_change', args=[article.id]),
+            'article': article,
+        })
+        send_mail(u'New article', msg, settings.DEFAULT_FROM_EMAIL, emails)
+
         messages.success(request, _(u'Thank you for submission. Your article will be reviewed by our staff. We will notify you soon about progress.'))
         return HttpResponseRedirect(reverse('index'))
 
@@ -318,7 +329,15 @@ def edit_review(request, key, do_login=False):
     if request.method == 'POST':
         form = ReviewForm(request.POST, instance=review)
         if form.is_valid():
-            form.save()
+            review = form.save()
+            if review.status == 2:
+                emails = JournalUser.objects.filter(staffmember__editor=True).distinct().values_list('email', flat=True)
+                msg = render_to_string('journal/mail/review_done.txt', {
+                    'link': settings.SITE_URL + reverse('admin:journal_article_change', args=[review.article_id]),
+                    'article': review.article,
+                    'review': review,
+                })
+                send_mail(u'New review', msg, settings.DEFAULT_FROM_EMAIL, emails)
             return HttpResponseRedirect(reverse('index'))
     else:
         form = ReviewForm(instance=review)

@@ -1,0 +1,13 @@
+{% load i18n %}
+
+{% language 'en' %}Hello{% if user.first_name %} {{ user.first_name }}{% endif %}.
+{% block content_en %}{% endblock %}{% endlanguage %}
+
+-------------------------------------------------------------------------------
+
+
+{% language 'ru' %}Здравствуйте{% if user.first_name %} {{ user.first_name }}{% endif %}.
+{% block content_ru %}{% endblock %}{% endlanguage %}
+
+-------------------------------------------------------------------------------
+Electronic journal "Physical-Chemical Kinetics in Gas Dynamics"

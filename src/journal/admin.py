@@ -113,6 +113,7 @@ class ReviewInline(admin.StackedInline):
     extra = 0
     fields = ('reviewer', 'status', 'date_created', 'comment_for_authors', 'comment_for_editors', 'resolution', 'render')
     readonly_fields = ('render', 'date_created')
+    view_on_site = False
 
 
 class ArticleAdmin(JournalAdmin):
@@ -134,33 +135,12 @@ class ArticleAdmin(JournalAdmin):
             kwargs['widget'] = forms.CheckboxSelectMultiple
         return super(ArticleAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
 
-    def save_formset(self, request, form, formset, change):
-        if formset.form._meta.model == app_models.Review:
-            new_forms = []
-            for form in formset:
-                if not form.instance.id:
-                    new_forms.append(form)
-            formset.save()
-
-            for form in new_forms:
-                form.instance.send(request.build_absolute_uri)
+    def article_link(self, obj):
+        if obj.issue:
+            return settings.SITE_URL + obj.get_absolute_url()
         else:
-            formset.save()
-
-    def get_readonly_fields(self, request, obj=None):
-        # This is rather ugly inception but I see no better option to pull *request* object
-        # It is required to construct absolute (i.e. with host) link for article
-        # we could get rid of this hack by specifying host in settings or use sites framework
-        # but both options seems to be less acceptable for now
-        def article_link(obj):
-            if obj.issue:
-                return request.build_absolute_uri(obj.get_absolute_url())
-            else:
-                return u''
-        article_link.short_description = _(u'Article link')
-        self.article_link = article_link
-
-        return self.readonly_fields
+            return u''
+    article_link.short_description = _(u'Article link')
 
     def display_title(self, obj=None, max_length=64):
         if not obj:
@@ -191,8 +171,6 @@ class ArticleAdmin(JournalAdmin):
                               review.get_resolution_display()) if review.resolution else review.get_status_display()))
         return mark_safe(u'<br />'.join(out))
     display_reviews.short_description = _(u'Reviews')
-
-    # TODO: display review links in article edit page
 
 
 class ReviewFieldAdmin(JournalAdmin):
@@ -227,7 +205,7 @@ class StaffMemberInline(admin.StackedInline):
     extra = 0
     model = app_models.StaffMember
     max_num = 1
-
+    ordering = ['id']
 
 
 class JournalUserChangeForm(forms.ModelForm):
@@ -274,7 +252,7 @@ class JournalUserAdmin(UserAdmin):
     )
     readonly_fields = ('last_login', 'date_joined')
     list_display = ('__unicode__', 'email', 'is_active', 'moderation_status', 'is_staff')
-    list_filter = ('is_staff', 'is_active', 'moderation_status')
+    list_filter = ('is_staff', 'is_active', 'moderation_status', 'staffmember__editor')
     search_fields = ('localizedname__first_name', 'localizedname__last_name', 'email')
     ordering = None  # handled inside get_queryset
 
@@ -289,7 +267,7 @@ class JournalUserAdmin(UserAdmin):
         qs = self.model._default_manager.get_queryset()
         # For ordering by localizedname__last_name
         ordering = self.get_ordering(request) + ('localizedname__last_name__max', )
-        qs = qs.annotate(models.Max('localizedname__last_name')).order_by(*ordering)
+        qs = qs.annotate(models.Max('localizedname__last_name')).order_by(*ordering).distinct()
         return qs
 
 

@@ -1,8 +1,0 @@
-{% load i18n %}
-{% blocktrans %}
-Hello,
-
-to enter on http://chemphys.edu.ru/ as author please proceed to the following link:
-{{ link }}
-
-{% endblocktrans %}

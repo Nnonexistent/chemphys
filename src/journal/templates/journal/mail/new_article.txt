@@ -1,0 +1,13 @@
+{% extends "journal/mail/base.txt" %}
+
+
+{% block content_en %}
+New article from {{ article.senders.all.0 }}: {{ article }}
+Admin link: {{ link }}
+{% endblock %}
+
+
+{% block content_ru %}
+Новая статья автора {{ article.senders.all.0 }}: {{ article }}
+Ссылка на редактирование: {{ link }}
+{% endblock %}

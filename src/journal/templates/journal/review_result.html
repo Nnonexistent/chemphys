@@ -1,8 +1,14 @@
-<table class="table">
+<table class="table" style="margin:-6px; border:none;">
 {% for field_id, name, type, value in data %}
     <tr>
-        <th>{{ name }}</th>
+    {% if type == 3 %}
+        <td colspan="2">{{ name }}
+        <div style="padding-left:1em;">{{ value|linebreaks }}</div>
+        </td>
+    {% else %}
+        <td>{{ name }}</td>
         <td>{{ value }}</td>
+    {% endif %}
     </tr>
 {% endfor %}
 </table>
