@@ -617,7 +617,9 @@ class Review(models.Model):
 
     @property
     def values(self):
-        return json.loads(self.field_values)
+        if self.field_values:
+            return json.loads(self.field_values)
+        return []
 
     @values.setter
     def values(self, value):
