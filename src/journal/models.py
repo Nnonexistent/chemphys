@@ -644,6 +644,7 @@ class Issue(OrderedEntry, BaseLocalizedObject):
         verbose_name = _(u'Issue')
         verbose_name_plural = _(u'Issues')
         ordering = ['order']
+        unique_together = ('number', 'volume', 'year')
 
     def __unicode__(self):
         if self.number:
