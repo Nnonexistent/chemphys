@@ -326,8 +326,17 @@ class PositionInOrganization(models.Model):
 
 
 def article_upload_to(instance, filename):
-    out = uuid.uuid4().hex + '.' + (filename.rsplit('.', 1)[-1][:4].lower() if '.' in filename else '')
+    out = uuid.uuid4().hex
+    if '.' in filename:
+        out += '.' + filename.rsplit('.', 1)[-1][:16].lower()
     return 'articles/' + out
+
+
+def report_upload_to(instance, filename):
+    out = uuid.uuid4().hex
+    if '.' in filename:
+        out += '.' + filename.rsplit('.', 1)[-1][:16].lower()
+    return 'reports/' + out
 
 
 class Article(BaseLocalizedObject):
@@ -340,7 +349,7 @@ class Article(BaseLocalizedObject):
     image = models.ImageField(verbose_name=_(u'Image'), upload_to=article_upload_to, blank=True, default='')
     type = models.PositiveSmallIntegerField(verbose_name=_(u'Article type'), choices=ARTICLE_TYPES, default=1)
     lang = models.CharField(max_length=2, choices=settings.LANGUAGES, verbose_name=_(u'Article language'), default=settings.LANGUAGE_CODE)
-    report = models.FileField(verbose_name=_(u'Акт экспертизы'), upload_to='expert_reports', default='', blank=True)
+    report = models.FileField(verbose_name=_(u'Акт экспертизы'), upload_to=report_upload_to, default='', blank=True)
     content = models.FileField(verbose_name=_(u'Content'), upload_to='published', default='', blank=True)
 
     senders = models.ManyToManyField(JournalUser, verbose_name=_(u'Senders'), blank=True)
