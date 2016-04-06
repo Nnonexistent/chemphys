@@ -99,7 +99,7 @@ def show_article(request, year, volume, number=None, id=None):
     except MultipleObjectsReturned:
         raise Http404
 
-    article = get_object_or_404(Article, issue=issue)
+    article = get_object_or_404(Article, issue=issue, id=id)
     return render(request, 'journal/article.html', {
         'title': unicode(article),
         'article': article,
