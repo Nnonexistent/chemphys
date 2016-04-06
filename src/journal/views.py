@@ -15,6 +15,7 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.utils.safestring import mark_safe
 from django.template.loader import render_to_string
+from django.core.exceptions import MultipleObjectsReturned
 
 from journal.models import Issue, Article, Organization, ARTICLE_ADDING_STATUSES, Review, JournalUser
 from journal.forms import AuthorEditForm, LocalizedNameFormSet, PIOFormSet, ARTICLE_ADDING_FORMS, ReviewForm
@@ -70,7 +71,11 @@ def show_issue(request, year, volume, number=None):
     if not (request.user.is_authenticated() and request.user.is_staff):
         kwargs['is_active'] = True
 
-    issue = get_object_or_404(Issue, **kwargs)
+    try:
+        issue = get_object_or_404(Issue, **kwargs)
+    except MultipleObjectsReturned:
+        raise Http404
+
     return render(request, 'journal/issue.html', {
         'title': unicode(issue),
         'subtitle': u'' if issue.is_active else _(u'(Inactive)'),
@@ -82,14 +87,19 @@ def show_issue(request, year, volume, number=None):
 def show_article(request, year, volume, number=None, id=None):
     if id is None:
         raise Http404
-    kwargs = {'id': id, 'status': 10, 'issue__year': year, 'issue__volume': volume}
+    kwargs = {'year': year, 'volume': volume}
     if number:
-        kwargs['issue__number'] = number
+        kwargs['number'] = number
 
     if not (request.user.is_authenticated() and request.user.is_staff):
-        kwargs['issue__is_active'] = True
+        kwargs['is_active'] = True
 
-    article = get_object_or_404(Article, **kwargs)
+    try:
+        issue = get_object_or_404(Issue, **kwargs)
+    except MultipleObjectsReturned:
+        raise Http404
+
+    article = get_object_or_404(Article, issue=issue)
     return render(request, 'journal/article.html', {
         'title': unicode(article),
         'article': article,
