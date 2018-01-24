@@ -1,17 +1,22 @@
-{% extends "journal/mail/base.txt" %}
+{% load i18n %}
 
-
-{% block content_en %}
+{% language 'en' %}Hello{% if user.first_name %} {{ user.first_name }}{% endif %}.
 New article "{{ article }}" was uploaded in journal and your review was requested.
 Please follow the link to fill the review form: {{ link }}
 
-Thanks.
-{% endblock %}
+Thanks.{% endlanguage %}
+
+-------------------------------------------------------------------------------
 
 
-{% block content_ru %}
-Новая статья "{{ article }}" была загружена и требует вашей рецензии.
-Перейдите по ссылке, чтобы заполнить форму рецензии: {{ link }}
+{% language 'ru' %}****АВТОМАТИЧЕСКАЯ РАССЫЛКА, ПОЖАЛУЙСТА, НЕ ОТВЕЧАЙТЕ НА ЭТО ПИСЬМО****
+{% if user.first_name %}Уважаемый/ая {{ user.first_name }}{% else %}Уважаемый рецензент{% endif %}.
+Редакция электронного журнала «Физико-химическая кинетика в газовой динамике» обращается к Вам с просьбой дать рецензию на статью «{{ article }}», поступившую в наш журнал.
+Перейдите по ссылке, чтобы получить доступ к статье и заполнить форму рецензии: {{ link }}
+По правилам журнала срок для написания рецензии составляет не более 2-х недель.
+Адрес для переписки: chemphys@imec.msu.ru
 
-Спасибо.
-{% endblock %}
+Благодарим за сотрудничество!{% endlanguage %}
+
+-------------------------------------------------------------------------------
+Electronic journal "Physical-Chemical Kinetics in Gas Dynamics"

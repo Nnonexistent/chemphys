@@ -97,6 +97,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_FROM_EMAIL = 'Journal <journal@chemphys.edu.ru>'
 SERVER_EMAIL = 'journal@chemphys.edu.ru'
+EMAIL_REPLY_TO = 'chemphys@imec.msu.ru'
 
 SITE_URL = 'http://chemphys.edu.ru'
 
