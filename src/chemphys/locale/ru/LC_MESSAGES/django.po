@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-26 02:28+0300\n"
+"POT-Creation-Date: 2018-11-14 16:32+0300\n"
 "PO-Revision-Date: 2015-01-09 00:54+0300\n"
 "Last-Translator: Elena Sergievska <skubird@gmail.com>\n"
 "Language-Team: \n"
@@ -62,11 +62,11 @@ msgstr "Удалить?"
 msgid "Физико-химическая кинетика в газовой динамике"
 msgstr "Физико-химическая кинетика в газовой динамике"
 
-#: templates/base.html:120 templates/base.html.py:144
+#: templates/base.html:120 templates/base.html:144
 msgid "Физико-химическая<br />кинетика"
 msgstr "Физико-химическая<br />кинетика"
 
-#: templates/base.html:122 templates/base.html.py:146
+#: templates/base.html:122 templates/base.html:146
 msgid "в газовой<br />динамике"
 msgstr "в газовой<br />динамике"
 
@@ -98,7 +98,12 @@ msgstr "Свидетельство СМИ: Эл № 77-6360 от 10 июля 200
 msgid "Журнал издается с 2003 года"
 msgstr "Журнал издается с 2003 года"
 
-#: templates/index.html:8
+#: templates/index.html:9
+msgid ""
+"Institute for Problems in Mechanics<br />of the Russian Academy of Sciences"
+msgstr "Институт проблем механики<br />им. А.Ю. Ишлинского РАН"
+
+#: templates/index.html:12
 msgid ""
 "\n"
 "<p>Журнал зарегистрирован как электронное периодическое издание.<br /"
@@ -106,26 +111,28 @@ msgid ""
 "<p>Журнал предназначен для оперативной публикации научных результатов, баз "
 "данных, компьютерных кодов, информации о новых приборах и методах "
 "физического эксперимента в области физико-химической кинетики в газовой "
-"динамике, физике плазмы и газового разряда, в процессах горения и взрыва "
-"(подробнее см. <a href=\"/about/\">О журнале</a>).</p>\n"
+"динамике, физике плазмы и газового разряда, в процессах горения и взрыва, в "
+"аэрофизике и аэротермодинамике летательных аппаратов (подробнее см. <a href="
+"\"/about/\">О журнале</a>).</p>\n"
 "<p>Статьи, опубликованные в журнале, открыты для свободного доступа в "
 "Интернете.</p>\n"
 "<p>Журнал ориентируется на научных работников, преподавателей, аспирантов и "
 "студентов.</p>\n"
+"<p>Дата включения издания в ПЕРЕЧЕНЬ рецензируемых научных изданий, в "
+"которых должны быть опубликованы основные научные результаты диссертаций на "
+"соискание ученой степени кандидата наук, на соискание ученой степени доктора "
+"наук - 29.05.2017 г.</p>\n"
+"<p>Дата включения издания в ПЕРЕЧЕНЬ Russian Science Citation Index на "
+"платформе Web of Science - 03.07.2018 г.</p>       \n"
 msgstr ""
 
-#: templates/index.html:17
+#: templates/index.html:23
 msgid "Lomonosov Moscow State University<br />Institute of Mechanics"
 msgstr ""
 "Московский Государственный Университет им. М.В.Ломоносова<br />Институт "
 "Механики"
 
-#: templates/index.html:21
-msgid ""
-"Institute for Problems in Mechanics<br />of the Russian Academy of Sciences"
-msgstr "Институт проблем механики<br />им. А.Ю. Ишлинского РАН"
-
-#: templates/index.html:33
+#: templates/index.html:35
 msgid ""
 "This is context help. You can invoke it by pressing on this symbol on any "
 "page. To&nbsp;close it press the symbol again."
@@ -133,75 +140,75 @@ msgstr ""
 "Это контекстная подсказка. Ее можно вызвать, нажав на этот символ на любой "
 "странице.Чтобы закрыть, нажмите на символ ещё раз"
 
-#: templates/index.html:36
+#: templates/index.html:38
 #, python-format
 msgid "You are logged in as <a href=\"%(link)s\">%(user)s</a>"
 msgstr "Вы вошли как <a href=\"%(link)s\">%(user)s</a>"
 
-#: templates/index.html:38
+#: templates/index.html:40
 #, python-format
 msgid "You are logged in as %(user)s"
 msgstr "Вы вошли как %(user)s"
 
-#: templates/index.html:40
+#: templates/index.html:42
 msgid "Logout"
 msgstr "Выйти"
 
-#: templates/index.html:42
+#: templates/index.html:44
 msgid "Edit profile"
 msgstr "Редактировать профайл"
 
-#: templates/index.html:43
+#: templates/index.html:45
 msgid "Add article"
 msgstr "Добавить статью"
 
-#: templates/index.html:47
+#: templates/index.html:49
 msgid "Unpublished articles"
 msgstr "Неопубликованные статьи"
 
-#: templates/index.html:51
+#: templates/index.html:53
 msgid "Title"
 msgstr "Заголовок"
 
-#: templates/index.html:52 templates/index.html.py:88
+#: templates/index.html:54 templates/index.html:90
 msgid "Status"
 msgstr "Статус"
 
-#: templates/index.html:69
+#: templates/index.html:71
 msgid "Adding"
 msgstr "Добавление"
 
-#: templates/index.html:72
+#: templates/index.html:74
 msgid "Continue adding article"
 msgstr "Продолжить добавление статьи"
 
-#: templates/index.html:74
+#: templates/index.html:76
 msgid "Rework article"
 msgstr "Переработка статьи"
 
-#: templates/index.html:83
+#: templates/index.html:85
 msgid "Pending reviews"
 msgstr "Незавершенные рецензии"
 
-#: templates/index.html:87
+#: templates/index.html:89
 msgid "Article"
 msgstr "Статья"
 
-#: templates/index.html:97
+#: templates/index.html:99
 msgid "Proceed to review form"
 msgstr "Перейти к форме рецензии"
 
-#: templates/index.html:111
+#: templates/index.html:113
 msgid "Recent articles"
 msgstr "Недавние статьи"
 
-#: templates/index.html:123
+#: templates/index.html:125
 msgid ""
 "Для представления статьи введите свой e-mail. На введённый адрес будет "
 "отправлено письмо со ссылкой для входа в электронный журнал."
 msgstr ""
 
-#: templates/index.html:127
+#: templates/index.html:129
 msgid "Enter journal"
 msgstr "Вход в журнал"
 

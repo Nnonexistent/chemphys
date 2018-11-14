@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Chemphys\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-11 11:17+0300\n"
+"POT-Creation-Date: 2018-11-14 16:31+0300\n"
 "PO-Revision-Date: 2015-01-09 12:18+0300\n"
 "Last-Translator: Nik Sergievskiy <nnonexistent@gmail.com>\n"
 "Language-Team: Chemphys <skubird@gmail.com>\n"
@@ -19,36 +19,36 @@ msgstr ""
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 1.7.1\n"
 
-#: mailauth/models.py:19
+#: models.py:19
 msgid "Key"
 msgstr "Ключ"
 
-#: mailauth/models.py:20
+#: models.py:20
 msgid "E-mail"
 msgstr "E-mail"
 
-#: mailauth/models.py:21
+#: models.py:21
 msgid "Created"
 msgstr "Создано"
 
-#: mailauth/models.py:24
+#: models.py:24
 msgid "Mail auth token"
 msgstr "Токен аутентификации"
 
-#: mailauth/models.py:25
+#: models.py:25
 msgid "Mail auth tokens"
 msgstr "Токены аутентификации"
 
-#: mailauth/templates/mailauth/auth.html:9
+#: templates/mailauth/auth.html:9
 msgid "Enter"
 msgstr "Войти"
 
-#: mailauth/views.py:22
+#: views.py:22
 #, python-format
 msgid "The authentication link was sent on your e-mail \"%s\""
 msgstr "Ссылка для входа была отправлена вам на e-mail \"%s\""
 
-#: mailauth/views.py:28
+#: views.py:28
 msgid "Authentication"
 msgstr "Аутентификация"
 
