@@ -190,6 +190,9 @@ class JournalUser(AbstractBaseUser, PermissionsMixin, ModeratedObject, BaseLocal
     def has_journal_profile(self):
         return bool(self.is_active and self.moderation_status == 2 and self.published_articles())
 
+# override user default moderation status
+JournalUser._meta.get_field('moderation_status').default = 2
+
 
 class Section(OrderedEntry, BaseLocalizedObject):
     moderators = models.ManyToManyField(JournalUser, verbose_name=_(u'Moderators'), blank=True)
@@ -347,6 +350,7 @@ class Article(BaseLocalizedObject):
                                   help_text=_(u'to link consistency with old articles'))
 
     image = models.ImageField(verbose_name=_(u'Image'), upload_to=article_upload_to, blank=True, default='')
+    doi = models.URLField(verbose_name='DOI', blank=True, null=True)
     type = models.PositiveSmallIntegerField(verbose_name=_(u'Article type'), choices=ARTICLE_TYPES, default=1)
     lang = models.CharField(max_length=2, choices=settings.LANGUAGES, verbose_name=_(u'Article language'), default=settings.LANGUAGE_CODE)
     report = models.FileField(verbose_name=_(u'Акт экспертизы'), upload_to=report_upload_to, default='', blank=True)

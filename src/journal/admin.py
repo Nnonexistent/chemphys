@@ -125,7 +125,7 @@ class ArticleAdmin(JournalAdmin):
     raw_id_fields = ['senders']
     readonly_fields = ['article_link']
     fieldsets = (
-        (None, {'fields': (('status', 'article_link'), 'issue', ('date_in', 'date_published'), 'old_number')}),
+        (None, {'fields': (('status', 'article_link'), 'doi', 'issue', ('date_in', 'date_published'), 'old_number')}),
         (None, {'fields': ('content', )}),
         (None, {'fields': ('senders', 'image', 'type', 'lang', 'report', 'sections')}),
     )
