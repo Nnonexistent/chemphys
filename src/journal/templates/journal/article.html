@@ -70,6 +70,9 @@
             {% endif %}
             </div>
             <div class="col-lg-3">
+                {% if article.doi %}
+                <div class="doi_link"><b>DOI:</b><a href="{{ article.doi }}">{{ article.doi }}</a></div>
+                {% endif %}
                 <div>
                     <label>
                     {% if article.get_authors.keys|length == 1 %}{% trans "Author" %}{% else %}{% trans "Authors" %}{% endif %}:
