@@ -71,7 +71,7 @@
             </div>
             <div class="col-lg-3">
                 {% if article.doi %}
-                <div class="doi_link"><b>DOI:</b><a href="{{ article.doi }}">{{ article.doi }}</a></div>
+                <div class="doi_link"><b>DOI:</b> <a href="{{ article.doi }}">{{ article.doi|cut:"https://doi.org/" }}</a><br></div>
                 {% endif %}
                 <div>
                     <label>
